@@ -5,15 +5,13 @@ import Blank from '../components/layouts/Blank';
 import MainView from '../views/Main';
 import MinorView from '../views/Minor';
 
-import { Route, Router, IndexRedirect, browserHistory} from 'react-router';
-
+//import { Route, Router, IndexRedirect, browserHistory} from 'react-router';
+import { HashRouter as Router, Route, Switch } from 'react-router-dom';
 export default (
-    <Router history={browserHistory}>
-        <Route path="/" component={Main}>
-            <IndexRedirect to="/main" />
-            <Route path="main" component={MainView}> </Route>
-            <Route path="minor" component={MinorView}> </Route>
-        </Route>
-    </Router>
+    <Switch>
+        <Route path="/" component={Main}></Route>
+        <Route path="main" component={MainView}> </Route>
+        <Route path="minor" component={MinorView}> </Route>
+    </Switch>
 
 );
