@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router';
 import {Glyphicon} from 'react-bootstrap';
+import LogNotificationCard from './LogNotificationCard';
 
 /*const Card = (props)=>{
  return (
@@ -10,6 +11,7 @@ import {Glyphicon} from 'react-bootstrap';
  );
  };*/
 
+/*
 const LogCard = ({dueDate,month,missingLog,partialLog}) => {
   return(
     <div className="card">
@@ -24,7 +26,7 @@ const LogCard = ({dueDate,month,missingLog,partialLog}) => {
             </div>
             <div>Missing log</div>
           </div>
-          <div className="col-md-6">
+          <div >
             <div>
               {partialLog + " Days"}
             </div>
@@ -35,6 +37,7 @@ const LogCard = ({dueDate,month,missingLog,partialLog}) => {
     </div>
   );
 };
+*/
 
 class ActivityLog extends Component{
   constructor(props){
@@ -146,7 +149,7 @@ class NotificationCards extends Component{
   render(){
     return(
       <div className="left-panel">
-        <LogCard dueDate="27" month="July" missingLog="10" partialLog="3"/>
+        <LogNotificationCard dueDate="24" month="Jul" missingLog="10" partialLog="3"/>
         <br/>
         <ActivityLog activityCount="2"/>
         <br/>
@@ -186,3 +189,5 @@ export default NotificationCards;
  </div>
  </div>
  */
+
+//<LogCard dueDate="27" month="July" missingLog="10" partialLog="3"/>
