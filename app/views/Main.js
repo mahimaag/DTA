@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
 
 class Main extends Component {
+    constructor(props){
+        super(props);
+        console.log('jksdhjhjbhj')
+    }
 
     render() {
         return (
