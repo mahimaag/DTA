@@ -52,3 +52,7 @@
     text-align: right;
     overflow: hidden;
 }
+
+.card-footer{
+    min-height:12px;
+}

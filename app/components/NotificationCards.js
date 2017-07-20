@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router';
 import {Glyphicon} from 'react-bootstrap';
 import LogNotificationCard from './LogNotificationCard';
-
+import '../../public/styles/card-styling.css';
 /*const Card = (props)=>{
  return (
  <div className="card" ...this.props>
@@ -114,7 +114,7 @@ class ActivityLog extends Component{
       <div className="card">
         <div className="card-header">
           <h5 className="">ACTIVITY({this.state.activityCount})</h5>
-          {!this.state.activityCount?'':<h5 className=""><Link to="/activity">View all</Link></h5>}
+          {!this.state.activityCount?'':<h5 className="">viewall</h5>}
         </div>
         <div className="card-block">
           <div className="activity-list">
