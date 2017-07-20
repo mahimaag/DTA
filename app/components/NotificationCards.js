@@ -4,6 +4,7 @@ import {Glyphicon} from 'react-bootstrap';
 
 import LogNotificationCard from './LogNotificationCard';
 import LogActivityCard from './LogActivityCard';
+import LogProjectCard from './LogProjectCard';
 
 import '../../public/styles/card-styling.css';
 
@@ -157,7 +158,7 @@ class NotificationCards extends Component{
         <br/>
         <LogActivityCard activityCount="2"/>
         <br/>
-        <ProjectLog numProjects="2"/>
+        <LogProjectCard numProjects="2"/>
       </div>
     );
   }
