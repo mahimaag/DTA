@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import routes from './config/routes';
 import { HashRouter as Router, Route, Switch } from 'react-router-dom';
+import Landing from './views/Landing';
 
 import jquery from 'jquery';
 import metismenu from 'metismenu';
@@ -13,6 +14,6 @@ import './../node_modules/animate.css/animate.min.css'
 import './../public/styles/style.css'
 
 ReactDOM.render(
-<Router>{routes}</Router>,
+<Router><Landing/></Router>,
     document.getElementById('root')
 );
