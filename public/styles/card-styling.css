@@ -6,7 +6,8 @@
 }
 
 .card>.card-header {
-    border-bottom: 1px solid #223848;
+    border-bottom: 1px solid #F3F3F4;
+    padding: 10px;
 }
 
 .card-block {
@@ -26,7 +27,7 @@
 .activity-list .activity{
     display: inline-block;
     width:100%;
-    border-bottom: 1px solid #223848;
+    border-bottom: 1px solid #F3F3F4;
     padding:10px;
 }
 
@@ -51,4 +52,8 @@
     width: 60%;
     text-align: right;
     overflow: hidden;
+}
+
+.card-footer{
+    min-height:12px;
 }
