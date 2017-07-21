@@ -5,8 +5,8 @@ import {Card, CardHeader, CardContent, CardFooter} from './Card/index';
 const LogProjectCard =(props)=>{
   let projectList = [];
   props.projectList.forEach((data, index)=>{
-    projectList.push(<div>{data.projectName} - Approval:{data.approval}</div>)
-  })
+    projectList.push(<div key={index}>{data.projectName} - Approval:{data.approval}</div>)
+  });
   return(
     <Card>
       <CardHeader>
