@@ -10,7 +10,7 @@ class Card extends Component {
   }
   render(){
     return(
-      <div className="card">
+      <div className="card" style={this.props.style}>
         {this.props.children}
       </div>
     );

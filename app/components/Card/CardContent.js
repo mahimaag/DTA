@@ -6,7 +6,7 @@ class CardContent extends Component{
   }
   render(){
     return(
-      <div className="card-content clearfix">
+      <div className="card-content clearfix" style={this.props.style}>
         {this.props.children}
       </div>
     );

@@ -7,7 +7,7 @@ class CardFooter extends Component{
 
   render(){
     return(
-      <div className="card-footer"></div>
+      <div className="card-footer" style={this.props.style}></div>
     );
   }
 }
