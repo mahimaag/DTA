@@ -5,3 +5,6 @@
 
 # production
 /dist
+
+.idea/
+npm-debug.log
