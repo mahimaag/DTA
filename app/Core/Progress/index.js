@@ -1,5 +1,5 @@
 import React from 'react';
-import pace from '../../../public/vendor/pace/pace';
+import pace from '../../../assests/vendor/pace/pace';
 
 class Progress extends React.Component {
     componentDidMount() {
@@ -12,4 +12,5 @@ class Progress extends React.Component {
 }
 
 export default Progress
+
 
