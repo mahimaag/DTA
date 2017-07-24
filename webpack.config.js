@@ -9,7 +9,7 @@ var config = {
             'webpack/hot/only-dev-server',
             './app/index'
         ],
-        vendor: []
+        vendor: ['react', 'react-dom']
     },
     devtool: 'eval',
     output: {
@@ -27,22 +27,24 @@ var config = {
             'window.$': 'jquery'
 
         }),
-        new webpack.optimize.CommonsChunkPlugin('vendor', 'vendor.js', Infinity),
+        new webpack.optimize.CommonsChunkPlugin({ name: 'vendor', filename: 'vendor.js'}),
         new webpack.DefinePlugin({
             "require.specified": "require.resolve"
         })
     ],
     module: {
-        noParse: [],
         loaders: [
             {
                 test: /\.js$/,
-                loaders: ['react-hot', 'babel'],
+                loaders: ['react-hot-loader', 'babel-loader'],
                 include: path.join(__dirname, 'app')
             },
             {
                 test: /\.css$/,
-                loader: ExtractTextPlugin.extract('style-loader', 'css-loader')
+                loader: ExtractTextPlugin.extract({
+                    fallback: 'style-loader',
+                    use: ['css-loader']
+                })
 
             },
             {
