@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Dropdown } from 'react-bootstrap';
-import { Link, Location } from 'react-router';
+import { Link, Location } from 'react-router-dom';
 
 class Navigation extends Component {
 
@@ -9,13 +9,13 @@ class Navigation extends Component {
         $(menu).metisMenu();
     }
 
-    activeRoute(routeName) {
+    /*activeRoute(routeName) {
         return this.props.location.pathname.indexOf(routeName) > -1 ? "active" : "";
     }
 
     secondLevelActive(routeName) {
         return this.props.location.pathname.indexOf(routeName) > -1 ? "nav nav-second-level collapse in" : "nav nav-second-level collapse";
-    }
+    }*/
 
     render() {
         return (
@@ -35,10 +35,10 @@ class Navigation extends Component {
                                 IN+
                             </div>
                         </li>
-                        <li className={this.activeRoute("/main")}>
+                        <li>
                             <Link to="/main"><i className="fa fa-th-large"></i> <span className="nav-label">Main view</span></Link>
                         </li>
-                        <li className={this.activeRoute("/minor")}>
+                        <li>
                             <Link to="/minor"><i className="fa fa-th-large"></i> <span className="nav-label">Minor view</span></Link>
                         </li>
                     </ul>

@@ -1,0 +1,59 @@
+.card{
+    max-width: 320px;
+    background: #FFFFFF;
+    border-radius:4px;
+    padding:3px;
+}
+
+.card>.card-header {
+    border-bottom: 1px solid #F3F3F4;
+    padding: 10px;
+}
+
+.card-block {
+    background: #FFFFFF;
+    min-height: 50px;
+}
+.card-header>h5{
+    display: inline-block;
+    width: 50%;
+    text-align: left;
+}
+
+.card-header h5 + h5 {
+    text-align: right;
+}
+
+.activity-list .activity{
+    display: inline-block;
+    width:100%;
+    border-bottom: 1px solid #F3F3F4;
+    padding:10px;
+}
+
+.activity-list .activity:last-child{
+    border-bottom: 1px solid #FFFFFF;
+}
+
+.card {
+    -webkit-box-shadow: 3px 3px 5px 6px #ccc;  /* Safari 3-4, iOS 4.0.2 - 4.2, Android 2.3+ */
+    -moz-box-shadow:    3px 3px 5px 6px #ccc;  /* Firefox 3.5 - 3.6 */
+    box-shadow:         3px 3px 5px 6px #ccc;  /* Opera 10.5, IE 9, Firefox 4+, Chrome 6+, iOS 5 */
+}
+
+.activity .description{
+    text-align: left;
+}
+
+.activity .action-container .time-details{
+    width: 40%;
+}
+.activity .action-container .action{
+    width: 60%;
+    text-align: right;
+    overflow: hidden;
+}
+
+.card-footer{
+    min-height:12px;
+}

@@ -33,16 +33,16 @@ class Main extends React.Component {
 
         // Run correctHeight function on load and resize window event
         $(window).bind("load resize", function() {
-            correctHeight();
+            //correctHeight();
             detectBody();
         });
 
         // Correct height of wrapper after metisMenu animation.
-        $('.metismenu a').click(() => {
+        /*$('.metismenu a').click(() => {
             setTimeout(() => {
                 correctHeight();
             }, 300)
-        });
+        });*/
     }
 }
 
