@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 
+import Calendar from '../components/Calendar'
+
 class Main extends Component {
 
     render() {
@@ -8,12 +10,7 @@ class Main extends Component {
                 <div className="row">
                     <div className="col-lg-12">
                         <div className="text-center m-t-lg">
-                            <h1>
-                                Welcome in INSPINIA ReactJS Seed Project
-                            </h1>
-                            <small>
-                                It is an application skeleton for a typical web app. You can use it to quickly bootstrap your webapp projects.
-                            </small>
+                            <Calendar lastDate={new Date('07/27/2017')}/>
                         </div>
                     </div>
                 </div>

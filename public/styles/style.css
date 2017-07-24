@@ -8551,3 +8551,26 @@ body.md-skin {
     margin: 0;
   }
 }
+
+.partial{
+  background-color: lightcyan;
+  width: 100%;
+}
+
+.pending{
+  background-color: antiquewhite
+}
+
+.todayDate{
+  background-color: gainsboro
+}
+
+.flag{
+  background-color: #ffffff;
+  background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAMAAABHPGVmAAAAb1BMVEX///8AAADv7++vr68QEBAgICCrq6vn5+c6OjopKSkHBweUlJQYGBjHx8fr6+uEhIRcXFxzc3NhYWGbm5ve3t6NjY22trZoaGjT09P19fWlpaVERER8fHzMzMw3NzdJSUkdHR1TU1MwMDBwcHBGRkZ0TGTcAAABuUlEQVRoge3Y2XKCQBAFUDoKsqm4xURQRP3/b0xDSpJKCPQy/ZS5j3k5RYV7ZyQIBrJfrob+7DDLIgWAebUwNLIcPhO/mhmrBJ6pzZBzb0BqhqzmPZKYIUH0VMKzHRIsys6o3g2NIJh1yIup8YVYPkuPpMXSHsFXIF4bOd8R3JdmtzdH2sLc3S/MLwRTHt7sEYB8e3K5/8MI5la5ewv+RHAzm8zRWzCCtJN2nLko6TgCbsoziXTlUZ7OBASTbFTloSGYh6I8ZKQrj/BIYCCYi6w8PERYHi4CkvIIEEy5Zl08ZAiWpzjRyyNFMDdyeRQIpqaVR4cAXLfRdHm0CFyr6YdRIvMjpZ06pJgRCB1Sn0iEBrlk5LuGFEnWjAmTIfndfFbSLfOcFCBNxCMESLnjX5KYyO0gubiwkJAwIUqENiE6pJBfvagIeULkSJypfoRTENaEyJB8o/4kMoWwJ0SANLRTSYNIJoSJyCaEhUgnZBT5+f92+X11+EkUE0JFVBNCQ5QTQkHUEzKNOJiQKcTJhIwieCU0+wjZIyH7oiNALOMRj3jEIx7xiEc84hGPeMQj/wqJwja2hkE+AGmfF4ENZH5vAAAAAElFTkSuQmCC);
+  background-repeat: no-repeat;
+  background-position: left top;
+}
+.completed {
+  background-color: transparent;
+}
