@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import NotificationCards from '../components/NotificationCards';
 
+import Calendar from '../components/Calendar'
+
 class Main extends Component {
     constructor(props){
         super(props);
@@ -16,6 +18,7 @@ class Main extends Component {
                             <div className="col-md-4 pull-right">
                                 <NotificationCards/>
                             </div>
+                            <Calendar lastDate={new Date('07/27/2017')}/>
                         </div>
                     </div>
                 </div>
