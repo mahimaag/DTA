@@ -18,7 +18,7 @@ class Main extends Component {
                             <div className="col-md-4 pull-right">
                                 <NotificationCards/>
                             </div>
-                            <Calendar lastDate={new Date('07/27/2017')}/>
+                            <Calendar />
                         </div>
                     </div>
                 </div>
