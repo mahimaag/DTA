@@ -1,6 +1,7 @@
 import React from 'react';
 import NotificationCards from './../../components/NotificationCard';
 import { correctHeight, detectBody } from './../../../utils/common';
+import Calendar from './../../components/Calendar';
 
 class Main extends React.Component {
 
@@ -13,6 +14,7 @@ class Main extends React.Component {
                             <div className="col-md-4 pull-right">
                                 <NotificationCards/>
                             </div>
+                            <Calendar />
                         </div>
                     </div>
                 </div>
