@@ -5,6 +5,7 @@ import BigCalendar from 'react-big-calendar';
 import moment from 'moment';
 import events from './../../../utils/event'
 import styles from './style.css';
+import AddButton from './../../Core/PlusButton'
 
 BigCalendar.setLocalizer(
     BigCalendar.momentLocalizer(moment)
@@ -26,7 +27,7 @@ BigCalendar.setLocalizer(
 //     )
 // }
 
-let clicked = (props) => {
+/*let clicked = (props) => {
     event.preventDefault();
     let dated = props.date.getMonth()+1+'/'+props.date.getDate()+'/'+props.date.getFullYear();
     events.push({
@@ -34,7 +35,7 @@ let clicked = (props) => {
         'start': new Date(dated),
         'end': new Date(dated),
     });
-};
+};*/
 
 let customHeader = (props) => {
     return (
@@ -44,11 +45,15 @@ let customHeader = (props) => {
     );
 };
 
-let customDateHeader = (props) => {
+let customDateHeader =(props) =>{
     return (
         <div className="date-header clearfix" >
             <span>{ props && props.label }</span>
-            <div onClick={(e) => clicked(props)}> + </div>
+            <span> {
+                props.date < new Date() ?
+                    <AddButton currentDated={props}/>:null
+            }
+               </span>
         </div>
     );
 };
@@ -62,7 +67,7 @@ let customDateHeader = (props) => {
 //     )
 // }
 
-function getComponents () {
+let getComponents = (props) => {
     return {
         // event: customEvent,
         //  eventWrapper: customEventWrapper,
@@ -81,10 +86,6 @@ let msg = {
 };
 
 class Calendar extends Component {
-    constructor(props){
-        super();
-
-    }
     eventStyleGetter(event, start, end, isSelected) {
         let cssClass;
         if (event.title === 'img') {
@@ -98,9 +99,9 @@ class Calendar extends Component {
 
         };
     }
-    // creaSlotAppuntamenti(slot) {
-    //     console.log("selected slot",slot)
-    // } //called when tile is clicked
+    creaSlotAppuntamenti(slot) {
+        console.log("selected slot",slot)
+    } //called when tile is clicked
     modificaSlotAppuntamenti(slotId) {
         console.log("event selected",slotId);
     } //called when event is clicked
@@ -115,6 +116,7 @@ class Calendar extends Component {
                     views={['month']}
                     messages={msg}
                     components={getComponents(events)}
+                    onSelectSlot = { (slot) => this.creaSlotAppuntamenti(slot)}
                     onSelectEvent={(event) => this.modificaSlotAppuntamenti(event)}
                     eventPropGetter={(this.eventStyleGetter)}
                 />
