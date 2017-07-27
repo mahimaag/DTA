@@ -15,13 +15,14 @@ class CustomModal extends Component{
                 aria-labelledby="contained-modal-title"
             >
                 <Modal.Header closeButton>
-                    <Modal.Title id="contained-modal-title">Contained Modal</Modal.Title>
+                    <Modal.Title id="contained-modal-title">Add Event</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     Event is added on {this.props.message}
                 </Modal.Body>
                 <Modal.Footer>
                     <button onClick={this.props.close}>Close</button>
+                    <button >Save</button>
                 </Modal.Footer>
             </Modal>
         )

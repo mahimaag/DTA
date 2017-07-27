@@ -69,8 +69,6 @@
 }
 
 #page-wrapper .fadeInRight {
-
-    /*webkit-animation-name: fadeIn;*/
     animation-name: none;
 }
 

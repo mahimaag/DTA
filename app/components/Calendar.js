@@ -37,6 +37,16 @@ BigCalendar.setLocalizer(
     });
 };*/
 
+let addEvent = (props) => {
+    let dated = props.date.getMonth() + 1 + '/' + props.date.getDate() + '/' + props.date.getFullYear();
+    events.push({
+        'title': '8hrs on project work',
+        'start': new Date(dated),
+        'end': new Date(dated),
+    });
+    console.log("date clicked is ---------", dated)
+};
+
 let customHeader = (props) => {
     return (
         <div style={{color: 'black', background: 'grey'}}>
@@ -51,12 +61,13 @@ let customDateHeader =(props) =>{
             <span>{ props && props.label }</span>
                <span> {
                     props.date < new Date() ?
-                        <AddButton currentDated={props}/>:null
+                        <AddButton currentDated={props} addEvent={() => addEvent(props)}/>:null
                 }
                </span>
         </div>
     );
 };
+
 /*(props) => {
     return (
         <div className="date-header clearfix" >
@@ -127,7 +138,7 @@ class Calendar extends Component {
                     popup
                     views={['month']}
                     messages={msg}
-                    components={getComponents()}
+                    components={getComponents(this.props)}
                     onSelectSlot = { (slot) => this.creaSlotAppuntamenti(slot)}
                     onSelectEvent={(event) => this.modificaSlotAppuntamenti(event)}
                     eventPropGetter={(this.eventStyleGetter)}

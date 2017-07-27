@@ -11,6 +11,12 @@ class AddButton extends Component {
         }
     }
 
+    showModal = (e) => {
+        e.preventDefault();
+        this.setState({show: true});
+        this.props.addEvent();
+    };
+
     close = (e) => {
         e.preventDefault();
         this.setState({show: false})
@@ -19,19 +25,8 @@ class AddButton extends Component {
     render() {
         return (
             <div className="modal-container">
-                <button
-                    onClick={() => this.setState({show: true}, () => {
-                        console.log("date clicked is ---------", this.props.currentDated)
-                        let dated = this.props.currentDated.date.getMonth() + 1 + '/' + this.props.currentDated.date.getDate() + '/' + this.props.currentDated.date.getFullYear();
-                        events.push({
-                            'title': '8hrs on project work',
-                            'start': new Date(dated),
-                            'end': new Date(dated),
-                        });
-                        console.log("date clicked is ---------", dated)
-                    })}
-                >
-                    <span>+</span>
+                <button onClick={(e) => this.showModal(e)}>
+                    +
                 </button>
                 {
                     this.state.show ?
