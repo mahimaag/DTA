@@ -1,5 +1,10 @@
 const events = [
     {
+        'title': 'img',
+        'start': new Date('07/27/2017'),
+        'end': new Date('07/27/2017'),
+    },
+    {
         'title': '8hrs',
         'start': new Date('07/03/2017'),
         'end': new Date('07/03/2017'),

@@ -35,10 +35,9 @@
 
 .date-header {
     text-align:left;
-    width:100%;
 }
 .date-header span:first-child {
-    float:left;
+    float:right;
 }
 
 .date-header div{
@@ -52,4 +51,24 @@
 }
 .wrapper-calendar {
     height: 600px;
+}
+
+.rbc-event {
+    cursor: pointer;
+    padding: 2px 5px;
+    background-color: antiquewhite;
+    border-radius: 5px;
+    color: #000000;
+}
+
+.rbc-day-bg {
+    background-color: white;
+}
+
+.footer {
+    display: none;
+}
+
+#page-wrapper .fadeInRight {
+    animation-name: none;
 }
