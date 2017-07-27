@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-
-import 'react-big-calendar/lib/css/react-big-calendar.css'
 import BigCalendar from 'react-big-calendar';
 import moment from 'moment';
-import events from './../../../utils/event'
+import 'react-big-calendar/lib/css/react-big-calendar.css'
+
+import events from './../../config/events'
 import styles from './style.css';
 import AddButton from './../../Core/PlusButton'
 
@@ -28,14 +28,24 @@ BigCalendar.setLocalizer(
 // }
 
 /*let clicked = (props) => {
-    event.preventDefault();
-    let dated = props.date.getMonth()+1+'/'+props.date.getDate()+'/'+props.date.getFullYear();
+ event.preventDefault();
+ let dated = props.date.getMonth()+1+'/'+props.date.getDate()+'/'+props.date.getFullYear();
+ events.push({
+ 'title': '8hrs on project work',
+ 'start': new Date(dated),
+ 'end': new Date(dated),
+ });
+ };*/
+
+let addEvent = (props) => {
+    let dated = props.date.getMonth() + 1 + '/' + props.date.getDate() + '/' + props.date.getFullYear();
     events.push({
         'title': '8hrs on project work',
         'start': new Date(dated),
         'end': new Date(dated),
     });
-};*/
+    console.log("date clicked is ---------", dated)
+};
 
 let customHeader = (props) => {
     return (
@@ -49,14 +59,28 @@ let customDateHeader =(props) =>{
     return (
         <div className="date-header clearfix" >
             <span>{ props && props.label }</span>
-            <span> {
-                props.date < new Date() ?
-                    <AddButton currentDated={props}/>:null
-            }
-               </span>
+            <span>
+                {
+                    props.date < new Date() ?
+                        <AddButton currentDated={props} addEvent={() => addEvent(props)}/>:null
+                }
+            </span>
         </div>
     );
 };
+
+/*(props) => {
+ return (
+ <div className="date-header clearfix" >
+ <span>{ props && props.label }</span>
+ {
+ props.date < new Date() ?
+ <a href="#" data-toggle="modal" data-target="#modalBill">+</a>:null
+ }
+ </div>
+
+ );
+ };*/
 
 // let customDayWrapper = (props) => {
 //     console.log('customDayWrapper -> ', props);
@@ -67,10 +91,10 @@ let customDateHeader =(props) =>{
 //     )
 // }
 
-let getComponents = (props) => {
+let getComponents  = (props) => {
     return {
         // event: customEvent,
-        //  eventWrapper: customEventWrapper,
+        // eventWrapper: customEventWrapper,
         //  dayWrapper: customDayWrapper,  // called when day format is displayed
         //  dateCellWrapper: customDateCellWrapper,
         month: {
@@ -79,7 +103,7 @@ let getComponents = (props) => {
             dateHeader: customDateHeader
         }
     };
-}
+};
 
 let msg = {
     showMore: total => `+${total} ...`
@@ -115,11 +139,12 @@ class Calendar extends Component {
                     popup
                     views={['month']}
                     messages={msg}
-                    components={getComponents(events)}
+                    components={getComponents(this.props)}
                     onSelectSlot = { (slot) => this.creaSlotAppuntamenti(slot)}
                     onSelectEvent={(event) => this.modificaSlotAppuntamenti(event)}
                     eventPropGetter={(this.eventStyleGetter)}
                 />
+
             </div>
         )
     }
@@ -128,95 +153,3 @@ class Calendar extends Component {
 export default Calendar
 
 
-/*
- import React from 'react';
- import BigCalendar from 'react-big-calendar';
- import events from '../events';
- let allViews = Object.keys(BigCalendar.views).map(k => BigCalendar.views[k])
- let customEventWrapper = (props) => {
- console.log('customEventWrapper -> ', props);
- const customEventStyles = {
- 'border-style': 'dotted',
- 'border-radius': 10,
- 'border-color': 'blue'
- };
- return (
- <div style={ customEventStyles}
- onClick={(e) => console.log('customEventSelected ->', props)}
- title={props && props.event && props.event.desc}>
- { props && props.event && props.event.title }
- </div>
- )
- }
- let customDayWrapper = (props) => {
- console.log('customDayWrapper -> ', props);
- return (
- <div style={{background: 'green'}}>
- { props && props.event && props.event.title }
- </div>
- )
- }
- let customEvent = (props) => {
- console.log('customEvent -> ', props);
- return null;
- // return (
- // <div style={{background: 'cyan'}}>
- // <strong>
- // { props && props.title }
- // </strong>
- // </div>
- // );
- }
- let customDateCellWrapper = (props) => {
- console.log('customDateCellWrapper -> ', props);
- return (
- <div style={{background: 'red'}}>
- { props }
- </div>
- );
- }
- let customDateHeader = (props) => {
- console.log('customDateHeader -> ', props);
- return (
- <div style={{color: 'red'}}>
- { props && props.label }
- </div>
- );
- }
- let customHeader = (props) => {
- console.log('customHeader -> ', props);
- return (
- <div style={{color: 'black', background: 'grey'}}>
- { props && props.label }
- </div>
- );
- }
- function getComponents () {
- return {
- // event: customEvent,
- eventWrapper: customEventWrapper,
- dayWrapper: customDayWrapper,
- // dateCellWrapper: customDateCellWrapper,
- month: {
- header: customHeader,
- event: customEvent,
- dateHeader: customDateHeader
- }
- };
- }
- let Basic = React.createClass({
- render(){
- return (
- <BigCalendar
- popup
- components={getComponents()}
- onSelectEvent={(data, e) => console.log('onSelectEvent - ', data)}
- {...this.props}
- events={events}
- views='month'
- defaultDate={new Date(2015, 3, 1)}
- />
- )
- }
- })
- export default Basic;*/
