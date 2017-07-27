@@ -6,7 +6,6 @@ import Calendar from '../components/Calendar'
 class Main extends Component {
     constructor(props){
         super(props);
-        console.log('jksdhjhjbhj')
     }
 
     render() {

@@ -9,44 +9,69 @@
     white-space: nowrap;
 }
 
-.partial{
+.partial {
     background-color: lightcyan;
 
 }
 
-.pending{
+.pending {
 
 }
 
-.todayDate{
+.todayDate {
     background-color: gainsboro
 }
 
-.flag{
+.flag {
     background-color: #ffffff;
     height: 69px;
     background-image: url(http://moonlighting.io/assets/world.png);
     background-repeat: no-repeat;
     background-position: left top;
 }
+
 .completed {
     background-color: transparent;
 }
 
 .date-header {
-    text-align:left;
-    width:100%;
-}
-.date-header span:first-child {
-    float:left;
+    text-align: left;
 }
 
-.date-header div{
-    float:right;
+.date-header span:first-child {
+    float: left;
+}
+
+.date-header div {
+    float: right;
 }
 
 .clearfix {
-    content:'';
-    clear:both;
-    display:table;
+    content: '';
+    clear: both;
+    display: table;
 }
+
+.rbc-event {
+    cursor: pointer;
+    padding: 2px 5px;
+    background-color: antiquewhite;
+    border-radius: 5px;
+    color: #000000;
+}
+
+.rbc-day-bg {
+    background-color: white;
+}
+
+.footer {
+    display: none;
+}
+
+#page-wrapper .fadeInRight {
+
+    /*webkit-animation-name: fadeIn;*/
+    animation-name: none;
+}
+
+
