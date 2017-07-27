@@ -59,11 +59,12 @@ let customDateHeader =(props) =>{
     return (
         <div className="date-header clearfix" >
             <span>{ props && props.label }</span>
-               <span> {
+            <span>
+                {
                     props.date < new Date() ?
                         <AddButton currentDated={props} addEvent={() => addEvent(props)}/>:null
                 }
-               </span>
+            </span>
         </div>
     );
 };

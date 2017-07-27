@@ -42,7 +42,7 @@
     float: left;
 }
 
-.date-header div {
+.date-header span:last-child {
     float: right;
 }
 

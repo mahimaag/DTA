@@ -6,7 +6,6 @@ class CustomModal extends Component{
         super(props)
     }
     render(){
-
         return(
             <Modal
                 show={this.props.show}
