@@ -1,0 +1,74 @@
+.rbc-show-more {
+    background-color: rgba(255, 255, 255, 0.3);
+    z-index: 4;
+    font-weight: bold;
+    color: black;
+    font-size: 85%;
+    height: auto;
+    line-height: normal;
+    white-space: nowrap;
+}
+
+.partial{
+    background-color: lightcyan;
+
+}
+
+.pending{
+
+}
+
+.todayDate{
+    background-color: gainsboro
+}
+
+.flag{
+    background-color: #ffffff;
+    height: 69px;
+    background-image: url(http://moonlighting.io/assets/world.png);
+    background-repeat: no-repeat;
+    background-position: left top;
+}
+.completed {
+    background-color: transparent;
+}
+
+.date-header {
+    text-align:left;
+}
+.date-header span:first-child {
+    float:right;
+}
+
+.date-header div{
+    float:right;
+}
+
+.clearfix {
+    content:'';
+    clear:both;
+    display:table;
+}
+.wrapper-calendar {
+    height: 600px;
+}
+
+.rbc-event {
+    cursor: pointer;
+    padding: 2px 5px;
+    background-color: antiquewhite;
+    border-radius: 5px;
+    color: #000000;
+}
+
+.rbc-day-bg {
+    background-color: white;
+}
+
+.footer {
+    display: none;
+}
+
+#page-wrapper .fadeInRight {
+    animation-name: none;
+}
