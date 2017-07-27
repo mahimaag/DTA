@@ -7,7 +7,7 @@ new WebpackDevServer(webpack(config), {
     publicPath: config.output.publicPath,
     hot: true,
     historyApiFallback: true,
-    contentBase: "public/"
+    contentBase: "assests/"
 }).listen(8000, 'localhost', function (error) {
         if (error) {
             return console.log(error);

@@ -1,4 +1,4 @@
-export function correctHeight() {
+const correctHeight = () => {
 
     var pageWrapper = $('#page-wrapper');
     var navbarHeight = $('nav.navbar-default').height();
@@ -25,7 +25,7 @@ export function correctHeight() {
     }
 }
 
-export function detectBody() {
+const detectBody = () => {
     if ($(document).width() < 769) {
         $('body').addClass('body-small')
     } else {
@@ -33,7 +33,7 @@ export function detectBody() {
     }
 }
 
-export function smoothlyMenu() {
+const smoothlyMenu = () => {
     if (!$('body').hasClass('mini-navbar') || $('body').hasClass('body-small')) {
         // Hide menu in order to smoothly turn on when maximize menu
         $('#side-menu').hide();
@@ -53,3 +53,6 @@ export function smoothlyMenu() {
         $('#side-menu').removeAttr('style');
     }
 }
+
+module.exports = {correctHeight, detectBody, smoothlyMenu};
+
