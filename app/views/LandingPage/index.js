@@ -2,6 +2,7 @@ import React from 'react';
 import NotificationCards from './../../components/NotificationCard';
 import { correctHeight, detectBody } from './../../../utils/common';
 import Calendar from './../../components/Calendar';
+import ActivityLog from './../../components/ListActivityCard';
 
 class Main extends React.Component {
 
@@ -11,7 +12,10 @@ class Main extends React.Component {
                 <div className="row">
                     <div className="col-lg-12">
                         <div className="text-center m-t-lg">
-                            <div className="col-md-4 pull-right">
+                            <div className="col-lg-9 pull-left">
+                                <ActivityLog/>
+                            </div>
+                            <div className="col-md-3 pull-right">
                                 <NotificationCards/>
                             </div>
                             <Calendar />
