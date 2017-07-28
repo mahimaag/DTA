@@ -4,7 +4,7 @@
 
 import React, { Component } from 'react'
 import { Row, Col } from 'react-bootstrap'
-import LogDropdown from './../../Core/Dropdown/LogDropdown'
+import LogDropdown from '../../Core/Dropdown/index'
 import { TSMS_IconButton } from './../../Core/Button'
 import {TimeEntryStatus} from '../../../constants/Index'
 
