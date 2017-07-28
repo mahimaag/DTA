@@ -87,6 +87,7 @@ class ActivityLogComp extends Component{
             typeArray.push(item.Type);
             durationArray.push(item.Duration);
         })
+        let activityTitles = ['Westcon','Knowlegde Meet','Daily Time Analysis'];
         let activityCategory = ['Project','Non-Project'];
         let durationTime = ['30 mins','1 hr','2 hrs','3 hrs','4 hrs','5 hrs','6 hrs','7 hrs','8 hrs'];
 
@@ -102,7 +103,7 @@ class ActivityLogComp extends Component{
                         </Col>
                         <Col md={2} lg={2} className="log-col">
                             <LogDropdown className='type'
-                                         data={typeArray}
+                                         data={activityTitles}
                                          title={this.state.projectName}
                                          onSelect={(item) => this.setSelectedValue(item, 'projectName')}/>
                         </Col>
