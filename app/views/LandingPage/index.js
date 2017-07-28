@@ -13,12 +13,12 @@ class Main extends React.Component {
                     <div className="col-lg-12">
                         <div className="text-center m-t-lg">
                             <div className="col-lg-9 pull-left">
+                                <Calendar />
                                 <ActivityLog/>
                             </div>
                             <div className="col-md-3 pull-right">
                                 <NotificationCards/>
                             </div>
-                            <Calendar />
                         </div>
                     </div>
                 </div>
