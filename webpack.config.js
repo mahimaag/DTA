@@ -9,7 +9,7 @@ var config = {
         app: [
             './client/app/index'
         ],
-        // vendor: ['react', 'react-dom']
+        vendor: ['react', 'react-dom']
     },
     devtool: 'eval',
     output: {
@@ -28,7 +28,7 @@ var config = {
             'window.$': 'jquery'
 
         }),
-        // new webpack.optimize.CommonsChunkPlugin({ name: 'vendor', filename: 'vendor.js'}),
+        new webpack.optimize.CommonsChunkPlugin({ name: 'vendor', filename: 'vendor.js'}),
         new webpack.DefinePlugin({
             "require.specified": "require.resolve"
         })
@@ -40,7 +40,7 @@ var config = {
                 loaders: ['react-hot-loader', 'babel-loader'],
                 include: [path.join(__dirname, clientLocation, 'app'),path.join(__dirname, 'constants')]
             },
-            {
+            {   
                 test: /\.css$/,
                 loader: ExtractTextPlugin.extract({
                     fallback: 'style-loader',
@@ -61,6 +61,14 @@ var config = {
                 loader: 'url-loader?limit=10000&mimetype=image/svg+xml'
             }
         ]
+    },
+    resolve: {
+        alias: {
+            core: path.resolve(__dirname, 'client', 'app', 'Core'),
+            components: path.resolve(__dirname, 'client', 'app', 'components'),
+            utils: path.resolve(__dirname, 'client', 'app', 'utils')
+        },
+        extensions: ['.json', '.js', '.jsx', '.css'],
     }
 };
 
