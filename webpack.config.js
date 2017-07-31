@@ -18,7 +18,7 @@ var config = {
         publicPath: '/'
     },
     plugins: [
-        new BundleAnalyzerPlugin(),
+        // new BundleAnalyzerPlugin(),
         new ExtractTextPlugin("styles.css"),
         new webpack.HotModuleReplacementPlugin(),
         new webpack.ProvidePlugin({

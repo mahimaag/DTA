@@ -9,7 +9,7 @@ if(env === 'development' || env === 'test') {
 }
 let app =require('./app');
 const startServer = (buildStats) => {
-  console.log('We are all set for starting the server.');  
+  // console.log('We are all set for starting the server.Yieppeee ');  
   const server = app.listen(9000, 'localhost', () => {
     console.log('Express server listening on in mode');
   });
