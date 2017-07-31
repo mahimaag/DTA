@@ -1,0 +1,36 @@
+.log-date-day{
+    margin:10px;
+    font-size: 15px;
+}
+
+.log-col {
+    border:none;
+}
+
+.log-clear-button {
+    border-radius: 15px;
+    margin: 10px;
+    padding: 3px;
+}
+
+.btn.btn-default.btn-sm.edit-clear-button {
+    border-radius: 15px;
+}
+
+.data-div {
+    display: -webkit-box;
+}
+
+.menu-items {
+    border: transparent;
+    background-color: white;
+    width:100%;
+}
+
+.main-dropdown {
+    background-color: white;
+}
+
+.drop-button {
+    width:100%;
+}

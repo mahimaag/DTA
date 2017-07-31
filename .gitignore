@@ -10,3 +10,5 @@
 
 .idea/
 npm-debug.log
+tsms.*.log
+/dist

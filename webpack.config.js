@@ -1,23 +1,24 @@
 var path = require('path');
 var webpack = require('webpack');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+const clientLocation = '/client'
 
 var config = {
     entry: {
         app: [
-            'webpack-dev-server/client?http://localhost:8000',
-            'webpack/hot/only-dev-server',
-            './app/index'
+            './client/app/index'
         ],
-        vendor: []
+        // vendor: ['react', 'react-dom']
     },
     devtool: 'eval',
     output: {
-        path: path.join(__dirname, '/public/'),
+        path: path.join(__dirname ,'/dist/'),
         filename: 'bundle.js',
         publicPath: '/'
     },
     plugins: [
+        new BundleAnalyzerPlugin(),
         new ExtractTextPlugin("styles.css"),
         new webpack.HotModuleReplacementPlugin(),
         new webpack.ProvidePlugin({
@@ -27,22 +28,24 @@ var config = {
             'window.$': 'jquery'
 
         }),
-        new webpack.optimize.CommonsChunkPlugin('vendor', 'vendor.js', Infinity),
+        // new webpack.optimize.CommonsChunkPlugin({ name: 'vendor', filename: 'vendor.js'}),
         new webpack.DefinePlugin({
             "require.specified": "require.resolve"
         })
     ],
     module: {
-        noParse: [],
         loaders: [
             {
                 test: /\.js$/,
-                loaders: ['react-hot', 'babel'],
-                include: path.join(__dirname, 'app')
+                loaders: ['react-hot-loader', 'babel-loader'],
+                include: [path.join(__dirname, clientLocation, 'app'),path.join(__dirname, 'constants')]
             },
             {
                 test: /\.css$/,
-                loader: ExtractTextPlugin.extract('style-loader', 'css-loader')
+                loader: ExtractTextPlugin.extract({
+                    fallback: 'style-loader',
+                    use: ['css-loader']
+                })
 
             },
             {
