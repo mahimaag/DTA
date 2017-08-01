@@ -3,8 +3,8 @@ import BigCalendar from 'react-big-calendar';
 import moment from 'moment';
 import Dropdown from './../Dropdown'
 
-import events from './../../config/events'
-import ModalComponent from './../../components/Calendar/AddLog'
+import events from '../../config/events'
+import ModalComponent from '../../components/Calendar/AddLog'
 
 BigCalendar.setLocalizer(
     BigCalendar.momentLocalizer(moment)
