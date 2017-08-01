@@ -2,9 +2,13 @@
 
 # dependencies
 /node_modules
+/.history
+/public
 
 # production
 /dist
 
 .idea/
 npm-debug.log
+tsms.*.log
+/dist
