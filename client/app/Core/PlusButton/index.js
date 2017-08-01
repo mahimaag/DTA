@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 
-import CustomModal from './../CustomModal'
+import ModalContent from '../../Core/AddActivityModalContent'
 
 class AddButton extends Component {
     constructor() {
@@ -29,10 +29,7 @@ class AddButton extends Component {
                 </button>
                 {
                     this.state.show ?
-                        <CustomModal show={this.state.show}
-                                     close={(e) => this.close(e)}
-                                     message={this.props.currentDated.date.toString()}
-                        /> : null
+                        <ModalContent close={(e)=>this.close(e)} message={this.props.currentDated.date}/>:null
                 }
             </div>
         );
@@ -40,4 +37,5 @@ class AddButton extends Component {
 }
 
 export default AddButton
+
 

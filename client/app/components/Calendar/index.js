@@ -26,7 +26,6 @@ BigCalendar.setLocalizer(
 //         </div>
 //     )
 // }
-
 /*let clicked = (props) => {
  event.preventDefault();
  let dated = props.date.getMonth()+1+'/'+props.date.getDate()+'/'+props.date.getFullYear();
@@ -36,17 +35,15 @@ BigCalendar.setLocalizer(
  'end': new Date(dated),
  });
  };*/
-
-let addEvent = (props) => {
-    let dated = props.date.getMonth() + 1 + '/' + props.date.getDate() + '/' + props.date.getFullYear();
-    events.push({
-        'title': '8hrs on project work',
-        'start': new Date(dated),
-        'end': new Date(dated),
-    });
-    console.log("date clicked is ---------", dated)
-};
-
+// let addEvent = (props) => {
+//     /*let dated = props.date.getMonth() + 1 + '/' + props.date.getDate() + '/' + props.date.getFullYear();
+//     events.push({
+//         'title': '8hrs on project work',
+//         'start': new Date(dated),
+//         'end': new Date(dated),
+//     });
+//     console.log("date clicked is ---------", dated)*/
+// };
 let customHeader = (props) => {
     return (
         <div style={{color: 'black', background: 'grey'}}>
@@ -54,7 +51,6 @@ let customHeader = (props) => {
         </div>
     );
 };
-
 let customDateHeader =(props) =>{
     return (
         <div className="date-header clearfix" >
@@ -62,13 +58,12 @@ let customDateHeader =(props) =>{
             <span>
                 {
                     props.date < new Date() ?
-                        <AddButton currentDated={props} addEvent={() => addEvent(props)}/>:null
+                        <AddButton currentDated={props}/>:null
                 }
             </span>
         </div>
     );
 };
-
 /*(props) => {
  return (
  <div className="date-header clearfix" >
@@ -81,7 +76,6 @@ let customDateHeader =(props) =>{
 
  );
  };*/
-
 // let customDayWrapper = (props) => {
 //     console.log('customDayWrapper -> ', props);
 //     return (
@@ -90,7 +84,6 @@ let customDateHeader =(props) =>{
 //         </div>
 //     )
 // }
-
 let getComponents  = (props) => {
     return {
         // event: customEvent,
@@ -104,7 +97,6 @@ let getComponents  = (props) => {
         }
     };
 };
-
 let msg = {
     showMore: total => `+${total} ...`
 };
@@ -123,10 +115,10 @@ class Calendar extends Component {
 
         };
     }
-    creaSlotAppuntamenti(slot) {
+    onselectSlot(slot) {
         console.log("selected slot",slot)
     } //called when tile is clicked
-    modificaSlotAppuntamenti(slotId) {
+    onselectEvent(slotId) {
         console.log("event selected",slotId);
     } //called when event is clicked
 
@@ -140,8 +132,8 @@ class Calendar extends Component {
                     views={['month']}
                     messages={msg}
                     components={getComponents(this.props)}
-                    onSelectSlot = { (slot) => this.creaSlotAppuntamenti(slot)}
-                    onSelectEvent={(event) => this.modificaSlotAppuntamenti(event)}
+                    onSelectSlot = { (slot) => this.onselectSlot(slot)}
+                    onSelectEvent={(event) => this.onselectEvent(event)}
                     eventPropGetter={(this.eventStyleGetter)}
                 />
 
