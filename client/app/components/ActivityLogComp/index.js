@@ -7,11 +7,11 @@ import { Row, Col } from 'react-bootstrap'
 import LogDropdown from '../../Core/Dropdown/index'
 import {TSMS_IconButton} from './../../Core/Button'
 import ActivityLogCollaborator from '../ActivityLogCollaborator'
-var ReactToastr = require("react-toastr") ;
+/*var ReactToastr = require("react-toastr") ;
 var {ToastContainer} = ReactToastr; // This is a React Element.
 // For Non ES6...
 // var ToastContainer = ReactToastr.ToastContainer;
-var ToastMessageFactory = React.createFactory(ReactToastr.ToastMessage.animation);
+var ToastMessageFactory = React.createFactory(ReactToastr.ToastMessage.animation);*/
 
 
 class ActivityLogComp extends Component{

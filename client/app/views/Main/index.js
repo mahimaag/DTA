@@ -10,7 +10,7 @@ import Sample from  'components/Sample';
 class Main extends Component {
     constructor(props){
         super(props);
-        console.log('jksdhjhjbhj')
+        console.log('jksdhjhjbhjgbfgbf')
     }
 
     render() {
