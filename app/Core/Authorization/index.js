@@ -19,7 +19,7 @@ const Authorization = (WrappedComponent, allowedRoles) => {
       return (<WrappedComponent  {...this.props} />);
     }
   }*/
-  let user_roles = 'user';
+  let user_roles = 'admin';
   return allowedRoles == user_roles ? WrappedComponent : null;
 }
 

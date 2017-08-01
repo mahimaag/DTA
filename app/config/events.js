@@ -1,6 +1,7 @@
 const events = [
     {
         'title': 'img',
+        'allDay':true,
         'start': new Date('07/27/2017'),
         'end': new Date('07/27/2017'),
     },
