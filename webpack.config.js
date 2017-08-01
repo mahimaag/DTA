@@ -1,23 +1,24 @@
 var path = require('path');
 var webpack = require('webpack');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+const clientLocation = '/client'
 
 var config = {
     entry: {
         app: [
-            'webpack-dev-server/client?http://localhost:8000',
-            'webpack/hot/only-dev-server',
-            './app/index'
+            './client/app/index'
         ],
         vendor: ['react', 'react-dom']
     },
     devtool: 'eval',
     output: {
-        path: path.join(__dirname, '/assests/'),
+        path: path.join(__dirname ,'/dist/'),
         filename: 'bundle.js',
         publicPath: '/'
     },
     plugins: [
+        // new BundleAnalyzerPlugin(),
         new ExtractTextPlugin("styles.css"),
         new webpack.HotModuleReplacementPlugin(),
         new webpack.ProvidePlugin({
@@ -37,9 +38,9 @@ var config = {
             {
                 test: /\.js$/,
                 loaders: ['react-hot-loader', 'babel-loader'],
-                include: [path.join(__dirname, 'app'),path.join(__dirname, 'constants')]
+                include: [path.join(__dirname, clientLocation, 'app'),path.join(__dirname, 'constants')]
             },
-            {
+            {   
                 test: /\.css$/,
                 loader: ExtractTextPlugin.extract({
                     fallback: 'style-loader',
@@ -60,6 +61,14 @@ var config = {
                 loader: 'url-loader?limit=10000&mimetype=image/svg+xml'
             }
         ]
+    },
+    resolve: {
+        alias: {
+            core: path.resolve(__dirname, 'client', 'app', 'Core'),
+            components: path.resolve(__dirname, 'client', 'app', 'components'),
+            utils: path.resolve(__dirname, 'client', 'app', 'utils')
+        },
+        extensions: ['.json', '.js', '.jsx', '.css'],
     }
 };
 

@@ -2,7 +2,7 @@ const correctHeight = () => {
 
     var pageWrapper = $('#page-wrapper');
     var navbarHeight = $('nav.navbar-default').height();
-    var wrapperHeigh = pageWrapper.height();
+    var wrapperHeigh = pageWrapper.height() ;
 
     if (navbarHeight > wrapperHeigh) {
         pageWrapper.css("min-height", navbarHeight + "px");
