@@ -4,7 +4,7 @@ import moment from 'moment';
 import Dropdown from './../Dropdown'
 
 import events from '../../config/events'
-import ModalComponent from '../../components/Calendar/AddLog'
+import ModalComponent from './../CustomModal'
 
 BigCalendar.setLocalizer(
     BigCalendar.momentLocalizer(moment)

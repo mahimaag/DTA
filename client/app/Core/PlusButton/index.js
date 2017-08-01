@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 
-import ModalComponent from '../../components/Calendar/AddLog'
 import ModalContent from '../../Core/AddActivityModalContent'
 
 class AddButton extends Component {

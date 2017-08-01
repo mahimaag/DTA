@@ -1,31 +1,54 @@
-import React, { Component } from 'react';
+import React,{Component} from 'react'
 
-function CustomModal(WrappedComponent) {
-    return WrappedComponent;
-  /*return class extends Component {
+/*import CustomModal from './../../Core/CustomModal'
+ import ModalContent from './../../Core/AddActivityModalContent'*/
+import Modal from 'react-bootstrap/lib/Modal'
 
-        render() {
-            console.log("inside11111 custom modal----------", WrappedComponent);
-            return (
+/*class ModalComponent extends Component {
+ render(){
+ const TestModal = CustomModal(ModalContent);
+ return(
+ <Modal
+ show={true}
+ container={this}
+ aria-labelledby="contained-modal-title"
+ >
+ <Modal.Header>
+ <Modal.Title id="contained-modal-title">Log Time on {this.props.message}</Modal.Title>
+ </Modal.Header>
+ <Modal.Body>
+ <TestModal/>
+ </Modal.Body>
+ <Modal.Footer>
+ <button onClick={this.props.close}>Close</button>
+ </Modal.Footer>
+ </Modal>
+ )
+ }
+ }*/
+
+export default function ModalComponent(WrappedComponent) {
+    return class extends React.Component {
+        render(){
+            return(
                 <Modal
-
+                    show={true}
                     container={this}
                     aria-labelledby="contained-modal-title"
                 >
-                    <Modal.Header closeButton>
-                        <Modal.Title id="contained-modal-title">LOG TIME ON </Modal.Title>
+                    <Modal.Header>
+                        <Modal.Title id="contained-modal-title">Log Time on {this.props.message.toString()}</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
-                        <WrappedComponent/>
+                        <WrappedComponent {...this.props}/>
                     </Modal.Body>
                     <Modal.Footer>
-                        <button >Close</button>
-                        <button >Save</button>
+                        <button onClick={this.props.close}>Close</button>
                     </Modal.Footer>
                 </Modal>
             )
         }
-    }*/
+    }
 }
 
-export default CustomModal
+
