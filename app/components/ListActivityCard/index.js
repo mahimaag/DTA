@@ -32,6 +32,7 @@ class ActivityLog extends Component{
                         childItem.Duration = newTimeLog.Duration;
                         childItem.Description = newTimeLog.Description;
                         childItem.Status = newTimeLog.Status;
+                        childItem.Collaborators = newTimeLog.Collaborators;
                     }
                 })
             }
@@ -64,7 +65,8 @@ class ActivityLog extends Component{
                     "Type": "",
                     "Duration": "",
                     "Description": "",
-                    "Status": TimeEntryStatus.New
+                    "Status": TimeEntryStatus.New,
+                    "Collaborators": []
                 }) ): null
         );
         this.setState({
@@ -82,6 +84,7 @@ class ActivityLog extends Component{
                         childItem.Duration = editItem.Duration;
                         childItem.Description = editItem.Description;
                         childItem.Status = editItem.Status;
+                        childItem.Collaborators = editItem.Collaborators;
                     }
                 })
             }
@@ -128,9 +131,9 @@ class ActivityLog extends Component{
         return(
                 <div className="col-md-12">
                     <Row className="show-grid">
-                        {HeadingArray.map(item =>{
+                        {HeadingArray.map((item, index) =>{
                             return (
-                                <Col md={item.md} lg={item.lg} className="log-col">
+                                <Col md={item.md} lg={item.lg} className="log-col" key={index}>
                                     <h5>{item.title}</h5>
                                 </Col>
                             )})
