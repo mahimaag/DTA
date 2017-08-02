@@ -21,7 +21,7 @@ const AUTH_HRMS_TOKEN_COOKIE = 'nw_dev_oauthToken';
 const verifyTsmsToken = (req, res, next) => {
   //to verify token
   const token = req.headers.authorization;
-  if (token) {
+  if (token)  {
     jwt_token.verify(token, config.token.SecretKey, (err, decode) => {
       if (err) {
         res.status(500).send("invalid token");
