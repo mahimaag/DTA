@@ -41,10 +41,7 @@ class NewLogComp extends Component{
             let collabArray = [];
             sampleData.map((item) => {
                 if(this.state.newLogType === item.Type){
-                    //console.log('types-------', item.Collaborators,' ',this.state.newLogType);
                     collabArray = item.Collaborators
-                    //console.log('collabArray----',collabArray);
-
                 }
             })
 
@@ -61,14 +58,6 @@ class NewLogComp extends Component{
             console.log('new obj-------',this.state);
             newLogStatus = TimeEntryStatus.Committed;
             this.props.newLogCreated(newLogObj,newLogStatus);
-            /*this.setState({
-                newLogActivity: 'Select',
-                newLogType: 'Select',
-                newLogDuration: 'Select',
-                newLogDesc: '',
-                newLogStatus: TimeEntryStatus.Pending,
-                newCollaborators: []
-            })*/
         }
 
     }
@@ -93,32 +82,6 @@ class NewLogComp extends Component{
 
     }
 
-    /*getSeletedValue = (selectedItem) => {
-        if(selectedItem === 'Project' || selectedItem === 'Non-Project'){
-            this.setState({
-                newLogActivity: selectedItem
-            })
-        }
-        else if(selectedItem === '30 mins' || selectedItem === '1 hr'
-            || selectedItem === '2 hrs' || selectedItem === '3 hrs'
-            || selectedItem === '4 hrs' || selectedItem === '5 hrs'
-            || selectedItem === '6 hrs' || selectedItem === '7 hrs' || selectedItem === '8 hrs'){
-            this.setState({
-                newLogDuration: selectedItem
-            })
-        }
-        else{
-            this.setState({
-                newLogType:selectedItem
-            })
-        }
-        /!*this.setState({
-         selectedValue: selectedItem
-         },() => {
-         console.log('value in activityLogComp------------------',this.state.selectedValue);
-         })*!/
-    }*/
-
     setSelectedValue = (item, property) => {
         this.setState({
             [property]: item
@@ -126,7 +89,6 @@ class NewLogComp extends Component{
     }
 
     onSelectedVal = (newCollab) => {
-        //console.log('new Collab------------',newCollab);
         let collabArray = this.state.newCollaborators;
         if(this.state.newCollaborators.indexOf(newCollab) > -1){
             alert('already exists!!!');
@@ -148,7 +110,6 @@ class NewLogComp extends Component{
     }
 
     render(){
-        //console.log('#####################3',this.props);
         let activityTitles = ['Westcon','Knowlegde Meet','Daily Time Analysis'];
         let activityCategory = ['Project','Non-Project'];
         let durationTime = ['30 mins','1 hr','2 hrs','3 hrs','4 hrs','5 hrs','6 hrs','7 hrs','8 hrs'];
@@ -201,6 +162,7 @@ class NewLogComp extends Component{
                             <Col md={12} lg={12} className="log-col">
                                 <MultiSelectDropdown collabArray={newCollabArray}
                                                      newCollab={this.state.newCollaborators}
+                                                     title='Select'
                                                      onSelectedVal = {(newCollab) => {this.onSelectedVal(newCollab)}}
                                                      onCloseCollabClick={(deletedVal) => {this.onCloseCollabClick(deletedVal)}}/>
                             </Col>

@@ -7,11 +7,6 @@ import { Row, Col } from 'react-bootstrap'
 import LogDropdown from '../../Core/Dropdown/index'
 import {TSMS_IconButton} from './../../Core/Button'
 import ActivityLogCollaborator from '../ActivityLogCollaborator'
-/*var ReactToastr = require("react-toastr") ;
-var {ToastContainer} = ReactToastr; // This is a React Element.
-// For Non ES6...
-// var ToastContainer = ReactToastr.ToastContainer;
-var ToastMessageFactory = React.createFactory(ReactToastr.ToastMessage.animation);*/
 
 
 class ActivityLogComp extends Component{
@@ -29,17 +24,10 @@ class ActivityLogComp extends Component{
                 Status: activity.Status,
                 Collaborators: activity.Collaborators
             },
-            /*id: activity.Id,
-            activity: activity.Activity,
-            type:activity.Type,
-            duration: activity.Duration,
-            desc: activity.Description,
-            status: activity.Status,*/
             projectName: activity.Type,
             projectCategory: activity.Activity,
             logDuration: activity.Duration,
             newDesc: activity.Description
-            //collaborators: activity.Collaborators
         }
     }
 
@@ -50,7 +38,6 @@ class ActivityLogComp extends Component{
     }
 
     onOkClick = () => {
-        /*this.addAlert()*/
         this.setState({
             editBtn:'false',
             activity: {
@@ -62,20 +49,7 @@ class ActivityLogComp extends Component{
                 Status: this.props.activity.Status,
                 Collaborators: this.state.activity.Collaborators
             },
-            /*activity: this.state.projectCategory,
-            type: this.state.projectName,
-            duration: this.state.logDuration,*/
         }, ()=> {
-            /*let edittedLog = this.state.activity
-            console.log('this.state.activity',this.state.activity){
-                Id: this.state.id,
-                Activity: this.state.activity,
-                Type: this.state.type,
-                Duration: this.state.duration,
-                Description: this.state.desc,
-                Status: this.state.status,
-                Collaborators: this.state.collaborators
-            }*/
             this.props.edittedLog(this.state.activity);
 
         })
@@ -123,25 +97,10 @@ class ActivityLogComp extends Component{
         })
     }
 
-    /*addAlert () {
-        this.refs.toaster.success(
-            "Welcome welcome welcome!!",
-            "You are now home my friend. Welcome home my friend.", {
-                timeOut: 30000,
-                extendedTimeOut: 10000
-            });
-    }*/
-
     render(){
         console.log('collaborators in actovity log----',this.props);
         const activity = this.props.activity;
         let sampleData = this.props.sampleData;
-        /*let activityArray = [], typeArray = [], durationArray = [];
-        sampleData.forEach(function(item){
-            activityArray.push(item.Activity);
-            typeArray.push(item.Type);
-            durationArray.push(item.Duration);
-        })*/
         let activityTitles = ['Westcon','Knowlegde Meet','Daily Time Analysis'];
         let activityCategory = ['Project','Non-Project'];
         let durationTime = ['30 mins','1 hr','2 hrs','3 hrs','4 hrs','5 hrs','6 hrs','7 hrs','8 hrs'];
@@ -188,12 +147,6 @@ class ActivityLogComp extends Component{
 
 
                             </Col>
-                            {/*<div>
-                                <ToastContainer ref="toaster"
-                                                toastMessageFactory={ToastMessageFactory}
-                                                className="toast-top-right" />
-                                <button onClick={this.addAlert}>GGininder</button>
-                            </div>*/}
                             <Col md={12} lg={12} className="log-col">
                                 <ActivityLogCollaborator collaborators={this.props.collaborators}
                                                          onCollabChange={(collaborators) => {this.onCollabChange(collaborators)}}

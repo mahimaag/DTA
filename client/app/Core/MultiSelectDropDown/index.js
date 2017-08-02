@@ -9,30 +9,21 @@ class MultiSelectDropdown extends Component{
         super();
         this.state = {
             dataSelected : false,
-            nameVal:'Select'
         }
     }
 
     onSelectedVal = (event) => {
-        let newVal = event.target.value;
         this.setState({
             dataSelected: true,
-            nameVal:'Select'
-        },() => {
-            this.props.onSelectedVal(newVal);
-        })
-
-
-    }
+        });
+        this.props.onSelectedVal(event.target && event.target.value);
+    };
 
     onCloseCollabClick = (event) => {
-        //let deletedVal = event.target.value;
         this.props.onCloseCollabClick(event.target.value);
     }
 
     render(){
-        //let nameArray = this.state.selectedVal;
-        //console.log('props in multiselect----',this.state.selectedVal);
         return(
             <div>
                 {this.state.dataSelected === true ?
@@ -45,7 +36,7 @@ class MultiSelectDropdown extends Component{
                     </div>:null
                 }
                 <div>
-                    <select value={this.state.nameVal} onChange={(value) => {this.onSelectedVal(value)}}>
+                    <select value={this.props.title} onChange={(e) => {this.onSelectedVal(e)}}>
                         <option>Select</option>
                         {this.props.collabArray.map((item, index) => {
                             return (<option value={item} key={index}>{item}</option>)

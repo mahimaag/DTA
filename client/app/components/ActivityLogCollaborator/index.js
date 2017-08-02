@@ -2,7 +2,6 @@
  * Created by saubhagya on 28/7/17.
  */
 import React, { Component } from 'react'
-import {TSMS_IconButton} from './../../Core/Button'
 
 class ActivityLogCollaborator extends Component{
     constructor(props) {
@@ -15,18 +14,8 @@ class ActivityLogCollaborator extends Component{
         }
     }
 
-    /*onAddClick = () => {
-     this.setState({
-     addCollab: true
-     })
-     }
-
-     onInputChange = () => {
-
-     }*/
-
     onCollaboratorChange = (index, event) => {
-        var newArray = this.state.collaborators;
+        let newArray = this.state.collaborators;
         newArray[index] = event.target.value;
         this.setState({
             collaborators: newArray
@@ -37,7 +26,6 @@ class ActivityLogCollaborator extends Component{
 
     render()
     {
-        console.log('props.in collaborator----', this.props);
         return (
             <div className="collab-div">
                 {this.props.editable ?
