@@ -44,8 +44,9 @@ class ActivityLogCollaborator extends Component{
                     <div>
                         <span
                             className="activity-collaborators">Collaborators:{this.state.collaborators.map((collaborator, index) => {
-                                return (<input type="text" value={collaborator}
-                                               onChange={this.onCollaboratorChange.bind(this, index)}/>)
+                                return (<input type="text"
+                                               value={collaborator}
+                                               onChange={(value) => {this.onCollaboratorChange(index, value)}}/>)
                             }
                         )}
                         </span>

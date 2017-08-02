@@ -8,7 +8,6 @@ class MultiSelectDropdown extends Component{
     constructor(){
         super();
         this.state = {
-            selectedVal: [],
             dataSelected : false,
             nameVal:'Select'
         }
@@ -27,29 +26,29 @@ class MultiSelectDropdown extends Component{
     }
 
     onCloseCollabClick = (event) => {
-        let deletedVal = event.target.value;
-        this.props.onCloseCollabClick(deletedVal);
+        //let deletedVal = event.target.value;
+        this.props.onCloseCollabClick(event.target.value);
     }
 
     render(){
-        let nameArray = this.state.selectedVal;
+        //let nameArray = this.state.selectedVal;
         //console.log('props in multiselect----',this.state.selectedVal);
         return(
             <div>
                 {this.state.dataSelected === true ?
                     <div>{this.props.newCollab.map((item, index) => {
                         return (
-                            <button key={index} value={item} onClick={this.onCloseCollabClick.bind(this)}>{item}
+                            <button key={index} value={item} onClick={(item) => {this.onCloseCollabClick(item)}}>{item}
                                 <span className="glyphicon glyphicon-remove"></span>
                             </button>)
                     })}
                     </div>:null
                 }
                 <div>
-                    <select value={this.state.nameVal} onChange={this.onSelectedVal.bind(this)}>
+                    <select value={this.state.nameVal} onChange={(value) => {this.onSelectedVal(value)}}>
                         <option>Select</option>
                         {this.props.collabArray.map((item, index) => {
-                            return (<option value={item} index={index}>{item}</option>)
+                            return (<option value={item} key={index}>{item}</option>)
                         })}
                     </select>
                 </div>

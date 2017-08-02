@@ -20,16 +20,26 @@ class ActivityLogComp extends Component{
         const activity = this.props.activity;
         this.state = {
             editBtn:'false',
-            id: activity.Id,
+            activity:{
+                Id: activity.Id,
+                Activity: activity.Activity,
+                Type:activity.Type,
+                Duration: activity.Duration,
+                Description: activity.Description,
+                Status: activity.Status,
+                Collaborators: activity.Collaborators
+            },
+            /*id: activity.Id,
             activity: activity.Activity,
             type:activity.Type,
             duration: activity.Duration,
             desc: activity.Description,
-            status: activity.Status,
+            status: activity.Status,*/
             projectName: activity.Type,
             projectCategory: activity.Activity,
             logDuration: activity.Duration,
-            collaborators: activity.Collaborators
+            newDesc: activity.Description
+            //collaborators: activity.Collaborators
         }
     }
 
@@ -43,11 +53,21 @@ class ActivityLogComp extends Component{
         /*this.addAlert()*/
         this.setState({
             editBtn:'false',
-            activity: this.state.projectCategory,
+            activity: {
+                Id: this.props.activity.Id,
+                Activity: this.state.projectCategory,
+                Type:this.state.projectName,
+                Duration: this.state.logDuration,
+                Description: this.state.newDesc,
+                Status: this.props.activity.Status,
+                Collaborators: this.state.activity.Collaborators
+            },
+            /*activity: this.state.projectCategory,
             type: this.state.projectName,
-            duration: this.state.logDuration,
+            duration: this.state.logDuration,*/
         }, ()=> {
-            let edittedLog = {
+            /*let edittedLog = this.state.activity
+            console.log('this.state.activity',this.state.activity){
                 Id: this.state.id,
                 Activity: this.state.activity,
                 Type: this.state.type,
@@ -55,8 +75,8 @@ class ActivityLogComp extends Component{
                 Description: this.state.desc,
                 Status: this.state.status,
                 Collaborators: this.state.collaborators
-            }
-            this.props.edittedLog(edittedLog);
+            }*/
+            this.props.edittedLog(this.state.activity);
 
         })
 
@@ -83,36 +103,45 @@ class ActivityLogComp extends Component{
 
     onDescChange = (event) => {
         this.setState({
-            desc: event.target.value
+            activity: {
+                Description: event.target.value
+            }
+        },()=>{
+            console.log('desc', this.state.activity.Description);
+            this.setState({
+                newDesc: this.state.activity.Description
+            })
         })
 
     }
 
     onCollabChange = (collaborators) => {
         this.setState({
-            collaborators: collaborators
+            activity: {
+                Collaborators: collaborators
+            }
         })
     }
 
-    addAlert () {
+    /*addAlert () {
         this.refs.toaster.success(
             "Welcome welcome welcome!!",
             "You are now home my friend. Welcome home my friend.", {
                 timeOut: 30000,
                 extendedTimeOut: 10000
             });
-    }
+    }*/
 
     render(){
         console.log('collaborators in actovity log----',this.props);
         const activity = this.props.activity;
         let sampleData = this.props.sampleData;
-        let activityArray = [], typeArray = [], durationArray = [];
+        /*let activityArray = [], typeArray = [], durationArray = [];
         sampleData.forEach(function(item){
             activityArray.push(item.Activity);
             typeArray.push(item.Type);
             durationArray.push(item.Duration);
-        })
+        })*/
         let activityTitles = ['Westcon','Knowlegde Meet','Daily Time Analysis'];
         let activityCategory = ['Project','Non-Project'];
         let durationTime = ['30 mins','1 hr','2 hrs','3 hrs','4 hrs','5 hrs','6 hrs','7 hrs','8 hrs'];
@@ -141,10 +170,12 @@ class ActivityLogComp extends Component{
                                              onSelect={(item) => {this.setSelectedValue(item, 'logDuration')}}/>
                             </Col>
                             <Col md={4} lg={4} className="log-col">
-                                <input type="text" value={this.state.desc} onChange={this.onDescChange.bind(this)}/>
+                                <input type="text"
+                                       value={this.state.activity.Description}
+                                       onChange={(value) => {this.onDescChange(value)}}/>
                             </Col>
                             <Col md={1} lg={1} className="log-col">
-                                <span>{this.state.status}</span>
+                                <span>{this.state.activity.Status}</span>
                             </Col>
                             <Col md={2} lg={2} lgOffset={1} className="log-col">
                                 <TSMS_IconButton bClassName="btn btn-default btn-sm edit-clear-button"
@@ -164,7 +195,9 @@ class ActivityLogComp extends Component{
                                 <button onClick={this.addAlert}>GGininder</button>
                             </div>*/}
                             <Col md={12} lg={12} className="log-col">
-                                <ActivityLogCollaborator collaborators={this.props.collaborators} onCollabChange={(collaborators) => {this.onCollabChange(collaborators)}} editable='true'/>
+                                <ActivityLogCollaborator collaborators={this.props.collaborators}
+                                                         onCollabChange={(collaborators) => {this.onCollabChange(collaborators)}}
+                                                         editable='true'/>
                             </Col>
                         </Row>
 

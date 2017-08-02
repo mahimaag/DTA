@@ -148,7 +148,7 @@ class NewLogComp extends Component{
     }
 
     render(){
-        console.log('#####################3',this.props);
+        //console.log('#####################3',this.props);
         let activityTitles = ['Westcon','Knowlegde Meet','Daily Time Analysis'];
         let activityCategory = ['Project','Non-Project'];
         let durationTime = ['30 mins','1 hr','2 hrs','3 hrs','4 hrs','5 hrs','6 hrs','7 hrs','8 hrs'];
