@@ -5,11 +5,12 @@ import EmployeeSchema from "../../api/employee/employee.model";
 import jwt_token from "jsonwebtoken";
 import Network from "../network";
 import config from "../../config/environment/"
+import path from 'path';
 const USER_DATA_URL = "http://newers-world-oauth.qa2.tothenew.net/oauth/user?access_token=";
 const AUTH_HRMS_TOKEN_COOKIE = 'nw_dev_oauthToken';
 const AUTH_TSMS_TOKEN_COOKIE = 'Tsms';
-
-const redirectUrl = (req, res) => {
+//const indexFile = path.join(app.get('appPath'), 'client', 'assests', 'index.html' );
+const redirectUrl = (req, res, next) => {
 
   const hrmsToken = req.query.access_token;
   Network({url: USER_DATA_URL + hrmsToken, method: 'GET'})
@@ -40,7 +41,7 @@ const redirectUrl = (req, res) => {
             }
           }, {upsert: true}).exec()
             .then(employee => {
-              res.sendFile('../../../client/index.html');
+                next()
             })
             .catch(error => {
               res.send(error);
