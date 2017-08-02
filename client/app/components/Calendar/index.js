@@ -106,16 +106,13 @@ class Calendar extends Component {
         let cssClass;
         if (event.title === 'img') {
             cssClass = 'flag'
-        }else if (event.title === ''){
-            cssClass = 'pending'
         }
-
         return {
             className:cssClass,
 
         };
     }
-    onselectSlot(slot) {
+    onelectSlot(slot) {
         console.log("selected slot",slot)
     } //called when tile is clicked
     onselectEvent(slotId) {
@@ -136,7 +133,6 @@ class Calendar extends Component {
                     onSelectEvent={(event) => this.onselectEvent(event)}
                     eventPropGetter={(this.eventStyleGetter)}
                 />
-
             </div>
         )
     }
