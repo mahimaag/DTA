@@ -6,22 +6,12 @@ import React, { Component } from 'react'
 class ActivityLogCollaborator extends Component{
     constructor(props) {
         super(props);
-
-        this.state = {
-            collaborators: this.props.collaborators,
-            newCollaboratorArray: []
-
-        }
     }
 
     onCollaboratorChange = (index, event) => {
-        let newArray = this.state.collaborators;
+        let newArray = this.props.collaborators;
         newArray[index] = event.target.value;
-        this.setState({
-            collaborators: newArray
-        },() => {
-            this.props.onCollabChange(this.state.collaborators);
-        })
+        this.props.onCollabChange(newArray);
     }
 
     render()
@@ -31,7 +21,7 @@ class ActivityLogCollaborator extends Component{
                 {this.props.editable ?
                     <div>
                         <span
-                            className="activity-collaborators">Collaborators:{this.state.collaborators.map((collaborator, index) => {
+                            className="activity-collaborators">Collaborators:{this.props.collaborators.map((collaborator, index) => {
                                 return (<input type="text"
                                                value={collaborator}
                                                onChange={(value) => {this.onCollaboratorChange(index, value)}}/>)
@@ -40,7 +30,7 @@ class ActivityLogCollaborator extends Component{
                         </span>
                     </div> :
                     <span
-                        className="activity-collaborators">Collaborators:{this.state.collaborators.map((collaborator, index) => {
+                        className="activity-collaborators">Collaborators:{this.props.collaborators.map((collaborator, index) => {
                             return (<p key={index}>{collaborator}</p>)
                         }
                     )}

@@ -69,14 +69,13 @@ class LogDropdown extends Component{
         }
     }
 
-    componentDidMount = () => {
+    /*componentDidMount = () => {
         if(this.props.disabled === 'true'){
             //document.getElementById('dropdownButton').disabled = true;
             //this.refs.dropdownButton.disabled = true
             this.setState({
                 buttonDisabled: true
             })
-            console.log('button disabled.................  ---------- CWM');
         }
         else{
             console.log('no disabled props ---------- CWM');
@@ -92,7 +91,7 @@ class LogDropdown extends Component{
         else{
             console.log('no disabled props');
         }
-    }
+    }*/
 
     onDropDownClick = () => {
         //console.log('button is clickable-----');

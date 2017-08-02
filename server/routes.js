@@ -21,7 +21,7 @@ export default function (app) {
   const distFolder = path.join(app.get('appPath'), 'dist');
   console.log('Dist folder - ', distFolder);
   console.log('Index file - ', indexFile);
-  //app.use(authMiddlewares);
+  app.use(authMiddlewares);
   app.use(express.static(indexFile), logMiddleware('After index file'));
   app.use(express.static(distFolder), logMiddleware('After dist folder'));
   // app.use('/api', authMiddlewares);

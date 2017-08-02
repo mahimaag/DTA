@@ -15,15 +15,7 @@ class ActivityLogComp extends Component{
         const activity = this.props.activity;
         this.state = {
             editBtn:'false',
-            activity:{
-                Id: activity.Id,
-                Activity: activity.Activity,
-                Type:activity.Type,
-                Duration: activity.Duration,
-                Description: activity.Description,
-                Status: activity.Status,
-                Collaborators: activity.Collaborators
-            },
+            activity: activity,
             projectName: activity.Type,
             projectCategory: activity.Activity,
             logDuration: activity.Duration,
@@ -58,13 +50,15 @@ class ActivityLogComp extends Component{
 
     onEditDeleteClick = () => {
         this.setState({
-            editBtn:'false'
-        })
+            editBtn:'false',
+            projectName: this.props.activity.Type,
+            projectCategory: this.props.activity.Activity,
+            logDuration: this.props.activity.Duration,
+            newDesc: this.props.activity.Description
+        });
     }
 
     onDeleteClick = (activity) => {
-        console.log('data to be deleted----------->>>',activity);
-
         this.props.deleteEntry(activity);
     }
 
@@ -77,16 +71,8 @@ class ActivityLogComp extends Component{
 
     onDescChange = (event) => {
         this.setState({
-            activity: {
-                Description: event.target.value
-            }
-        },()=>{
-            console.log('desc', this.state.activity.Description);
-            this.setState({
-                newDesc: this.state.activity.Description
-            })
-        })
-
+            newDesc: event.target.value
+        });
     }
 
     onCollabChange = (collaborators) => {
@@ -98,9 +84,7 @@ class ActivityLogComp extends Component{
     }
 
     render(){
-        console.log('collaborators in actovity log----',this.props);
         const activity = this.props.activity;
-        let sampleData = this.props.sampleData;
         let activityTitles = ['Westcon','Knowlegde Meet','Daily Time Analysis'];
         let activityCategory = ['Project','Non-Project'];
         let durationTime = ['30 mins','1 hr','2 hrs','3 hrs','4 hrs','5 hrs','6 hrs','7 hrs','8 hrs'];
@@ -130,7 +114,7 @@ class ActivityLogComp extends Component{
                             </Col>
                             <Col md={4} lg={4} className="log-col">
                                 <input type="text"
-                                       value={this.state.activity.Description}
+                                       value={this.state.newDesc}
                                        onChange={(value) => {this.onDescChange(value)}}/>
                             </Col>
                             <Col md={1} lg={1} className="log-col">
@@ -148,7 +132,7 @@ class ActivityLogComp extends Component{
 
                             </Col>
                             <Col md={12} lg={12} className="log-col">
-                                <ActivityLogCollaborator collaborators={this.props.collaborators}
+                                <ActivityLogCollaborator collaborators={activity.Collaborators}
                                                          onCollabChange={(collaborators) => {this.onCollabChange(collaborators)}}
                                                          editable='true'/>
                             </Col>
@@ -187,7 +171,7 @@ class ActivityLogComp extends Component{
 
                             </Col>
                             <Col md={12} lg={12} className="log-col">
-                                <ActivityLogCollaborator collaborators={this.props.collaborators}/>
+                                <ActivityLogCollaborator collaborators={activity.Collaborators}/>
                             </Col>
                         </Row>
                     </div>
