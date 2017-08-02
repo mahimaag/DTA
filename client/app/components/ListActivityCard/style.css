@@ -17,8 +17,20 @@
     border-radius: 15px;
 }
 
+.collab-div {
+    /*float:left;
+    width:100%;*/
+}
+
+.add-button {
+    float:left;
+}
+
 .data-div {
     display: -webkit-box;
+    height: 100%;
+   /* padding: 5px 0 5px 0;
+    margin: 2px 0 2px 0;*/
 }
 
 .menu-items {
@@ -33,4 +45,28 @@
 
 .drop-button {
     width:100%;
+}
+
+.activity-log-comp {
+    height: 30px;
+}
+
+.activity-collaborators{
+    float:left;
+    font-size: small;
+    padding: 5px;
+}
+
+.activity-collaborators p {
+    display: inline;
+    padding: 3px;
+}
+
+.activity-collaborators input {
+    width: 80px;
+    border: 0;
+    outline: 0;
+    background: transparent;
+    border-bottom: 1px solid black;
+    margin: 2px;
 }
