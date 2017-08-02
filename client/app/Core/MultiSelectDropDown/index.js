@@ -14,7 +14,7 @@ class MultiSelectDropdown extends Component{
             <div>
                 {this.props.newCollab.map((item, index) => {
                     return (
-                        <button key={index} value={item} onClick={(item) => this.props.onDeleteCollab(event.target.value)}>{item}
+                        <button key={index} value={item} onClick={(event) => this.props.onDeleteCollab(item)}>{item}
                             <span className="glyphicon glyphicon-remove"></span>
                         </button>)
                 })}
