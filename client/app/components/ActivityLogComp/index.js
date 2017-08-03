@@ -86,21 +86,16 @@ class ActivityLogComp extends Component{
     }
 
     onSelectedVal = (newCollab) => {
-        console.log('AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA');
         (this.state.activity.Collaborators.length && this.state.activity.Collaborators.indexOf(newCollab) > -1) ? null : this.state.activity.Collaborators.push(newCollab);
         this.setState({activity:{Collaborators: this.state.activity.Collaborators}});
     };
 
     onDeleteCollab = (deletedVal) => {
-        console.log('delete val',deletedVal,this.state.activity.Collaborators);
         this.state.activity.Collaborators.splice(this.state.activity.Collaborators.indexOf(deletedVal), 1);
         this.setState({
             activity:{
                 Collaborators: this.state.activity.Collaborators
             }
-        },() => {
-            console.log('delete val2',this.state.activity.Collaborators);
-
         })
     }
 
