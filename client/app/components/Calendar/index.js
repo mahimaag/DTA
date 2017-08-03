@@ -115,7 +115,6 @@ class Calendar extends Component {
 
     render() {
         return (
-            <div className="wrapper-calendar">
                 <BigCalendar
                     selectable
                     events={this.props.events}
@@ -127,7 +126,6 @@ class Calendar extends Component {
                     onSelectEvent={(event) => this.onselectEvent(event)}
                     eventPropGetter={(this.eventStyleGetter)}
                 />
-            </div>
         )
     }
 }
