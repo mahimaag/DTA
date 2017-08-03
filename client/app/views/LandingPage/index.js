@@ -12,7 +12,7 @@ class Main extends React.Component {
                 <div className="row">
                     <div className="col-lg-12">
                         <div className="text-center m-t-lg">
-                            <div className="col-lg-9 pull-left">
+                            <div className="col-lg-9 pull-left ">
                                 <Calendar />
                                 <ActivityLog/>
                             </div>

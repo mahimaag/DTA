@@ -13,8 +13,19 @@
     padding: 3px;
 }
 
+.activity-list-comp {
+    margin: 20px 0 0 0;
+    border: 1px solid #DDDDDD;
+}
+
+.activity-timelog {
+    border: 1px solid lightgrey;
+    box-shadow: 5px 5px 10px #CCCCCC;
+}
+
 .btn.btn-default.btn-sm.edit-clear-button {
     border-radius: 15px;
+    background-color: #DDDDDD;
 }
 
 .collab-div {
