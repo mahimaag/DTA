@@ -135,7 +135,7 @@ class LogDropdown extends Component{
             <div>
                 <DropdownButton title={this.props.title}>
                    {dataArray.map((item, index) => {
-                        return (<MenuItem eventKey={index+1} onSelect={() => this.props.onSelect(item)}>{item}
+                        return (<MenuItem key={index} eventKey={index+1} onSelect={() => this.props.onSelect(item)}>{item}
                         </MenuItem>)
 
                     })}

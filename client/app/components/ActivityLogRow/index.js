@@ -15,14 +15,14 @@ import deleteIcon from '../assets/images/deleteIcon.jpg'*/
 class ActivityLogRow extends Component{
     constructor(props){
         super(props);
-        this.state = {
+        /*this.state = {
             activity:'',
             type:'',
             duration:'',
             description:'',
             status: TimeEntryStatus.Pending,
             collaborators: []
-        }
+        }*/
     }
 
     render(){
