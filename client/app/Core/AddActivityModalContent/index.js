@@ -43,17 +43,22 @@ class ModalContent extends Component{
 
     selectSlot(slot) {
         let newRepeatedDates = this.state.repeatedDates;
-        if(newRepeatedDates.indexOf(slot.start.getMonth()+1+'/'+slot.start.getDate()+'/'+slot.start.getFullYear())>=0){
-            newRepeatedDates.splice((newRepeatedDates.indexOf(slot.start.getMonth()+1+'/'+slot.start.getDate()+'/'+slot.start.getFullYear())),1)
+        if(slot.start>new Date()){
+            alert("Cannot add event for Future dates!!!")
         }else{
-            newRepeatedDates.push(slot.start.getMonth()+1+'/'+slot.start.getDate()+'/'+slot.start.getFullYear());
+            if(newRepeatedDates.indexOf(slot.start.getMonth()+1+'/'+slot.start.getDate()+'/'+slot.start.getFullYear())>=0){
+                newRepeatedDates.splice((newRepeatedDates.indexOf(slot.start.getMonth()+1+'/'+slot.start.getDate()+'/'+slot.start.getFullYear())),1)
+            }else{
+                newRepeatedDates.push(slot.start.getMonth()+1+'/'+slot.start.getDate()+'/'+slot.start.getFullYear());
+            }
+
+            this.setState({
+                repeatedDates:newRepeatedDates
+            },() => {
+                console.log("Event repeats on",this.state.repeatedDates)
+            });
         }
 
-        this.setState({
-            repeatedDates:newRepeatedDates
-        },() => {
-            console.log("Event repeats on",this.state.repeatedDates)
-        });
     }
 
     saveEvent = (event) => {
