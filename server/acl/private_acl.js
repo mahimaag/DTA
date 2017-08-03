@@ -20,17 +20,20 @@ const ACL = {
         operations: ["*"]
     }],
     "NEWER": [{
+        resource: "user",
+        operations: ["GET"]
+    },{
         resource: "projects",
         operations: ["GET"]     // user can only subscribe to feeds.
     }],
-    "AP1":{
+    "AP1":[{
         resource: "projects",
         operations:["GET","POST"]
-    },
-    "AP2":{
+    }],
+    "AP2":[{
         resource: "projects",
         operations:["GET","POST"]
-    }
+    }]
 };
 
 module.exports = ACL;
