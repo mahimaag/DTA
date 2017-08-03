@@ -3,13 +3,16 @@ import BigCalendar from 'react-big-calendar';
 import moment from 'moment';
 import 'react-big-calendar/lib/css/react-big-calendar.css'
 
+/*
 import events from './../../config/events'
 import styles from './style.css';
 import AddButton from './../../Core/PlusButton'
+*/
 
 BigCalendar.setLocalizer(
     BigCalendar.momentLocalizer(moment)
 );
+
 
 // let customEventWrapper = (props) => {
 //     console.log('customEventWrapper -> ', props);
@@ -44,7 +47,7 @@ BigCalendar.setLocalizer(
 //     });
 //     console.log("date clicked is ---------", dated)*/
 // };
-let customHeader = (props) => {
+/*let customHeader = (props) => {
     return (
         <div style={{color: 'black', background: 'grey'}}>
             { props && props.label }
@@ -63,7 +66,7 @@ let customDateHeader =(props) =>{
             </span>
         </div>
     );
-};
+};*/
 /*(props) => {
  return (
  <div className="date-header clearfix" >
@@ -84,24 +87,15 @@ let customDateHeader =(props) =>{
 //         </div>
 //     )
 // }
-let getComponents  = (props) => {
-    return {
-        // event: customEvent,
-        // eventWrapper: customEventWrapper,
-        //  dayWrapper: customDayWrapper,  // called when day format is displayed
-        //  dateCellWrapper: customDateCellWrapper,
-        month: {
-            header: customHeader,
-            // event: customEvent,
-            dateHeader: customDateHeader
-        }
-    };
-};
+
 let msg = {
     showMore: total => `+${total} ...`
 };
 
 class Calendar extends Component {
+    constructor(props){
+        super(props)
+    }
     eventStyleGetter(event, start, end, isSelected) {
         let cssClass;
         if (event.title === 'img') {
@@ -112,7 +106,7 @@ class Calendar extends Component {
 
         };
     }
-    onelectSlot(slot) {
+    onselectSlot(slot) {
         console.log("selected slot",slot)
     } //called when tile is clicked
     onselectEvent(slotId) {
@@ -124,11 +118,11 @@ class Calendar extends Component {
             <div className="wrapper-calendar">
                 <BigCalendar
                     selectable
-                    events={events}
+                    events={this.props.events}
                     popup
                     views={['month']}
                     messages={msg}
-                    components={getComponents(this.props)}
+                    components={this.props.getComponents(this.props)}
                     onSelectSlot = { (slot) => this.onselectSlot(slot)}
                     onSelectEvent={(event) => this.onselectEvent(event)}
                     eventPropGetter={(this.eventStyleGetter)}

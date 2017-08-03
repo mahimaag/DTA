@@ -1,6 +1,7 @@
 'use strict';
 
 // Set default node environment to development
+import node_acl from 'acl'
 var env = process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 
 if(env === 'development' || env === 'test') {
@@ -17,4 +18,5 @@ const startServer = (buildStats) => {
 
 startServer();
 // Export the application
+
 exports = module.exports = require('./app');
