@@ -41,7 +41,7 @@ class CustomDateHeader extends Component{
                                 </button>
                                 {
                                     this.state.show ?
-                                        <ModalContent close={(e)=>this.close(e)} message={new Date()}/>:null
+                                        <ModalContent close={(e)=>this.close(e)} message={this.props.date}/>:null
                                 }
                             </div>:null
                     }
@@ -64,7 +64,7 @@ let getComponents  = (props) => {
         month: {
             header: customHeader,
             // event: customEvent,
-            dateHeader: CustomDateHeader
+            dateHeader: CustomDateHeader   // refer source code DateHeader.js
         }
     };
 };
