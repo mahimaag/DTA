@@ -15,32 +15,18 @@ import deleteIcon from '../assets/images/deleteIcon.jpg'*/
 class ActivityLogRow extends Component{
     constructor(props){
         super(props);
-        this.state = {
+        /*this.state = {
             activity:'',
             type:'',
             duration:'',
             description:'',
             status: TimeEntryStatus.Pending,
-        }
-    }
-
-    newLogData = (newObj, date, newLogStatus) => {
-        this.props.newEntry(newObj,date, newLogStatus);
-    };
-
-    /*onClearClick = () => {
-        console.log('clear all data------------------->>>>');
-        //sampleData.splice(0,sampleData.length);
-        //console.log('------------------',sampleData);
-    }*/
-
-
-
-    deleteEntry = (deletedEntry,logDate) => {
-        this.props.deleteEntry(deletedEntry,logDate);
+            collaborators: []
+        }*/
     }
 
     render(){
+        console.log('props in row component--------',this.props);
         return(
             <div>
                 {
@@ -48,24 +34,25 @@ class ActivityLogRow extends Component{
                         return (
                             <div key={index}>
                                 <ActivityLogHeader logDate={item.date}
-                                                   onLogTimeClick={() => this.props.logItem(item)}
-                                                   onClearClick={() => this.props.onClearClick(item,item.date)}/>
+                                                   activities = {item.activities}
+                                                   onLogTimeClick={() => this.props.logItem(item.date)}
+                                                   onClearClick={() => this.props.onClearClick(item.date)}/>
                                 <Row className="show-grid">
                                     {/*{(this.state.newEntry === true)?
                                         <NewLogComp sampleData={item.activities} newLogCreated={(newLog) => this.newLogData(newLog,item.date)}/>:null
                                     }*/}
-                                    {item.activities.map((activity) => {
-                                        return ((activity.Status == TimeEntryStatus.New) ? <NewLogComp sampleData={item.activities}
-                                                                                         sampleDataStatus={item.status}
-                                                                                         newLogCreated={(newLog,newLogStatus) => this.newLogData(newLog,item.date,newLogStatus)}
-                                                                                         closedWithoutCreate={(newLogStatus) => {this.props.closedWithoutCreate(newLogStatus,item.date)}}/> :
+                                    {item.activities.map((activity, index) => {
+                                        return ((activity.Status == TimeEntryStatus.New) ? <NewLogComp
+                                                                                         newLogCreated={(newLog) => this.props.newEntry(newLog, item.date)}
+                                                                                         closedWithoutCreate={() => {this.props.closedWithoutCreate(item.date)}} key={index}/> :
                                             <ActivityLogComp activity={activity}
-                                                             sampleData={item.activities}
-                                                             deleteEntry={(deletedEntry) => {this.deleteEntry(deletedEntry,item.date)}}
+                                                             deleteEntry={(deletedEntry) => this.props.deleteEntry(deletedEntry, item.date)}
                                                              edittedLog={(editLog) => {this.props.edittedLog(editLog, item.date)}}
+                                                             key={index}
                                             />
                                         )
                                     })}
+
                                 </Row>
                             </div>
                         )
