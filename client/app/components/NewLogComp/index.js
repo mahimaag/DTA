@@ -123,7 +123,7 @@ class NewLogComp extends Component{
 
                     </Col>
                     <Col md={12} lg={12} className="log-col">
-                        <MultiSelectDropdown collabArray={newCollabArray}
+                        Collaborators: <MultiSelectDropdown collabArray={newCollabArray}
                                              newCollab={this.state.newCollaborators}
                                              title='Select'
                                              onSelectedVal = {(newCollab) => {this.onSelectedVal(newCollab)}}

@@ -7,6 +7,8 @@ import { Row, Col } from 'react-bootstrap'
 import LogDropdown from '../../Core/Dropdown/index'
 import {TSMS_IconButton} from './../../Core/Button'
 import ActivityLogCollaborator from '../ActivityLogCollaborator'
+import MultiSelectDropdown from '../../Core/MultiSelectDropDown'
+
 
 
 class ActivityLogComp extends Component{
@@ -83,12 +85,26 @@ class ActivityLogComp extends Component{
         })
     }
 
+    onSelectedVal = (newCollab) => {
+        (this.state.activity.Collaborators.length && this.state.activity.Collaborators.indexOf(newCollab) > -1) ? null : this.state.activity.Collaborators.push(newCollab);
+        this.setState({activity:{Collaborators: this.state.activity.Collaborators}});
+    };
+
+    onDeleteCollab = (deletedVal) => {
+        this.state.activity.Collaborators.splice(this.state.activity.Collaborators.indexOf(deletedVal), 1);
+        this.setState({
+            activity:{
+                Collaborators: this.state.activity.Collaborators
+            }
+        })
+    }
+
     render(){
         const activity = this.props.activity;
         let activityTitles = ['Westcon','Knowlegde Meet','Daily Time Analysis'];
         let activityCategory = ['Project','Non-Project'];
         let durationTime = ['30 mins','1 hr','2 hrs','3 hrs','4 hrs','5 hrs','6 hrs','7 hrs','8 hrs'];
-
+        let newCollabArray = ['Gaurav','Rubi','Mahima','Nitin'];
         return(
             <div>
                 {this.state.editBtn === 'true'?
@@ -132,9 +148,14 @@ class ActivityLogComp extends Component{
 
                             </Col>
                             <Col md={12} lg={12} className="log-col">
-                                <ActivityLogCollaborator collaborators={activity.Collaborators}
+                                <MultiSelectDropdown collabArray={newCollabArray}
+                                                     newCollab={this.state.activity.Collaborators}
+                                                     title='Select'
+                                                     onSelectedVal = {(newCollab) => {this.onSelectedVal(newCollab)}}
+                                                     onDeleteCollab={(deletedVal) => {this.onDeleteCollab(deletedVal)}}/>
+                                {/*<ActivityLogCollaborator collaborators={activity.Collaborators}
                                                          onCollabChange={(collaborators) => {this.onCollabChange(collaborators)}}
-                                                         editable='true'/>
+                                                         editable='true'/>*/}
                             </Col>
                         </Row>
 

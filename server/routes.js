@@ -24,7 +24,7 @@ export default function (app) {
   app.use(authMiddlewares);
   app.use(express.static(indexFile), logMiddleware('After index file'));
   app.use(express.static(distFolder), logMiddleware('After dist folder'));
-  // app.use('/api', authMiddlewares);
+  app.use('/api', authMiddlewares);
   app.use('/api/employees', require('./api/employee'));
     app.use('/api/oauthServerCallback',redirectUrlFunction, (req, res) => {
       res.redirect('/');

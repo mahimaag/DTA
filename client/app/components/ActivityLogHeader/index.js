@@ -19,7 +19,7 @@ class ActivityLogHeader extends Component{
                 totalTime = totalTime + timeLog;
             }
         })
-        console.log('total time is =',totalTime);
+        //console.log('total time is =',totalTime);
         return(
             <Row className="show-grid">
                 <Col md={2} lg={2} className="log-col">
