@@ -14,14 +14,10 @@ import MultiSelectDropdown from '../../Core/MultiSelectDropDown'
 class ActivityLogComp extends Component{
     constructor(props){
         super(props);
-        const activity = this.props.activity;
+        const logActivity = Object.assign({}, this.props.activity);
         this.state = {
             editBtn:'false',
-            activity: activity,
-            projectName: activity.Type,
-            projectCategory: activity.Activity,
-            logDuration: activity.Duration,
-            newDesc: activity.Description
+            activity: logActivity
         }
     }
 
@@ -33,30 +29,17 @@ class ActivityLogComp extends Component{
 
     onOkClick = () => {
         this.setState({
-            editBtn:'false',
-            activity: {
-                Id: this.props.activity.Id,
-                Activity: this.state.projectCategory,
-                Type:this.state.projectName,
-                Duration: this.state.logDuration,
-                Description: this.state.newDesc,
-                Status: this.props.activity.Status,
-                Collaborators: this.state.activity.Collaborators
-            },
-        }, ()=> {
-            this.props.edittedLog(this.state.activity);
+            editBtn: 'false'
+        });
+        this.props.edittedLog(this.state.activity);
 
-        })
-
-    }
+    };
 
     onEditDeleteClick = () => {
+        const activity = Object.assign({}, this.props.activity);
         this.setState({
             editBtn:'false',
-            projectName: this.props.activity.Type,
-            projectCategory: this.props.activity.Activity,
-            logDuration: this.props.activity.Duration,
-            newDesc: this.props.activity.Description
+            activity: activity
         });
     }
 
@@ -66,8 +49,9 @@ class ActivityLogComp extends Component{
 
 
     setSelectedValue = (item, property) => {
+        this.state.activity[property] = item;
         this.setState({
-            [property]: item
+            activity: this.state.activity
         })
     }
 
@@ -87,17 +71,15 @@ class ActivityLogComp extends Component{
 
     onSelectedVal = (newCollab) => {
         (this.state.activity.Collaborators.length && this.state.activity.Collaborators.indexOf(newCollab) > -1) ? null : this.state.activity.Collaborators.push(newCollab);
-        this.setState({activity:{Collaborators: this.state.activity.Collaborators}});
+        this.setState({activity: this.state.activity});
     };
 
     onDeleteCollab = (deletedVal) => {
         this.state.activity.Collaborators.splice(this.state.activity.Collaborators.indexOf(deletedVal), 1);
         this.setState({
-            activity:{
-                Collaborators: this.state.activity.Collaborators
-            }
+            activity: this.state.activity
         })
-    }
+    };
 
     render(){
         const activity = this.props.activity;
@@ -112,25 +94,25 @@ class ActivityLogComp extends Component{
                         <Row>
                             <Col md={1} lg={1} className="log-col">
                                 <LogDropdown className='activity'
-                                             title={this.state.projectCategory}
+                                             title={this.state.activity.Activity}
                                              data={activityCategory}
-                                             onSelect={(item) => {this.setSelectedValue(item, 'projectCategory')}}/>
+                                             onSelect={(item) => {this.setSelectedValue(item, 'Activity')}}/>
                             </Col>
                             <Col md={2} lg={2} className="log-col">
                                 <LogDropdown className='type'
                                              data={activityTitles}
-                                             title={this.state.projectName}
-                                             onSelect={(item) => this.setSelectedValue(item, 'projectName')}/>
+                                             title={this.state.activity.Type}
+                                             onSelect={(item) => this.setSelectedValue(item, 'Type')}/>
                             </Col>
                             <Col md={1} lg={1} className="log-col">
                                 <LogDropdown className="duration"
-                                             title={this.state.logDuration}
+                                             title={this.state.activity.Duration}
                                              data={durationTime}
-                                             onSelect={(item) => {this.setSelectedValue(item, 'logDuration')}}/>
+                                             onSelect={(item) => {this.setSelectedValue(item, 'Duration')}}/>
                             </Col>
                             <Col md={4} lg={4} className="log-col">
                                 <input type="text"
-                                       value={this.state.newDesc}
+                                       value={this.state.activity.Description}
                                        onChange={(value) => {this.onDescChange(value)}}/>
                             </Col>
                             <Col md={1} lg={1} className="log-col">
