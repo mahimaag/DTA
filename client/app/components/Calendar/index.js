@@ -14,80 +14,6 @@ BigCalendar.setLocalizer(
 );
 
 
-// let customEventWrapper = (props) => {
-//     console.log('customEventWrapper -> ', props);
-//     const customEventStyles = {
-//         'border-style': 'dotted',
-//         'border-radius': 10,
-//         'border-color': 'blue'
-//     };
-//     return (
-//         <div style={ customEventStyles}
-//              onClick={(e) => console.log('customEventSelected ->', props)}
-//              title={props && props.event && props.event.desc}>
-//             { props && props.event && props.event.title }
-//         </div>
-//     )
-// }
-/*let clicked = (props) => {
- event.preventDefault();
- let dated = props.date.getMonth()+1+'/'+props.date.getDate()+'/'+props.date.getFullYear();
- events.push({
- 'title': '8hrs on project work',
- 'start': new Date(dated),
- 'end': new Date(dated),
- });
- };*/
-// let addEvent = (props) => {
-//     /*let dated = props.date.getMonth() + 1 + '/' + props.date.getDate() + '/' + props.date.getFullYear();
-//     events.push({
-//         'title': '8hrs on project work',
-//         'start': new Date(dated),
-//         'end': new Date(dated),
-//     });
-//     console.log("date clicked is ---------", dated)*/
-// };
-/*let customHeader = (props) => {
-    return (
-        <div style={{color: 'black', background: 'grey'}}>
-            { props && props.label }
-        </div>
-    );
-};
-let customDateHeader =(props) =>{
-    return (
-        <div className="date-header clearfix" >
-            <span>{ props && props.label }</span>
-            <span>
-                {
-                    props.date < new Date() ?
-                        <AddButton currentDated={props}/>:null
-                }
-            </span>
-        </div>
-    );
-};*/
-/*(props) => {
- return (
- <div className="date-header clearfix" >
- <span>{ props && props.label }</span>
- {
- props.date < new Date() ?
- <a href="#" data-toggle="modal" data-target="#modalBill">+</a>:null
- }
- </div>
-
- );
- };*/
-// let customDayWrapper = (props) => {
-//     console.log('customDayWrapper -> ', props);
-//     return (
-//         <div style={{color: 'green'}}>
-//             Hi
-//         </div>
-//     )
-// }
-
 let msg = {
     showMore: total => `+${total} ...`
 };
@@ -95,6 +21,9 @@ let msg = {
 class Calendar extends Component {
     constructor(props){
         super(props)
+        this.state = {
+            showEventModal : false
+        }
     }
     eventStyleGetter(event, start, end, isSelected) {
         let cssClass;
@@ -111,10 +40,14 @@ class Calendar extends Component {
     } //called when tile is clicked
     onselectEvent(slotId) {
         console.log("event selected",slotId);
+        this.setState({
+            showEventModal : true
+        })
     } //called when event is clicked
 
     render() {
         return (
+            <div>
                 <BigCalendar
                     selectable
                     events={this.props.events}
@@ -126,6 +59,7 @@ class Calendar extends Component {
                     onSelectEvent={(event) => this.onselectEvent(event)}
                     eventPropGetter={(this.eventStyleGetter)}
                 />
+            </div>
         )
     }
 }
