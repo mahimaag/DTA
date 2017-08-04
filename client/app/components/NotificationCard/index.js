@@ -18,7 +18,7 @@ class NotificationCards extends Component{
     let LogActivityCardHOC = Authorization(LogActivityCard, 'user');
     return(
       <div className="left-panel">
-        {LogNotificationCardHOC && <LogNotificationCardHOC dueDate="24" month="Jul" missingLog="10" partialLog="3" />}
+        {LogNotificationCardHOC && <LogNotificationCardHOC dueDate="26" month="Jul" missingLog="10" partialLog="3" />}
         <br/>
         <Authorization2 allowedRoles = {['admin', 'user']} user={{role:"undefined"}}>
           <LogNotificationCard dueDate="24" month="Jul" missingLog="8" partialLog="3"/>
