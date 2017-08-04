@@ -6,7 +6,7 @@ import jwt_token from "jsonwebtoken";
 import Network from "../network";
 import config from "../../config/environment/"
 import path from 'path';
-const USER_DATA_URL = "http://newers-world-oauth.qa2.tothenew.net/oauth/user?access_token=";
+const USER_DATA_URL = "http://kkknewers-world-oauth.qa2.tothenew.net/oauth/user?access_token=";
 const AUTH_HRMS_TOKEN_COOKIE = 'nw_dev_oauthToken';
 const AUTH_TSMS_TOKEN_COOKIE = 'Tsms';
 //const indexFile = path.join(app.get('appPath'), 'client', 'assests', 'index.html' );
@@ -57,6 +57,5 @@ const redirectUrl = (req, res, next) => {
     })
 
 };
-
 module.exports = redirectUrl;
 

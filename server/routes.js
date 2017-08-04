@@ -10,7 +10,6 @@ import authMiddlewares from "./components/auth";
 import redirectUrlFunction from "./components/auth/redirectUrl";
 import logout from "./components/auth/logout";
 import express from 'express';
-
 export default function (app) {
 
     const logMiddleware = (m) => (r1, r2, n) => {
@@ -30,14 +29,14 @@ export default function (app) {
     app.use('/api/oauthServerCallback', redirectUrlFunction, (req, res) => {
         res.redirect('/');
     });
-    app.get('/logout', logout);
+  app.get('/logout', logout);
 
     //Error handler for 500 res
     app.use(function _500ErrorMiddleware(err, req, res, next) {
         if (res.statusCode != 500) {
             return next(err);
         }
-        res.sendfile("/home/sourabh/DTA/server/views/500.html");
+        res.sendfile(path.resolve("server/views/500.html"));
     });
 
     // All undefined asset or api routes should return a 404
@@ -45,9 +44,9 @@ export default function (app) {
     app.route('/:url(api|auth|app|assets)/*')
         .get(errors[404]);
 
-    //Error handler for 400 res
-    app.use(function _400ErrorMiddleware(err, req, res, next) {
-        res.sendfile("/home/sourabh/DTA/server/views/404.html");
+    //Error handler for 404 res
+    app.use(function _404ErrorMiddleware(err, req, res, next) {
+        res.sendfile(path.resolve("server/views/404.html"));
     });
     /*app.route('/!*', authMiddlewares)
      .get((req, res) => {

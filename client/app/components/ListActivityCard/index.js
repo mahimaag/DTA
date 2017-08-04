@@ -20,44 +20,30 @@ class ActivityLog extends Component{
         }
     }
 
-    newEntry = (newTimeLog,date,newLogStatus) => {
+    newEntry = (newTimeLog, date) => {
         this.state.timeEnteries.map((item) => {
             if(item.date === date){
-                item.status = newLogStatus;
-                item.activities.map((childItem) => {
-                    if(childItem.Status === TimeEntryStatus.New){
-                        childItem.Id = newTimeLog.Id;
-                        childItem.Activity = newTimeLog.Activity;
-                        childItem.Type = newTimeLog.Type;
-                        childItem.Duration = newTimeLog.Duration;
-                        childItem.Description = newTimeLog.Description;
-                        childItem.Status = newTimeLog.Status;
-                        childItem.Collaborators = newTimeLog.Collaborators;
-                    }
-                })
+                item.status = TimeEntryStatus.Committed;
+                item.activities.map((childItem) => childItem.Status === TimeEntryStatus.New ? Object.assign(childItem, newTimeLog) : null);
             }
-        })
+        });
 
 
         this.setState({
             timeEnteries: this.state.timeEnteries
         })
-    }
+    };
 
-    clearAllLogs = (allLogs,date) => {
-        this.state.timeEnteries.map((entry) => {
-            if(entry.date === date){
-                entry.activities.splice(0,entry.activities.length);
-            }
-        })
+    clearAllLogs = (date) => {
+        this.state.timeEnteries.map((entry) => entry.date === date ? entry.activities = [] : null);
         this.setState({
             timeEnteries:this.state.timeEnteries
         })
 
     };
 
-    addNewLog = (item) => {
-        this.state.timeEnteries.map((entry) => (entry.date == item.date && entry.status === TimeEntryStatus.Committed) ?
+    addNewLog = (logDate) => {
+        this.state.timeEnteries.map((entry) => (entry.date == logDate && entry.status === TimeEntryStatus.Committed) ?
             (entry.status = TimeEntryStatus.Uncommitted,
                 entry.activities.unshift({
                     "Id":"",
@@ -77,51 +63,24 @@ class ActivityLog extends Component{
     edittedLog = (editItem,date) => {
         this.state.timeEnteries.map((entry) => {
             if(entry.date === date){
-                entry.activities.map((childItem) => {
-                    if(childItem.Id === editItem.Id){
-                        childItem.Activity = editItem.Activity;
-                        childItem.Type = editItem.Type;
-                        childItem.Duration = editItem.Duration;
-                        childItem.Description = editItem.Description;
-                        childItem.Status = editItem.Status;
-                        childItem.Collaborators = editItem.Collaborators;
-                    }
-                })
+                entry.activities.map((childItem) => childItem.Id === editItem.Id ? Object.assign(childItem, editItem) : null);
             }
-        })
+        });
         this.setState({
             timeEnteries: this.state.timeEnteries
         })
     }
 
     deleteEntry = (deletedEntry,logDate) => {
-        this.state.timeEnteries.map((entry) => {
-            if(entry.date === logDate){
-                console.log('ids--------------',entry.activities.indexOf(deletedEntry))
-                entry.activities.splice(entry.activities.indexOf(deletedEntry),1);
-
-                /*entry.activities.map((childEntry) => {
-                 if(childEntry.Id === deletedEntry.Id){
-                 console.log('ids--------------',entry.activities.indexOf(childEntry));
-                 entry.activities.splice(entry.activities.indexOf(childEntry),1);
-                 }
-                 })*/
-            }
-        })
+        this.state.timeEnteries.map((entry) => entry.date === logDate ? entry.activities.splice(entry.activities.indexOf(deletedEntry),1) : null);
         this.setState({
             timeEnteries:this.state.timeEnteries
         })
-    }
+    };
 
-    closedWithoutCreate = (newLogStatus,logDate) => {
-        this.state.timeEnteries.map((entry) => {
-            if(entry.date === logDate){
-                entry.status = TimeEntryStatus.Committed;
-                entry.activities.map((childEntry) => {
-                    childEntry.Status === TimeEntryStatus.New ? entry.activities.splice(entry.activities.indexOf(childEntry),1):null
-                })
-            }
-        })
+    closedWithoutCreate = (logDate) => {
+        this.state.timeEnteries.map((entry) => entry.date === logDate ? (entry.status = TimeEntryStatus.Committed,
+            entry.activities.splice(entry.activities.findIndex((activity) => activity.Status === TimeEntryStatus.New), 1)) : null);
         this.setState({
             timeEnteries:this.state.timeEnteries
         })
@@ -129,7 +88,7 @@ class ActivityLog extends Component{
 
     render(){
         return(
-                <div className="col-md-12">
+                <div className="col-md-12 activity-list-comp">
                     <Row className="show-grid">
                         {HeadingArray.map((item, index) =>{
                             return (
@@ -140,12 +99,12 @@ class ActivityLog extends Component{
                         }
                     </Row>
                     <ActivityLogRow timeLog={this.state.timeEnteries}
-                                    logItem={(item) => this.addNewLog(item)}
-                                    newEntry={(newTimeLog,date,newLogStatus) => {this.newEntry(newTimeLog,date,newLogStatus)}}
-                                    onClearClick={(allLogs,date) => {this.clearAllLogs(allLogs,date)}}
+                                    logItem={(logDate) => this.addNewLog(logDate)}
+                                    newEntry={(newTimeLog,date) => {this.newEntry(newTimeLog,date)}}
+                                    onClearClick={(date) => {this.clearAllLogs(date)}}
                                     edittedLog={(editItem,date) => {this.edittedLog(editItem,date)}}
                                     deleteEntry={(deletedEntry,logDate) => {this.deleteEntry(deletedEntry,logDate)}}
-                                    closedWithoutCreate={(newLogStatus,logDate) => {this.closedWithoutCreate(newLogStatus,logDate)}}/>
+                                    closedWithoutCreate={(logDate) => {this.closedWithoutCreate(logDate)}}/>
                 </div>
         );
     }

@@ -7,27 +7,17 @@ import { Row, Col } from 'react-bootstrap'
 import LogDropdown from '../../Core/Dropdown/index'
 import {TSMS_IconButton} from './../../Core/Button'
 import ActivityLogCollaborator from '../ActivityLogCollaborator'
+import MultiSelectDropdown from '../../Core/MultiSelectDropDown'
+
 
 
 class ActivityLogComp extends Component{
     constructor(props){
         super(props);
-        const activity = this.props.activity;
+        const logActivity = Object.assign({}, this.props.activity);
         this.state = {
             editBtn:'false',
-            activity:{
-                Id: activity.Id,
-                Activity: activity.Activity,
-                Type:activity.Type,
-                Duration: activity.Duration,
-                Description: activity.Description,
-                Status: activity.Status,
-                Collaborators: activity.Collaborators
-            },
-            projectName: activity.Type,
-            projectCategory: activity.Activity,
-            logDuration: activity.Duration,
-            newDesc: activity.Description
+            activity: logActivity
         }
     }
 
@@ -39,54 +29,36 @@ class ActivityLogComp extends Component{
 
     onOkClick = () => {
         this.setState({
-            editBtn:'false',
-            activity: {
-                Id: this.props.activity.Id,
-                Activity: this.state.projectCategory,
-                Type:this.state.projectName,
-                Duration: this.state.logDuration,
-                Description: this.state.newDesc,
-                Status: this.props.activity.Status,
-                Collaborators: this.state.activity.Collaborators
-            },
-        }, ()=> {
-            this.props.edittedLog(this.state.activity);
+            editBtn: 'false'
+        });
+        this.props.edittedLog(this.state.activity);
 
-        })
-
-    }
+    };
 
     onEditDeleteClick = () => {
+        const activity = Object.assign({}, this.props.activity);
         this.setState({
-            editBtn:'false'
-        })
+            editBtn:'false',
+            activity: activity
+        });
     }
 
     onDeleteClick = (activity) => {
-        console.log('data to be deleted----------->>>',activity);
-
         this.props.deleteEntry(activity);
     }
 
 
     setSelectedValue = (item, property) => {
+        this.state.activity[property] = item;
         this.setState({
-            [property]: item
+            activity: this.state.activity
         })
     }
 
     onDescChange = (event) => {
         this.setState({
-            activity: {
-                Description: event.target.value
-            }
-        },()=>{
-            console.log('desc', this.state.activity.Description);
-            this.setState({
-                newDesc: this.state.activity.Description
-            })
-        })
-
+            newDesc: event.target.value
+        });
     }
 
     onCollabChange = (collaborators) => {
@@ -97,14 +69,24 @@ class ActivityLogComp extends Component{
         })
     }
 
+    onSelectedVal = (newCollab) => {
+        (this.state.activity.Collaborators.length && this.state.activity.Collaborators.indexOf(newCollab) > -1) ? null : this.state.activity.Collaborators.push(newCollab);
+        this.setState({activity: this.state.activity});
+    };
+
+    onDeleteCollab = (deletedVal) => {
+        this.state.activity.Collaborators.splice(this.state.activity.Collaborators.indexOf(deletedVal), 1);
+        this.setState({
+            activity: this.state.activity
+        })
+    };
+
     render(){
-        console.log('collaborators in actovity log----',this.props);
         const activity = this.props.activity;
-        let sampleData = this.props.sampleData;
         let activityTitles = ['Westcon','Knowlegde Meet','Daily Time Analysis'];
         let activityCategory = ['Project','Non-Project'];
         let durationTime = ['30 mins','1 hr','2 hrs','3 hrs','4 hrs','5 hrs','6 hrs','7 hrs','8 hrs'];
-
+        let newCollabArray = ['Gaurav','Rubi','Mahima','Nitin'];
         return(
             <div>
                 {this.state.editBtn === 'true'?
@@ -112,21 +94,21 @@ class ActivityLogComp extends Component{
                         <Row>
                             <Col md={1} lg={1} className="log-col">
                                 <LogDropdown className='activity'
-                                             title={this.state.projectCategory}
+                                             title={this.state.activity.Activity}
                                              data={activityCategory}
-                                             onSelect={(item) => {this.setSelectedValue(item, 'projectCategory')}}/>
+                                             onSelect={(item) => {this.setSelectedValue(item, 'Activity')}}/>
                             </Col>
                             <Col md={2} lg={2} className="log-col">
                                 <LogDropdown className='type'
                                              data={activityTitles}
-                                             title={this.state.projectName}
-                                             onSelect={(item) => this.setSelectedValue(item, 'projectName')}/>
+                                             title={this.state.activity.Type}
+                                             onSelect={(item) => this.setSelectedValue(item, 'Type')}/>
                             </Col>
                             <Col md={1} lg={1} className="log-col">
                                 <LogDropdown className="duration"
-                                             title={this.state.logDuration}
+                                             title={this.state.activity.Duration}
                                              data={durationTime}
-                                             onSelect={(item) => {this.setSelectedValue(item, 'logDuration')}}/>
+                                             onSelect={(item) => {this.setSelectedValue(item, 'Duration')}}/>
                             </Col>
                             <Col md={4} lg={4} className="log-col">
                                 <input type="text"
@@ -148,9 +130,14 @@ class ActivityLogComp extends Component{
 
                             </Col>
                             <Col md={12} lg={12} className="log-col">
-                                <ActivityLogCollaborator collaborators={this.props.collaborators}
+                                <MultiSelectDropdown collabArray={newCollabArray}
+                                                     newCollab={this.state.activity.Collaborators}
+                                                     title='Select'
+                                                     onSelectedVal = {(newCollab) => {this.onSelectedVal(newCollab)}}
+                                                     onDeleteCollab={(deletedVal) => {this.onDeleteCollab(deletedVal)}}/>
+                                {/*<ActivityLogCollaborator collaborators={activity.Collaborators}
                                                          onCollabChange={(collaborators) => {this.onCollabChange(collaborators)}}
-                                                         editable='true'/>
+                                                         editable='true'/>*/}
                             </Col>
                         </Row>
 
@@ -187,7 +174,7 @@ class ActivityLogComp extends Component{
 
                             </Col>
                             <Col md={12} lg={12} className="log-col">
-                                <ActivityLogCollaborator collaborators={this.props.collaborators}/>
+                                <ActivityLogCollaborator collaborators={activity.Collaborators}/>
                             </Col>
                         </Row>
                     </div>

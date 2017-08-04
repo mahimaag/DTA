@@ -69,14 +69,13 @@ class LogDropdown extends Component{
         }
     }
 
-    componentDidMount = () => {
+    /*componentDidMount = () => {
         if(this.props.disabled === 'true'){
             //document.getElementById('dropdownButton').disabled = true;
             //this.refs.dropdownButton.disabled = true
             this.setState({
                 buttonDisabled: true
             })
-            console.log('button disabled.................  ---------- CWM');
         }
         else{
             console.log('no disabled props ---------- CWM');
@@ -92,7 +91,7 @@ class LogDropdown extends Component{
         else{
             console.log('no disabled props');
         }
-    }
+    }*/
 
     onDropDownClick = () => {
         //console.log('button is clickable-----');
@@ -134,9 +133,9 @@ class LogDropdown extends Component{
         }*/
         return(
             <div>
-                <DropdownButton title={this.props.title}>
+                <DropdownButton title={this.props.title} id="DropdownButton">
                    {dataArray.map((item, index) => {
-                        return (<MenuItem eventKey={index+1} onSelect={() => this.props.onSelect(item)}>{item}
+                        return (<MenuItem key={index} eventKey={index+1} onSelect={() => this.props.onSelect(item)}>{item}
                         </MenuItem>)
 
                     })}
