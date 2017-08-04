@@ -65,8 +65,8 @@ var config = {
         alias: {
             core: path.resolve(__dirname, 'client', 'app', 'Core'),
             components: path.resolve(__dirname, 'client', 'app', 'components'),
-            utils: path.resolve(__dirname, 'client', 'app', 'utils')
-        },
+            utils: path.resolve(__dirname, 'client', 'utils')
+    },
         extensions: ['.json', '.js', '.jsx', '.css'],
     }
 };

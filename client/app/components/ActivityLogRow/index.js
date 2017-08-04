@@ -26,13 +26,12 @@ class ActivityLogRow extends Component{
     }
 
     render(){
-        console.log('props in row component--------',this.props);
         return(
             <div>
                 {
                     this.props.timeLog.map((item, index) => {
                         return (
-                            <div key={index}>
+                            <div key={index} className="activity-timelog">
                                 <ActivityLogHeader logDate={item.date}
                                                    activities = {item.activities}
                                                    onLogTimeClick={() => this.props.logItem(item.date)}

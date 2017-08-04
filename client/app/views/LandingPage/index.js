@@ -3,7 +3,7 @@ import NotificationCards from './../../components/NotificationCard';
 import { correctHeight, detectBody } from './../../../utils/common';
 import Calendar from './../../components/Calendar';
 import ActivityLog from './../../components/ListActivityCard';
-
+import TtnButton from 'core/Button/btn';
 class Main extends React.Component {
 
     render() {
@@ -12,7 +12,7 @@ class Main extends React.Component {
                 <div className="row">
                     <div className="col-lg-12">
                         <div className="text-center m-t-lg">
-                            <div className="col-lg-9 pull-left">
+                            <div className="col-lg-9 pull-left ">
                                 <Calendar />
                                 <ActivityLog/>
                             </div>
@@ -21,6 +21,23 @@ class Main extends React.Component {
                             </div>
                         </div>
                     </div>
+                </div>
+                <div className="row">
+                    <div className="col-lg-6">
+                        <div className="ibox float-e-margins">
+                            <div className="ibox-title">
+                                <h5>List of components</h5>
+                            </div>
+                            <div className="ibox-content">
+                                <div>
+                                    <h3> Buttons </h3>
+                                    <TtnButton level="primary" title="Flat Button"/>
+                                    <TtnButton nature="Decline"/>
+                                    <TtnButton iconButton level="primary" rounded icon="fa fa-address-book-o"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>                
                 </div>
             </div>
 

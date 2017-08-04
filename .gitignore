@@ -10,5 +10,5 @@
 
 .idea/
 npm-debug.log
-tsms.*.log
+*.log
 /dist
