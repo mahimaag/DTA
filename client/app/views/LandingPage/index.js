@@ -7,6 +7,7 @@ import ActivityLog from './../../components/ListActivityCard';
 class Main extends React.Component {
 
     render() {
+
         return (
             <div className="wrapper wrapper-content animated fadeInRight">
                 <div className="row">

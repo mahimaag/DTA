@@ -54,6 +54,8 @@ const authChecker = (req, res, next) => {
   if (req.cookies[AUTH_HRMS_TOKEN_COOKIE]) {
     next();
   } else {
+    // res.status(422);
+    // next({ err: 799});
     res.redirect(AUTHORIZE_URL)
   }
 };

@@ -6,8 +6,9 @@ import logger from '../logger';
  * @return status - Boolean 
  */
 const _isErrorResponse = (response = {}) => {
-    let isErrorResponse = false;     // signifies whether response is an errored response or not.
-    return isErrorResponse;
+    // let isErrorResponse = re;     // signifies whether response is an errored response or not.
+
+    return (response.statusCode != 200);
 }
 
 const ErrorType = Object.freeze({
@@ -34,7 +35,7 @@ module.exports = (requestOptions = {}) => {
                 response.errorType = ErrorType.CustomError;
                 return reject(response)
             }
-            logger.silly(`[Network] Api result, Url -> ${requestOptions.url} -->`, response.body);
+            logger.silly(`[Network] Api result, Url -> ${requestOptions.url}  -->`, response.body, response.statusCode);
             return resolve(response);
         });
     });

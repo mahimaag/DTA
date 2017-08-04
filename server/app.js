@@ -39,4 +39,4 @@ seedDatabaseIfNeeded();
 // setImmediate(startServer);
 
 // Expose app
-exports = module.exports = app;
+ module.exports = app;

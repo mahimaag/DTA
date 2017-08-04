@@ -41,17 +41,20 @@ const redirectUrl = (req, res, next) => {
             }
           }, {upsert: true}).exec()
             .then(employee => {
-                next()
+                return next()
             })
             .catch(error => {
-              res.send(error);
+               res.send(error)
             });
 
 
 
       }
     })
-    .catch(error => res.send("unable to fetch employee details"))
+    .catch(error => {
+        res.statusCode=error.statusCode;
+        next(error);
+    })
 
 };
 
