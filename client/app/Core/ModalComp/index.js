@@ -4,6 +4,8 @@
 
 import React,{Component} from 'react'
 import Modal from 'react-bootstrap/lib/Modal'
+import TtnButton from 'core/Button/btn';
+
 
 class ModalComp extends Component{
     constructor(){
@@ -18,7 +20,6 @@ class ModalComp extends Component{
                 className = {this.props.modalClassName}
                 show={this.props.modalShow}
                 onHide = {this.props.modalHide}
-                container={this}
                 aria-labelledby="contained-modal-title"
             >
                 <Modal.Header closeButton>
@@ -28,7 +29,11 @@ class ModalComp extends Component{
                     {this.props.modalBody}
                 </Modal.Body>
                 <Modal.Footer>
-                    <button onClick={this.props.modalFooterClose}>{this.props.modalFooterText}</button>
+                    <TtnButton level="primary"
+                               title={this.props.modalFooterText}
+                               onClick={this.props.modalFooterClose}/>
+
+                    {/*<button onClick={this.props.modalFooterClose}>{this.props.modalFooterText}</button>*/}
                 </Modal.Footer>
             </Modal>
         )

@@ -58,7 +58,7 @@ class TtnFlatButton extends React.Component {
         const _btnClass = `ladda-button ladda-button-demo btn ${getBtnLevelClass(this.props.level)} ${this.props.rounded? 'btn-rounded': ''}`;
         return (
             <button className={_btnClass}
-                onClick={ this.props.onClick || _noop}
+                    onClick={ this.props.onClick || _noop}
                 data-style="zoom-in">
                 { this.props.title }
             </button> 

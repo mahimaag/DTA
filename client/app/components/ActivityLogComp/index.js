@@ -5,11 +5,13 @@
 import React, { Component } from 'react'
 import { Row, Col } from 'react-bootstrap'
 import LogDropdown from '../../Core/Dropdown/index'
-import {TSMS_IconButton} from './../../Core/Button'
+//import {TSMS_IconButton} from './../../Core/Button'
 import ActivityLogCollaborator from '../ActivityLogCollaborator'
 import MultiSelectDropdown from '../../Core/MultiSelectDropDown'
 import ModalComp from '../../Core/ModalComp'
 import ModalBodyComp from '../../Core/ModalBodyComp'
+import TtnButton from 'core/Button/btn';
+
 
 
 class ActivityLogComp extends Component{
@@ -19,6 +21,7 @@ class ActivityLogComp extends Component{
         this.state = {
             editBtn:'false',
             activity: logActivity,
+            newDesc: logActivity.Description,
             displayModal: false
         }
     }
@@ -133,13 +136,23 @@ class ActivityLogComp extends Component{
                                 <span>{this.state.activity.Status}</span>
                             </Col>
                             <Col md={2} lg={2} lgOffset={1} className="log-col">
-                                <TSMS_IconButton bClassName="btn btn-default btn-sm edit-clear-button"
+                                <TtnButton iconButton
+                                           level = "primary"
+                                           rounded icon = "glyphicon glyphicon-ok"
+                                           onClick = {() => this.onOkClick()}/>
+
+                                <TtnButton iconButton
+                                           level = "primary"
+                                           rounded icon = "glyphicon glyphicon-remove"
+                                           onClick = {() => this.onEditDeleteClick()}/>
+
+                                {/*<TSMS_IconButton bClassName="btn btn-default btn-sm edit-clear-button"
                                                  onClickFunc={() => this.onOkClick()}
                                                  spanClass="glyphicon glyphicon-ok"/>
 
                                 <TSMS_IconButton bClassName="btn btn-default btn-sm edit-clear-button"
                                                  onClickFunc={() => this.onEditDeleteClick()}
-                                                 spanClass="glyphicon glyphicon-remove"/>
+                                                 spanClass="glyphicon glyphicon-remove"/>*/}
 
 
                             </Col>
@@ -177,13 +190,23 @@ class ActivityLogComp extends Component{
                                 {/* <button className="edit-clear-button"><img src={editIcon}/></button>
                                  <button className="edit-clear-button"><img src={deleteIcon}/></button>*/}
 
-                                <TSMS_IconButton bClassName="btn btn-default btn-sm edit-clear-button"
+                                <TtnButton iconButton
+                                           level = "primary"
+                                           rounded icon = "glyphicon glyphicon-pencil"
+                                           onClick = {() => this.onEditClick()}/>
+
+                                <TtnButton iconButton
+                                           level = "primary"
+                                           rounded icon = "glyphicon glyphicon-trash"
+                                           onClick = {() => this.onDeleteClick(activity)}/>
+
+                                {/*<TSMS_IconButton bClassName="btn btn-default btn-sm edit-clear-button"
                                                  onClickFunc={() => this.onEditClick()}
                                                  spanClass="glyphicon glyphicon-pencil"/>
 
                                 <TSMS_IconButton bClassName="btn btn-default btn-sm edit-clear-button"
                                                  onClickFunc={() => this.onDeleteClick(activity)}
-                                                 spanClass="glyphicon glyphicon-trash"/>
+                                                 spanClass="glyphicon glyphicon-trash"/>*/}
 
 
                             </Col>

@@ -5,9 +5,10 @@
 import React, { Component } from 'react'
 import { Row, Col } from 'react-bootstrap'
 import LogDropdown from '../../Core/Dropdown/index'
-import { TSMS_IconButton } from './../../Core/Button'
+//import { TSMS_IconButton } from './../../Core/Button'
 import {TimeEntryStatus} from '../../../constants/Index'
 import MultiSelectDropdown from '../../Core/MultiSelectDropDown'
+import TtnButton from 'core/Button/btn';
 
 class NewLogComp extends Component{
     constructor(){
@@ -112,13 +113,21 @@ class NewLogComp extends Component{
                         <span>{this.state.newLogStatus}</span>
                     </Col>
                     <Col md={2} lg={2} lgOffset={1} className="log-col">
-                        <TSMS_IconButton bClassName="btn btn-default btn-sm edit-clear-button"
-                                         onClickFunc={() => this.onDoneClick()}
-                                         spanClass="glyphicon glyphicon-ok"/>
+                        <TtnButton iconButton
+                                   level="primary"
+                                   rounded icon="glyphicon glyphicon-ok"
+                                   onClick={() => this.onDoneClick()}/>
+
+
+                        <TtnButton nature="Decline"
+                                   onClick={() => this.onCloseClick()}/>
+                        {/*<TSMS_IconButton bClassName="btn btn-default btn-sm edit-clear-button"
+                         onClickFunc={() => this.onDoneClick()}
+                         spanClass="glyphicon glyphicon-ok"/>
 
                         <TSMS_IconButton bClassName="btn btn-default btn-sm edit-clear-button"
                                          onClickFunc={() => this.onCloseClick()}
-                                         spanClass="glyphicon glyphicon-remove"/>
+                                         spanClass="glyphicon glyphicon-remove"/>*/}
 
 
                     </Col>
