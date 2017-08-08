@@ -11,12 +11,15 @@ import { Grid, Row, Col } from 'react-bootstrap';
 import SampleData from './../../../assests/SampleData'
 import { TimeEntryStatus, HeadingArray } from './../../../constants/Index'
 import './style.css'
+import ModalComp from '../../Core/ModalComp'
+import ModalBodyComp from '../../Core/ModalBodyComp'
 
 class ActivityLog extends Component{
     constructor(props){
         super(props);
         this.state = {
             timeEnteries: SampleData,
+            displayModal: false
         }
     }
 
@@ -74,7 +77,8 @@ class ActivityLog extends Component{
     deleteEntry = (deletedEntry,logDate) => {
         this.state.timeEnteries.map((entry) => entry.date === logDate ? entry.activities.splice(entry.activities.indexOf(deletedEntry),1) : null);
         this.setState({
-            timeEnteries:this.state.timeEnteries
+            timeEnteries:this.state.timeEnteries,
+            displayModal: true
         })
     };
 
@@ -83,6 +87,12 @@ class ActivityLog extends Component{
             entry.activities.splice(entry.activities.findIndex((activity) => activity.Status === TimeEntryStatus.New), 1)) : null);
         this.setState({
             timeEnteries:this.state.timeEnteries
+        })
+    };
+
+    onCloseModalClick = () => {
+        this.setState({
+            displayModal: false
         })
     }
 
@@ -105,9 +115,28 @@ class ActivityLog extends Component{
                                     edittedLog={(editItem,date) => {this.edittedLog(editItem,date)}}
                                     deleteEntry={(deletedEntry,logDate) => {this.deleteEntry(deletedEntry,logDate)}}
                                     closedWithoutCreate={(logDate) => {this.closedWithoutCreate(logDate)}}/>
+                    <ModalComp modalClassName = 'inmodal'
+                               modalShow = {this.state.displayModal}
+                               modalHide = {() => {this.onCloseModalClick()}}
+                               modalHeaderMsg = "Activity Deleted successfully"
+                               modalBody = {'deletion completed!!!'}
+                               modalFooterClose = {() => {this.onCloseModalClick()}}
+                               modalFooterText = 'Close'
+                    />
                 </div>
         );
     }
 }
 
 export default ActivityLog;
+
+//Modal component ---------------------------
+// Can also be used as below when we need to pass another component inside it's body..
+/*
+ <ModalComp modalShow={this.state.displayModal}
+ modalHide = {() => {this.onCloseModalClick()}}
+ modalHeaderMsg="Activity Deleted successfully"
+ modalBody = {<ModalBodyComp/>}
+ modalFooterClose = {() => {this.onCloseModalClick()}}
+ modalFooterText = 'Close'
+ />*/

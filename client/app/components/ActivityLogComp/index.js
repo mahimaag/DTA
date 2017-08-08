@@ -8,8 +8,6 @@ import LogDropdown from '../../Core/Dropdown/index'
 import {TSMS_IconButton} from './../../Core/Button'
 import ActivityLogCollaborator from '../ActivityLogCollaborator'
 import MultiSelectDropdown from '../../Core/MultiSelectDropDown'
-import ModalComp from '../../Core/ModalComp'
-import ModalBodyComp from '../../Core/ModalBodyComp'
 
 
 class ActivityLogComp extends Component{
@@ -46,10 +44,6 @@ class ActivityLogComp extends Component{
     }
 
     onDeleteClick = (activity) => {
-        //console.log('displayModal**********------',this.state.displayModal);
-        this.setState({
-            displayModal: true,
-        })
 
         //setTimeout(function() { this.setState({displayModal: false}); }.bind(this), 3000);
         this.props.deleteEntry(activity);
@@ -192,14 +186,6 @@ class ActivityLogComp extends Component{
                             </Col>
                         </Row>
 
-                        <ModalComp modalClassName = 'inmodal'
-                                   modalShow = {this.state.displayModal}
-                                   modalHide = {() => {this.onCloseModalClick()}}
-                                   modalHeaderMsg = "Activity Deleted successfully"
-                                   modalBody = {'deletion completed!!!'}
-                                   modalFooterClose = {() => {this.onCloseModalClick()}}
-                                   modalFooterText = 'Close'
-                        />
                     </div>
                 }
             </div>
@@ -209,13 +195,3 @@ class ActivityLogComp extends Component{
 
 export default ActivityLogComp;
 
-//Modal component ---------------------------
-// Can also be used as below when we need to pass another component inside it's body..
-/*
-<ModalComp modalShow={this.state.displayModal}
-           modalHide = {() => {this.onCloseModalClick()}}
-           modalHeaderMsg="Activity Deleted successfully"
-           modalBody = {<ModalBodyComp/>}
-           modalFooterClose = {() => {this.onCloseModalClick()}}
-           modalFooterText = 'Close'
-/>*/
