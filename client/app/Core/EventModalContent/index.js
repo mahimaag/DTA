@@ -5,6 +5,7 @@ import BigCalendar from 'react-big-calendar';
 import moment from 'moment';
 
 import ModalComponent from './../CustomModal'
+import TtnButton from 'core/Button/btn';
 
 BigCalendar.setLocalizer(
     BigCalendar.momentLocalizer(moment)
@@ -43,13 +44,13 @@ class ModalContent extends Component {
                 this.state.edit ?
                     <div>
                         <input type="text" value={this.props.eventInfo.title}/>
-                        <button>Done</button>
-                        <button onClick={(e) => this.cancelEdit(e)}>Cancel</button>
+                        <TtnButton level="primary" title="Done" />
+                        <TtnButton level="primary" title="Cancel" onClick={(e) => this.cancelEdit(e)}/>
                     </div> :
                     <div>
                         {this.props.eventInfo.title}
-                        <button onClick={(e) => this.onEdit(e)}>Edit</button>
-                        <button onClick={(e) => this.deleteEvent(e)}>Delete</button>
+                        <TtnButton level="primary" title="Edit" onClick={(e) => this.onEdit(e)}/>
+                        <TtnButton level="primary" title="Delete" onClick={(e) => this.deleteEvent(e)}/>
                     </div>
             }
             </div>

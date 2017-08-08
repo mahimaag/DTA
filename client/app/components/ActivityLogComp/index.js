@@ -8,6 +8,8 @@ import LogDropdown from '../../Core/Dropdown/index'
 import {TSMS_IconButton} from './../../Core/Button'
 import ActivityLogCollaborator from '../ActivityLogCollaborator'
 import MultiSelectDropdown from '../../Core/MultiSelectDropDown'
+import ModalComp from '../../Core/ModalComp'
+import ModalBodyComp from '../../Core/ModalBodyComp'
 
 
 class ActivityLogComp extends Component{
@@ -17,8 +19,7 @@ class ActivityLogComp extends Component{
         this.state = {
             editBtn:'false',
             activity: logActivity,
-            alertType:'',
-            message:''
+            displayModal: false
         }
     }
 
@@ -26,18 +27,12 @@ class ActivityLogComp extends Component{
         this.setState({
             editBtn:'true'
         })
-    };
+    }
 
     onOkClick = () => {
-        console.log("props are ,",this.state);
         this.setState({
             editBtn: 'false',
-        },()=>{
-            console.log("state is ",this.state)
         });
-        //update in db after this hide toastr
-
-        // setTimeout(() => {this.setState({alertType:'',message:''})}, 1000)
         this.props.edittedLog(this.state.activity);
 
     };
@@ -48,24 +43,31 @@ class ActivityLogComp extends Component{
             editBtn:'false',
             activity: activity
         });
-    };
+    }
 
     onDeleteClick = (activity) => {
+        //console.log('displayModal**********------',this.state.displayModal);
+        this.setState({
+            displayModal: true,
+        })
+
+        //setTimeout(function() { this.setState({displayModal: false}); }.bind(this), 3000);
         this.props.deleteEntry(activity);
-    };
+    }
+
 
     setSelectedValue = (item, property) => {
         this.state.activity[property] = item;
         this.setState({
             activity: this.state.activity
         })
-    };
+    }
 
     onDescChange = (event) => {
         this.setState({
             newDesc: event.target.value
         });
-    };
+    }
 
     onCollabChange = (collaborators) => {
         this.setState({
@@ -73,7 +75,7 @@ class ActivityLogComp extends Component{
                 Collaborators: collaborators
             }
         })
-    };
+    }
 
     onSelectedVal = (newCollab) => {
         (this.state.activity.Collaborators.length && this.state.activity.Collaborators.indexOf(newCollab) > -1) ? null : this.state.activity.Collaborators.push(newCollab);
@@ -86,6 +88,12 @@ class ActivityLogComp extends Component{
             activity: this.state.activity
         })
     };
+
+    onCloseModalClick = () => {
+        this.setState({
+            displayModal: false
+        })
+    }
 
     render(){
         const activity = this.props.activity;
@@ -183,12 +191,31 @@ class ActivityLogComp extends Component{
                                 <ActivityLogCollaborator collaborators={activity.Collaborators}/>
                             </Col>
                         </Row>
+
+                        <ModalComp modalClassName = 'inmodal'
+                                   modalShow = {this.state.displayModal}
+                                   modalHide = {() => {this.onCloseModalClick()}}
+                                   modalHeaderMsg = "Activity Deleted successfully"
+                                   modalBody = {'deletion completed!!!'}
+                                   modalFooterClose = {() => {this.onCloseModalClick()}}
+                                   modalFooterText = 'Close'
+                        />
                     </div>
                 }
-
             </div>
         )
     }
 }
 
 export default ActivityLogComp;
+
+//Modal component ---------------------------
+// Can also be used as below when we need to pass another component inside it's body..
+/*
+<ModalComp modalShow={this.state.displayModal}
+           modalHide = {() => {this.onCloseModalClick()}}
+           modalHeaderMsg="Activity Deleted successfully"
+           modalBody = {<ModalBodyComp/>}
+           modalFooterClose = {() => {this.onCloseModalClick()}}
+           modalFooterText = 'Close'
+/>*/

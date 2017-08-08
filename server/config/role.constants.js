@@ -1,10 +1,10 @@
 /*
-TEMPLATE =
-      "ROLE": {
-          resource: '',    //  name of resource       ( names of module)
-         operations: []       //  permitted operations   (GET, POST, PUT, DELETE, *)
-          }
-*/
+ TEMPLATE =
+ "ROLE": {
+ resource: '',    //  name of resource       ( names of module)
+ operations: []       //  permitted operations   (GET, POST, PUT, DELETE, *)
+ }
+ */
 
 const ACL = {
     "ADMIN": [{

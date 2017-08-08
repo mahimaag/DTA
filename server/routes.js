@@ -11,6 +11,7 @@ import redirectUrlFunction from "./components/auth/redirectUrl";
 import logout from "./components/auth/logout";
 import express from 'express';
 import aclMiddleware from './acl'
+import logger from './components/logger';
 
 
 export default function (app) {
@@ -26,7 +27,7 @@ export default function (app) {
   console.log('Index file - ', indexFile);
   app.use(authMiddlewares);
     const checkAccess = (req,res,next) => {
-        console.log("checked acl middleware");
+        logger.silly("checked acl middleware");
     };
   app.use(express.static(indexFile), logMiddleware('After index file'));
   app.use(express.static(distFolder), logMiddleware('After dist folder'));
@@ -36,7 +37,7 @@ export default function (app) {
       res.redirect('/');
     });
     app.get('/logout', logout);
-    app.get('/user/:role',aclMiddleware,checkAccess); //ACL middleware used
+    app.get('/api/projects/:role',aclMiddleware,checkAccess); //api is /api/resource/:role role can be('NEWER','ADMIN','SUPER_ADMIN','AP1','AP2')
 
 
   // All undefined asset or api routes should return a 404
@@ -50,7 +51,7 @@ export default function (app) {
   // All other routes should redirect to the index.html
   app.route('/*')
     .get((req, res) => {
-      console.log('NOT MATCHING ANY ROUTE...');
+        logger.silly('NOT MATCHING ANY ROUTE...');
       res.sendFile(indexFile);
     });
 }

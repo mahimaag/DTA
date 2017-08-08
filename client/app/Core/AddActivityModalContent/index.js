@@ -5,6 +5,7 @@ import Dropdown from './../Dropdown'
 
 import events from '../../config/events'
 import ModalComponent from './../CustomModal'
+import TtnButton from 'core/Button/btn';
 
 BigCalendar.setLocalizer(
     BigCalendar.momentLocalizer(moment)
@@ -43,9 +44,6 @@ class ModalContent extends Component{
 
     selectSlot(slot) {
         let newRepeatedDates = this.state.repeatedDates;
-        if(slot.start>new Date()){
-            alert("Cannot add event for Future dates!!!")
-        }else{
             if(newRepeatedDates.indexOf(slot.start.getMonth()+1+'/'+slot.start.getDate()+'/'+slot.start.getFullYear())>=0){
                 newRepeatedDates.splice((newRepeatedDates.indexOf(slot.start.getMonth()+1+'/'+slot.start.getDate()+'/'+slot.start.getFullYear())),1)
             }else{
@@ -57,7 +55,6 @@ class ModalContent extends Component{
             },() => {
                 console.log("Event repeats on",this.state.repeatedDates)
             });
-        }
 
     } // todo : change color of selected slot
 
@@ -75,7 +72,7 @@ class ModalContent extends Component{
             });
 
             console.log("saved event is ",this.state);
-            console.log("date clicked is ---------", dated);
+            console.log("date clicked is -----------", dated);
 
             this.setState({
                 savedEvent:true
@@ -109,7 +106,7 @@ class ModalContent extends Component{
                             toolbar={false}
                             onSelectSlot = { (slot) => this.selectSlot(slot)}
                         />
-                        <button onClick={(e) => this.saveRepeat(e)}>Save </button>
+                        <TtnButton title="Save" level="primary" onClick = {this.saveRepeat}/>
                     </div>:
                     <div>
                         Activity : <Dropdown data={activityCategory}
@@ -126,9 +123,10 @@ class ModalContent extends Component{
                         Collaborators : <input type="text"/>
                         {
                             this.state.savedEvent ?
-                                <button onClick={(e) => this.repeatEvent(e)}>Repeat </button>
+                                <TtnButton title="Repeat" level="primary" onClick = {this.repeatEvent}/>
                                 :
-                                <button onClick={(e) => this.saveEvent(e)}>Save</button>
+                                <TtnButton title="Save" level="primary" onClick = {this.saveEvent}/>
+
                         }
                     </div>
                  }

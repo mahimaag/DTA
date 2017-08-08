@@ -3,6 +3,8 @@ import ReactDOM from 'react-dom';
 import { HashRouter as Router, Route, Switch } from 'react-router-dom';
 import Main from './views/Main';
 
+//import { AppContainer } from 'react-hot-loader';
+
 import jquery from 'jquery';
 import metismenu from 'metismenu';
 import bootstrap from 'bootstrap';
@@ -14,6 +16,23 @@ import './../assests/styles/style.css'
 
 
 ReactDOM.render(
-<Router><Main/></Router>,
-    document.getElementById('root')
+    <Router><Main/></Router>
+,    document.getElementById('root')
 );
+
+/*
+  </AppContainer>,
+
+if (module.hot) {
+  module.hot.accept('./views/Main', () => {
+    console.log("changes.....");
+    const NextApp = require('./views/Main').default;
+    ReactDOM.render(
+      <AppContainer>
+          <Router><NextApp/></Router>
+      </AppContainer>,
+      document.getElementById('root')
+    );
+  });
+}
+*/

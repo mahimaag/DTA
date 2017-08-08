@@ -1,8 +1,9 @@
 import React,{Component} from 'react'
 
-import Calendar from './../Calendar'
+import Calendar from 'components/Calendar'
 import ModalContent from './../../Core/AddActivityModalContent'
-import './../Calendar/style.css'
+import 'components/Calendar/style.css'
+import TtnButton from 'core/Button/btn';
 
 let customHeader = (props) => {
     return (
@@ -38,9 +39,10 @@ class CustomDateHeader extends Component{
                     {
                         this.props.date < new Date() ?
                             <div className="modal-container">
-                                <button onClick={(e) => this.showModal(e)}>
+                                <TtnButton level="secondary" title="+" onClick = {this.showModal}/>
+                               {/* <button onClick={(e) => this.showModal(e)}>
                                     +
-                                </button>
+                                </button>*/}
                                 {
                                     this.state.show ?
                                         <ModalContent close={(e)=>this.close(e)} showModal={this.state.show} message={this.props.date}/>:null

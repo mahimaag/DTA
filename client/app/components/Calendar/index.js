@@ -23,7 +23,69 @@ BigCalendar.setLocalizer(
 let msg = {
     showMore: total => `+${total} ...`,
     };
+let customHeader = (props) => {
+    return (
+        <div className="fc-day-header fc-widget-header ">
+            { props && props.label }
+        </div>
+    );
+};
 
+class CustomDateHeader extends Component{
+    constructor(props){
+        super(props);
+        this.state = {
+            show:false
+        };
+    }
+
+    showModal = (e) => {
+        e.preventDefault();
+        this.setState({show: true});
+    };
+
+    close = (e) => {
+        e.preventDefault();
+        this.setState({show: false})
+    };
+
+    render(){
+        return (
+            <div className="fc-day-number fc-future date-header" >
+                <span>{ this.props.label }</span>
+                <span>
+                    {
+                        this.props.date < new Date() ?
+                            <div className="modal-container">
+                                <TtnButton level="secondary" title="+" onClick = {this.showModal}/>
+                                {/* <button onClick={(e) => this.showModal(e)}>
+                                 +
+                                 </button>*/}
+                                {
+                                    this.state.show ?
+                                        <ModalContent close={(e)=>this.close(e)} showModal={this.state.show} message={this.props.date}/>:null
+                                }
+                            </div>:null
+                    }
+                </span>
+            </div>
+        );
+    }
+}
+
+let defaultComponent  = (props) => {
+    return {
+        // event: customEvent,
+        // eventWrapper: customEventWrapper,
+        //  dayWrapper: customDayWrapper,  // called when day format is displayed
+        //  dateCellWrapper: customDateCellWrapper,
+        month: {
+            header: customHeader,
+            // event: customEvent,
+            dateHeader: CustomDateHeader   // refer source code DateHeader.js
+        }
+    };
+};
 class Calendar extends Component {
     constructor(props){
         super(props)
@@ -63,7 +125,7 @@ class Calendar extends Component {
                     popup
                     views={['month']}
                     messages={msg}
-                    components={this.props.getComponents(this.props)}
+                    components={this.props.getComponents(this.props) || this.defaultComponent(this.props)}
                     onSelectSlot = { (slot) => this.onselectSlot(slot)}
                     onSelectEvent={(event) => this.onselectEvent(event)}
                     eventPropGetter={(this.eventStyleGetter)}

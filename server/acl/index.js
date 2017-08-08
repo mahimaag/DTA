@@ -1,6 +1,6 @@
 "use strict";
-
-let ACLs = require('./private_acl');
+import logger from './../components/logger';
+let ACLs = require('./../config/role.constants');
 // http_method http://domain:port/resource/:role
 
 /**
@@ -14,8 +14,8 @@ let isActionPermitted = ((httpRequest = null, userRole = '', acl = '') => {
     let isPermitted = false;
     if(!httpRequest || !userRole ||!acl) return isPermitted;
     let splittedUrl = httpRequest.url.split('/');
-    let _resource = splittedUrl[1];
-    console.log(`An ${userRole} is trying to access ${httpRequest.method} method of ${_resource} resource`);
+    let _resource = splittedUrl[2];
+    logger.silly(`An ${userRole} is trying to access ${httpRequest.method} method of ${_resource} resource`)
     let roleForAcl = acl[userRole];
     if(!roleForAcl) return isPermitted;
     let permittedResource = roleForAcl.find(permission => permission.resource === _resource || permission.resource == "*");
@@ -26,7 +26,7 @@ let isActionPermitted = ((httpRequest = null, userRole = '', acl = '') => {
 
 module.exports = (req, res, next) => {
     if(!isActionPermitted(req, req.params.role , ACLs)){
-        console.log('Access denied');
+        logger.silly('Access denied')
         return res.status(401).end('Access denied');
     }
     next();
