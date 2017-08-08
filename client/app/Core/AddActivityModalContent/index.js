@@ -44,10 +44,10 @@ class ModalContent extends Component{
 
     selectSlot(slot) {
         let newRepeatedDates = this.state.repeatedDates;
-            if(newRepeatedDates.indexOf(slot.start.getMonth()+1+'/'+slot.start.getDate()+'/'+slot.start.getFullYear())>=0){
-                newRepeatedDates.splice((newRepeatedDates.indexOf(slot.start.getMonth()+1+'/'+slot.start.getDate()+'/'+slot.start.getFullYear())),1)
+            if(newRepeatedDates.indexOf(`${slot.start.getMonth()+1}/${slot.start.getDate()}/${slot.start.getFullYear()}`)>=0){
+                newRepeatedDates.splice((newRepeatedDates.indexOf(`${slot.start.getMonth()+1}/${slot.start.getDate()}/${slot.start.getFullYear()}`)),1)
             }else{
-                newRepeatedDates.push(slot.start.getMonth()+1+'/'+slot.start.getDate()+'/'+slot.start.getFullYear());
+                newRepeatedDates.push(`${slot.start.getMonth()+1}/${slot.start.getDate()}/${slot.start.getFullYear()}`);
             }
 
             this.setState({
@@ -64,7 +64,7 @@ class ModalContent extends Component{
             alert("Fields cannot be empty")
         }else{
             console.log(this.props.message,typeof (this.props.message));
-            let dated = this.props.message.getMonth() + 1 + '/' + this.props.message.getDate() + '/' + this.props.message.getFullYear();
+            let dated = `${this.props.message.getMonth() + 1 }/${this.props.message.getDate()}/${this.props.message.getFullYear()}`;
             events.push({
                 'title': this.state.duration +" " +this.state.projectName,
                 'start': new Date(dated),
