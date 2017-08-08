@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import {Glyphicon} from 'react-bootstrap';
+//import {Glyphicon} from 'react-bootstrap';
+import TtnButton from 'core/Button/btn';
 
 import {Card, CardHeader, CardContent, CardFooter} from './../../Core/Card';
 
@@ -56,7 +57,7 @@ class LogActivityCard extends Component{
     }
     render(){
         let activityList = [];
-        this.state.activityList.map((data, index)=>{
+        this.state.activityList.map((data, index) => {
             activityList.push(
                 <div key={index} className="activity">
                     <div className="col-sm-12 col-md-12 col-lg-12 description">
@@ -67,12 +68,22 @@ class LogActivityCard extends Component{
                     <div className="col-sm-12 col-md-12 col-lg-12">
                         <div className="col-sm-6 col-md-6 col-lg-6">2 hours</div>
                         <div className="col-sm-6 col-md-6 col-lg-6">
-                            <button type="button" className="btn btn-default btn-sm" onClick={(e)=>this.okHandler(e,index)}>
+                            <TtnButton iconButton
+                                       level = "primary"
+                                       rounded icon = "glyphicon glyphicon-ok"
+                                       onClick = {(e)=>this.okHandler(e,index)}/>
+
+                            <TtnButton iconButton
+                                       level = "primary"
+                                       rounded icon = "glyphicon glyphicon-remove"
+                                       onClick = {(e)=>this.removeHandler(e,index)}/>
+
+                            {/*<button type="button" className="btn btn-default btn-sm" onClick={(e)=>this.okHandler(e,index)}>
                                 <Glyphicon glyph="ok-circle"></Glyphicon>
                             </button>
                             <button type="button" className="btn btn-default btn-sm" onClick={(e)=>this.removeHandler(e,index)}>
                                 <Glyphicon glyph="remove-circle"></Glyphicon>
-                            </button>
+                            </button>*/}
                         </div>
                     </div>
                 </div>);
@@ -80,11 +91,11 @@ class LogActivityCard extends Component{
         return(
             <Card>
                 <CardHeader>
-                    <h5 className="">ACTIVITY({this.state.activityCount})</h5>
+                    <h5 className = "">ACTIVITY({this.state.activityCount})</h5>
                     {!this.state.activityCount?'':<h5 className="">viewall</h5>}
                 </CardHeader>
                 <CardContent>
-                    <div className="activity-list">
+                    <div className = "activity-list">
                         {activityList}
                     </div>
                 </CardContent>

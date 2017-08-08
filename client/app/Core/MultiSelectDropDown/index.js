@@ -3,6 +3,7 @@
  */
 
 import React, { Component } from 'react';
+import TtnButton from 'core/Button/btn';
 
 class MultiSelectDropdown extends Component{
     constructor(){
@@ -14,9 +15,14 @@ class MultiSelectDropdown extends Component{
             <div>
                 {this.props.newCollab.map((item, index) => {
                     return (
-                        <button key={index} value={item} onClick={(event) => this.props.onDeleteCollab(item)}>{item}
-                            <span className="glyphicon glyphicon-remove"></span>
-                        </button>)
+                        <div key={index}>
+                            {item}
+                            <TtnButton iconButton
+                                       level = "primary"
+                                       rounded icon = "glyphicon glyphicon-remove"
+                                       onClick={(event) => this.props.onDeleteCollab(item)}/>
+                        </div>
+                        )
                 })}
 
                 <div>
@@ -33,3 +39,8 @@ class MultiSelectDropdown extends Component{
 }
 
 export default MultiSelectDropdown;
+
+//Earlier in place of <TtnButton/> we had the following code... :-
+/*<button key={index} value={item} onClick={(event) => this.props.onDeleteCollab(item)}>{item}
+    <span className="glyphicon glyphicon-remove"></span>
+</button>*/
