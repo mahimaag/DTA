@@ -46,14 +46,12 @@ class ActivityLogComp extends Component{
     }
 
     onDeleteClick = (activity) => {
-        console.log('displayModal**********------',this.state.displayModal);
+        //console.log('displayModal**********------',this.state.displayModal);
         this.setState({
             displayModal: true,
-        },() => {
-            console.log('displayModal------',this.state.displayModal);
         })
 
-        setTimeout(function() { this.setState({displayModal: false}); }.bind(this), 3000);
+        //setTimeout(function() { this.setState({displayModal: false}); }.bind(this), 3000);
         this.props.deleteEntry(activity);
     }
 
@@ -194,9 +192,10 @@ class ActivityLogComp extends Component{
                             </Col>
                         </Row>
 
-                        <ModalComp modalShow={this.state.displayModal}
+                        <ModalComp modalClassName = 'inmodal'
+                                   modalShow = {this.state.displayModal}
                                    modalHide = {() => {this.onCloseModalClick()}}
-                                   modalHeaderMsg="Activity Deleted successfully"
+                                   modalHeaderMsg = "Activity Deleted successfully"
                                    modalBody = {'deletion completed!!!'}
                                    modalFooterClose = {() => {this.onCloseModalClick()}}
                                    modalFooterText = 'Close'

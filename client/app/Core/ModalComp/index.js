@@ -15,8 +15,7 @@ class ModalComp extends Component{
         //console.log('modal visibility----',this.props.modalShow);
         return(
             <Modal
-                content={this.props.modalBody}
-                className = "inmodal"
+                className = {this.props.modalClassName}
                 show={this.props.modalShow}
                 onHide = {this.props.modalHide}
                 container={this}
