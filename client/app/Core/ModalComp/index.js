@@ -1,3 +1,42 @@
 /**
  * Created by saubhagya on 4/8/17.
  */
+
+import React,{Component} from 'react'
+import Modal from 'react-bootstrap/lib/Modal'
+
+class ModalComp extends Component{
+    constructor(){
+        super();
+    }
+
+    render(){
+
+        //console.log('modal visibility----',this.props.modalShow);
+        return(
+            <Modal
+                content={this.props.modalBody}
+                className = "inmodal"
+                show={this.props.modalShow}
+                onHide = {this.props.modalHide}
+                container={this}
+                aria-labelledby="contained-modal-title"
+            >
+                <Modal.Header closeButton>
+                    <Modal.Title id="contained-modal-title">{this.props.modalHeaderMsg}</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    {this.props.modalBody}
+                </Modal.Body>
+                <Modal.Footer>
+                    <button onClick={this.props.modalFooterClose}>{this.props.modalFooterText}</button>
+                </Modal.Footer>
+            </Modal>
+        )
+    }
+}
+
+export default ModalComp;
+
+
+
