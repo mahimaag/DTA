@@ -89,7 +89,7 @@ class ActivityLog extends Component{
     render(){
         return(
                 <div className="col-md-12 activity-list-comp">
-                    <Row className="show-grid">
+                    <Row className="show-grid log-header">
                         {HeadingArray.map((item, index) =>{
                             return (
                                 <Col md={item.md} lg={item.lg} className="log-col" key={index}>

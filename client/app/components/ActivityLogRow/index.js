@@ -15,6 +15,7 @@ import deleteIcon from '../assets/images/deleteIcon.jpg'*/
 class ActivityLogRow extends Component{
     constructor(props){
         super(props);
+
         /*this.state = {
             activity:'',
             type:'',
