@@ -115,6 +115,7 @@ class ActivityLog extends Component{
                                     edittedLog={(editItem,date) => {this.edittedLog(editItem,date)}}
                                     deleteEntry={(deletedEntry,logDate) => {this.deleteEntry(deletedEntry,logDate)}}
                                     closedWithoutCreate={(logDate) => {this.closedWithoutCreate(logDate)}}/>
+
                     <ModalComp modalClassName = 'inmodal'
                                modalShow = {this.state.displayModal}
                                modalHide = {() => {this.onCloseModalClick()}}

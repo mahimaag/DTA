@@ -8,8 +8,6 @@ import LogDropdown from '../../Core/Dropdown/index'
 //import {TSMS_IconButton} from './../../Core/Button'
 import ActivityLogCollaborator from '../ActivityLogCollaborator'
 import MultiSelectDropdown from '../../Core/MultiSelectDropDown'
-import ModalComp from '../../Core/ModalComp'
-import ModalBodyComp from '../../Core/ModalBodyComp'
 import TtnButton from 'core/Button/btn';
 
 
@@ -22,7 +20,7 @@ class ActivityLogComp extends Component{
             editBtn:'false',
             activity: logActivity,
             newDesc: logActivity.Description,
-            displayModal: false
+            //displayModal: false
         }
     }
 
@@ -50,9 +48,9 @@ class ActivityLogComp extends Component{
 
     onDeleteClick = (activity) => {
         //console.log('displayModal**********------',this.state.displayModal);
-        this.setState({
+        /*this.setState({
             displayModal: true,
-        })
+        })*/
 
         //setTimeout(function() { this.setState({displayModal: false}); }.bind(this), 3000);
         this.props.deleteEntry(activity);
@@ -92,11 +90,11 @@ class ActivityLogComp extends Component{
         })
     };
 
-    onCloseModalClick = () => {
+    /*onCloseModalClick = () => {
         this.setState({
             displayModal: false
         })
-    }
+    }*/
 
     render(){
         const activity = this.props.activity;
@@ -156,12 +154,12 @@ class ActivityLogComp extends Component{
 
 
                             </Col>
-                            <Col md={12} lg={12} className="log-col">
-                                <MultiSelectDropdown collabArray={newCollabArray}
-                                                     newCollab={this.state.activity.Collaborators}
-                                                     title='Select'
+                            <Col md={12} lg={12} className = "log-col">
+                                <MultiSelectDropdown collabArray = {newCollabArray}
+                                                     newCollab = {this.state.activity.Collaborators}
+                                                     title = 'Select'
                                                      onSelectedVal = {(newCollab) => {this.onSelectedVal(newCollab)}}
-                                                     onDeleteCollab={(deletedVal) => {this.onDeleteCollab(deletedVal)}}/>
+                                                     onDeleteCollab = {(deletedVal) => {this.onDeleteCollab(deletedVal)}}/>
                                 {/*<ActivityLogCollaborator collaborators={activity.Collaborators}
                                                          onCollabChange={(collaborators) => {this.onCollabChange(collaborators)}}
                                                          editable='true'/>*/}
@@ -215,14 +213,6 @@ class ActivityLogComp extends Component{
                             </Col>
                         </Row>
 
-                        <ModalComp modalClassName = 'inmodal'
-                                   modalShow = {this.state.displayModal}
-                                   modalHide = {() => {this.onCloseModalClick()}}
-                                   modalHeaderMsg = "Activity Deleted successfully"
-                                   modalBody = {'deletion completed!!!'}
-                                   modalFooterClose = {() => {this.onCloseModalClick()}}
-                                   modalFooterText = 'Close'
-                        />
                     </div>
                 }
             </div>
@@ -232,13 +222,4 @@ class ActivityLogComp extends Component{
 
 export default ActivityLogComp;
 
-//Modal component ---------------------------
-// Can also be used as below when we need to pass another component inside it's body..
-/*
-<ModalComp modalShow={this.state.displayModal}
-           modalHide = {() => {this.onCloseModalClick()}}
-           modalHeaderMsg="Activity Deleted successfully"
-           modalBody = {<ModalBodyComp/>}
-           modalFooterClose = {() => {this.onCloseModalClick()}}
-           modalFooterText = 'Close'
-/>*/
+

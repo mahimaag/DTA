@@ -57,7 +57,7 @@ class LogActivityCard extends Component{
     }
     render(){
         let activityList = [];
-        this.state.activityList.map((data, index)=>{
+        this.state.activityList.map((data, index) => {
             activityList.push(
                 <div key={index} className="activity">
                     <div className="col-sm-12 col-md-12 col-lg-12 description">
@@ -71,12 +71,12 @@ class LogActivityCard extends Component{
                             <TtnButton iconButton
                                        level = "primary"
                                        rounded icon = "glyphicon glyphicon-ok"
-                                       onClick={(e)=>this.okHandler(e,index)}/>
+                                       onClick = {(e)=>this.okHandler(e,index)}/>
 
                             <TtnButton iconButton
                                        level = "primary"
                                        rounded icon = "glyphicon glyphicon-remove"
-                                       onClick={(e)=>this.removeHandler(e,index)}/>
+                                       onClick = {(e)=>this.removeHandler(e,index)}/>
 
                             {/*<button type="button" className="btn btn-default btn-sm" onClick={(e)=>this.okHandler(e,index)}>
                                 <Glyphicon glyph="ok-circle"></Glyphicon>
@@ -91,11 +91,11 @@ class LogActivityCard extends Component{
         return(
             <Card>
                 <CardHeader>
-                    <h5 className="">ACTIVITY({this.state.activityCount})</h5>
+                    <h5 className = "">ACTIVITY({this.state.activityCount})</h5>
                     {!this.state.activityCount?'':<h5 className="">viewall</h5>}
                 </CardHeader>
                 <CardContent>
-                    <div className="activity-list">
+                    <div className = "activity-list">
                         {activityList}
                     </div>
                 </CardContent>
