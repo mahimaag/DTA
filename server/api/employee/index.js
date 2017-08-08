@@ -1,7 +1,7 @@
 'use strict';
 
-const express = require('express');
-const  controller = require('./employee.controller.js');
+import express from "express"
+import controller from "./employee.controller"
 const router = express.Router();
 
 router.get('/', controller.index);

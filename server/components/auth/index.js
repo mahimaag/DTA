@@ -1,10 +1,6 @@
-/**
- * Created by sourabh on 26/7/17.
- */
 import jwt_token from "jsonwebtoken";
 import config from "../../config/environment"
 import { compose } from "compose-middleware"
-// import { compose } from "compose-middleware";
 const AUTHORIZE_URL = "http://newers-world-oauth.qa2.tothenew.net/oauth/authorize?client_id=e6d6a83e-6c7a-11e7-9394-406186be844b";
 const AUTH_HRMS_TOKEN_COOKIE = 'nw_dev_oauthToken';
 

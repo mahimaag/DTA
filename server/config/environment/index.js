@@ -13,7 +13,7 @@ import _ from 'lodash';
 
 // All configurations will extend these options
 // ============================================
-var all = {
+let all = {
   env: process.env.NODE_ENV,
 
   // Root path of server
@@ -23,12 +23,14 @@ var all = {
   browserSyncPort: process.env.BROWSER_SYNC_PORT || 3000,
 
   // Server port
-  port: process.env.PORT || 9000,
+  port: process.env.PORT || 3000,
 
   //Cookie maxAge
 
   cookie: {
     MaximumAge: process.env.MAX_AGE || 900000,
+    TsmsTokenCookie: process.env.AUTH_TSMS_TOKEN_COOKIE || 'Tsms',
+    HrmsTokenCookie:process.env.AUTH_HRMS_TOKEN_COOKIE || 'nw_dev_oauthToken',
   },
 
   //Token expiry Time

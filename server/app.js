@@ -7,7 +7,9 @@
 import express from 'express';
 import mongoose from 'mongoose';
 
-mongoose.Promise = require('bluebird');
+import Promise from "bluebird";
+mongoose.Promise = Promise;
+
 import config from './config/environment';
 import seedDatabaseIfNeeded from './config/seed';
 import logger from './components/logger';
@@ -20,7 +22,6 @@ mongoose.connection.on('error', function(err) {
 
 // Setup server
 const app = express();
-// const server = http.createServer(app);
 require('./config/express').default(app);
 require('./routes').default(app);
 

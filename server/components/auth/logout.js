@@ -1,5 +1,4 @@
-const AUTH_TSMS_TOKEN_COOKIE = 'Tsms';
-const AUTH_HRMS_TOKEN_COOKIE = 'nw_dev_oauthToken';
+import config from "../../config/environment"
 const INVALIDATE_TOKEN_URL = "http://newers-world-oauth.qa2.tothenew.net/oauth/invalidateToken?access_token=";
 import Network from "../network";
 import logger from "../logger"
@@ -10,11 +9,11 @@ import logger from "../logger"
  */
 
 const logout = (req, res) => {
-  const hrmstoken = req.cookies[AUTH_HRMS_TOKEN_COOKIE];
+  const hrmstoken = req.cookies[config.cookie.HrmsTokenCookie];
 
-  res.clearCookie(AUTH_TSMS_TOKEN_COOKIE).send("logout successful");
+  res.clearCookie(config.cookie.TsmsTokenCookie).send("logout successful");
   //
-  // res.clearCookie(AUTH_HRMS_TOKEN_COOKIE).send("logout successful");
+  // res.clearCookie(config.cookie.HrmsTokenCookie).send("logout successful");
   // Network({url: INVALIDATE_TOKEN_URL + hrmstoken})
   //   .then(res => {
   //     logger.silly(res)
