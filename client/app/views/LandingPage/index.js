@@ -4,11 +4,10 @@ import { correctHeight, detectBody } from './../../../utils/common';
 import Calendar from './../../components/Calendar';
 import ActivityLog from './../../components/ListActivityCard';
 import TtnButton from 'core/Button/btn';
-class Main extends React.Component {
+class Main extends React.Component{
 
-    render() {
-
-        return (
+    render(){
+        return(
             <div className="wrapper wrapper-content animated fadeInRight">
                 <div className="row">
                     <div className="col-lg-12">
@@ -41,18 +40,15 @@ class Main extends React.Component {
                     </div>                
                 </div>
             </div>
-
         )
     }
 
-    componentDidMount() {
-
+    componentDidMount(){
         // Run correctHeight function on load and resize window event
         $(window).bind("load resize", function() {
             correctHeight();
             detectBody();
         });
-
         // Correct height of wrapper after metisMenu animation.
         $('.metismenu a').click(() => {
             setTimeout(() => {

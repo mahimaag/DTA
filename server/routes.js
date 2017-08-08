@@ -11,20 +11,12 @@ import redirectUrlFunction from "./components/auth/redirectUrl";
 import logout from "./components/auth/logout";
 import express from 'express';
 export default function (app) {
-
-    const logMiddleware = (m) => (r1, r2, n) => {
-        console.log(m);
-        n();
-    };
     //middlewares
     const indexFile = path.join(app.get('appPath'), 'client', 'assests', 'index.html');
     const distFolder = path.join(app.get('appPath'), 'dist');
-    console.log('Dist folder - ', distFolder);
-    console.log('Index file - ', indexFile);
     app.use(authMiddlewares);
-    app.use(express.static(indexFile), logMiddleware('After index file'));
-    app.use(express.static(distFolder), logMiddleware('After dist folder'));
-    // app.use('/api', authMiddlewares);
+    app.use(express.static(indexFile));
+    app.use(express.static(distFolder));
     app.use('/api/employees', require('./api/employee'));
     app.use('/api/oauthServerCallback', redirectUrlFunction, (req, res) => {
         res.redirect('/');
@@ -48,15 +40,9 @@ export default function (app) {
     app.use(function _404ErrorMiddleware(err, req, res, next) {
         res.sendfile(path.resolve("server/views/404.html"));
     });
-    /*app.route('/!*', authMiddlewares)
-     .get((req, res) => {
-     console.log('NOT MATCHING ANY ROUTE...');
-     res.sendFile(indexFile);
-     });*/
     // All other routes should redirect to the index.html
     app.route('/*')
         .get((req, res) => {
-            console.log('NOT MATCHING ANY ROUTE...');
             res.sendFile(indexFile);
         });
 }

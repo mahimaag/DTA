@@ -1,6 +1,3 @@
-/**
- * Created by sourabh on 27/7/17.
- */
 const AUTH_TSMS_TOKEN_COOKIE = 'Tsms';
 const AUTH_HRMS_TOKEN_COOKIE = 'nw_dev_oauthToken';
 const INVALIDATE_TOKEN_URL = "http://newers-world-oauth.qa2.tothenew.net/oauth/invalidateToken?access_token=";

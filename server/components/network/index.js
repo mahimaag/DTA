@@ -9,7 +9,7 @@ const _isErrorResponse = (response = {}) => {
     // let isErrorResponse = re;     // signifies whether response is an errored response or not.
 
     return (response.statusCode != 200);
-}
+};
 
 const ErrorType = Object.freeze({
     CustomError: 'CustomError',

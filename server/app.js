@@ -9,7 +9,6 @@ import mongoose from 'mongoose';
 
 mongoose.Promise = require('bluebird');
 import config from './config/environment';
-import http from 'http';
 import seedDatabaseIfNeeded from './config/seed';
 import logger from './components/logger';
 // Connect to MongoDB
@@ -25,15 +24,6 @@ const app = express();
 require('./config/express').default(app);
 require('./routes').default(app);
 
-//using cookie-parser
-
-
-// // Start server
-// function startServer() {
-//   app.angularFullstack = server.listen(config.port, config.ip, function() {
-//     logger.info('Express server listening on %d, in %s mode', config.port, app.get('env'));
-//   });
-// }
 
 seedDatabaseIfNeeded();
 // setImmediate(startServer);
