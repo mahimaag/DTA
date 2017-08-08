@@ -1,0 +1,19 @@
+.typeahead-container{
+    width: 100%;
+    position: relative;
+}
+.typeahead-container .place-right{
+    position: absolute;
+    bottom: 2px;
+    right: 5px;
+    width: 23px;
+    height: 19px;
+    margin-top: 10px;
+}
+.typeahead-container .place-left{
+    position: absolute;
+    width: 23px;
+    height: 19px;
+    margin-top: 10px;
+    left: 5px;
+}
