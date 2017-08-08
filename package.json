@@ -74,6 +74,7 @@
     "react-pace": "^1.0.0",
     "react-router": "^4.1.2",
     "react-router-dom": "^4.1.2",
+    "react-toastr": "^2.8.2",
     "request": "^2.81.0",
     "shrink-ray": "^0.1.3",
     "sinon": "^2.4.1",

@@ -10,14 +10,15 @@ import ActivityLogCollaborator from '../ActivityLogCollaborator'
 import MultiSelectDropdown from '../../Core/MultiSelectDropDown'
 
 
-
 class ActivityLogComp extends Component{
     constructor(props){
         super(props);
         const logActivity = Object.assign({}, this.props.activity);
         this.state = {
             editBtn:'false',
-            activity: logActivity
+            activity: logActivity,
+            alertType:'',
+            message:''
         }
     }
 
@@ -25,12 +26,18 @@ class ActivityLogComp extends Component{
         this.setState({
             editBtn:'true'
         })
-    }
+    };
 
     onOkClick = () => {
+        console.log("props are ,",this.state);
         this.setState({
-            editBtn: 'false'
+            editBtn: 'false',
+        },()=>{
+            console.log("state is ",this.state)
         });
+        //update in db after this hide toastr
+
+        // setTimeout(() => {this.setState({alertType:'',message:''})}, 1000)
         this.props.edittedLog(this.state.activity);
 
     };
@@ -41,25 +48,24 @@ class ActivityLogComp extends Component{
             editBtn:'false',
             activity: activity
         });
-    }
+    };
 
     onDeleteClick = (activity) => {
         this.props.deleteEntry(activity);
-    }
-
+    };
 
     setSelectedValue = (item, property) => {
         this.state.activity[property] = item;
         this.setState({
             activity: this.state.activity
         })
-    }
+    };
 
     onDescChange = (event) => {
         this.setState({
             newDesc: event.target.value
         });
-    }
+    };
 
     onCollabChange = (collaborators) => {
         this.setState({
@@ -67,7 +73,7 @@ class ActivityLogComp extends Component{
                 Collaborators: collaborators
             }
         })
-    }
+    };
 
     onSelectedVal = (newCollab) => {
         (this.state.activity.Collaborators.length && this.state.activity.Collaborators.indexOf(newCollab) > -1) ? null : this.state.activity.Collaborators.push(newCollab);
@@ -179,6 +185,7 @@ class ActivityLogComp extends Component{
                         </Row>
                     </div>
                 }
+
             </div>
         )
     }
