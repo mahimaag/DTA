@@ -3,36 +3,40 @@ import BigCalendar from 'react-big-calendar';
 import moment from 'moment';
 import 'react-big-calendar/lib/css/react-big-calendar.css'
 
-/*
-import events from './../../config/events'
-import styles from './style.css';
-import AddButton from './../../Core/PlusButton'
-*/
+import EventModalContent from './../../Core/EventModalContent'
 
 BigCalendar.setLocalizer(
     BigCalendar.momentLocalizer(moment)
 );
 
+/*function CustomToolbar() {
+    return (
+        <div className="fc-toolbar">
+            <div className="fc-center">
+                Aug-Sept 2016
+            </div>
+        </div >
+    )
+}*/
+//add custom toolbar in Calendar
 
 let msg = {
-    showMore: total => `+${total} ...`
-};
+    showMore: total => `+${total} ...`,
+    };
 
 class Calendar extends Component {
     constructor(props){
         super(props)
         this.state = {
-            showEventModal : false
+            showEventModal : false,
+            eventSelected : ''
         }
     }
+
     eventStyleGetter(event, start, end, isSelected) {
-        let cssClass;
-        if (event.title === 'img') {
-            cssClass = 'flag'
-        }
+        let cssClass = "fc-day-grid-event fc-event  ";
         return {
             className:cssClass,
-
         };
     }
     onselectSlot(slot) {
@@ -41,13 +45,18 @@ class Calendar extends Component {
     onselectEvent(slotId) {
         console.log("event selected",slotId);
         this.setState({
-            showEventModal : true
+            showEventModal : true,
+            eventSelected : slotId
         })
     } //called when event is clicked
+    close  = (event) => {
+        event.preventDefault();
+        this.setState({showEventModal:false})
+    };
 
     render() {
         return (
-            <div>
+            <div className=" ibox-content wrapper-calendar">
                 <BigCalendar
                     selectable
                     events={this.props.events}
@@ -59,11 +68,14 @@ class Calendar extends Component {
                     onSelectEvent={(event) => this.onselectEvent(event)}
                     eventPropGetter={(this.eventStyleGetter)}
                 />
+                {
+                    this.state.showEventModal ?
+                        <EventModalContent close = {(e) => this.close(e)} showModal = {this.state.showEventModal} message={this.state.eventSelected.start} eventInfo={this.state.eventSelected}/>:null
+                }
             </div>
         )
     }
 }
-
 export default Calendar
 
 

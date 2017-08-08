@@ -7,7 +7,7 @@ export default function ModalComponent(WrappedComponent) {
         render(){
             return(
                 <Modal
-                    show={true}
+                    show={this.props.showModal}
                     container={this}
                     aria-labelledby="contained-modal-title"
                 >

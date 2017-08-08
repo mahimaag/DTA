@@ -6,7 +6,6 @@ TEMPLATE =
           }
 */
 
-
 const ACL = {
     "ADMIN": [{
         resource: "user",
@@ -24,7 +23,7 @@ const ACL = {
         operations: ["GET"]
     },{
         resource: "projects",
-        operations: ["GET"]     // user can only subscribe to feeds.
+        operations: ["GET"]
     }],
     "AP1":[{
         resource: "projects",

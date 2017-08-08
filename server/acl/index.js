@@ -17,7 +17,6 @@ let isActionPermitted = ((httpRequest = null, userRole = '', acl = '') => {
     let _resource = splittedUrl[1];
     console.log(`An ${userRole} is trying to access ${httpRequest.method} method of ${_resource} resource`);
     let roleForAcl = acl[userRole];
-    console.log("roleFOrACL",roleForAcl)
     if(!roleForAcl) return isPermitted;
     let permittedResource = roleForAcl.find(permission => permission.resource === _resource || permission.resource == "*");
     if(!permittedResource)  return isPermitted;
@@ -26,7 +25,6 @@ let isActionPermitted = ((httpRequest = null, userRole = '', acl = '') => {
 });
 
 module.exports = (req, res, next) => {
-    console.log("inside acl middleware")
     if(!isActionPermitted(req, req.params.role , ACLs)){
         console.log('Access denied');
         return res.status(401).end('Access denied');

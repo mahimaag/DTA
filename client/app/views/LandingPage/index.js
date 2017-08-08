@@ -3,7 +3,7 @@ import React from 'react';
 import events from './../../config/events'
 import NotificationCards from './../../components/NotificationCard';
 import { correctHeight, detectBody } from './../../../utils/common';
-import DashboardCalendar from './../../components/DashboardCalendar';
+import DashboardCalendar from '../../components/DashboardCalendar/index';
 import ActivityLog from './../../components/ListActivityCard';
 
 class Main extends React.Component {

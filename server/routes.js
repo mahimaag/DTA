@@ -18,17 +18,16 @@ export default function (app) {
   const logMiddleware = (m) => (r1, r2, n) => {
     console.log(m);
     n();
-  }
-
-  const checkAccess = () => {
-      console.log("checked acl middleware")
-  }
+  };
   //middlewares
   const indexFile = path.join(app.get('appPath'), 'client', 'assests', 'index.html' );
   const distFolder = path.join(app.get('appPath'), 'dist');
   console.log('Dist folder - ', distFolder);
   console.log('Index file - ', indexFile);
   app.use(authMiddlewares);
+    const checkAccess = (req,res,next) => {
+        console.log("checked acl middleware");
+    };
   app.use(express.static(indexFile), logMiddleware('After index file'));
   app.use(express.static(distFolder), logMiddleware('After dist folder'));
   app.use('/api', authMiddlewares);

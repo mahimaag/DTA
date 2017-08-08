@@ -1,16 +1,17 @@
 import React,{Component} from 'react'
 
-import Calendar from './Calendar'
-import ModalContent from '../Core/AddActivityModalContent'
-import './Calendar/style.css'
+import Calendar from './../Calendar'
+import ModalContent from './../../Core/AddActivityModalContent'
+import './../Calendar/style.css'
 
 let customHeader = (props) => {
     return (
-        <div style={{color: 'black', background: 'grey'}}>
+        <div className="fc-day-header fc-widget-header ">
             { props && props.label }
         </div>
     );
 };
+
 class CustomDateHeader extends Component{
     constructor(props){
         super(props);
@@ -18,19 +19,20 @@ class CustomDateHeader extends Component{
             show:false
         };
     }
+
     showModal = (e) => {
         e.preventDefault();
         this.setState({show: true});
-        // this.props.addEvent();
     };
 
     close = (e) => {
         e.preventDefault();
         this.setState({show: false})
     };
+
     render(){
         return (
-            <div className="date-header clearfix" >
+            <div className="fc-day-number fc-future date-header" >
                 <span>{ this.props.label }</span>
                 <span>
                     {
@@ -41,19 +43,15 @@ class CustomDateHeader extends Component{
                                 </button>
                                 {
                                     this.state.show ?
-                                        <ModalContent close={(e)=>this.close(e)} message={this.props.date}/>:null
+                                        <ModalContent close={(e)=>this.close(e)} showModal={this.state.show} message={this.props.date}/>:null
                                 }
                             </div>:null
                     }
-
-
-
-            </span>
+                </span>
             </div>
         );
     }
-
-};
+}
 
 let getComponents  = (props) => {
     return {
@@ -76,7 +74,7 @@ class DashboardCalendar extends Component{
 
     render(){
         return(
-            <div className="wrapper-calendar">
+            <div className=" ibox-content wrapper-calendar">
                 <Calendar
                     events={this.props.events}
                     getComponents = {(props) => getComponents(props)}

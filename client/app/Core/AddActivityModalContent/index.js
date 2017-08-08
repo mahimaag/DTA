@@ -59,7 +59,7 @@ class ModalContent extends Component{
             });
         }
 
-    }
+    } // todo : change color of selected slot
 
     saveEvent = (event) => {
         event.preventDefault();
@@ -106,6 +106,7 @@ class ModalContent extends Component{
                             selectable
                             events={newEvents}
                             views={['month']}
+                            toolbar={false}
                             onSelectSlot = { (slot) => this.selectSlot(slot)}
                         />
                         <button onClick={(e) => this.saveRepeat(e)}>Save </button>
