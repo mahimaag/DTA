@@ -18,7 +18,6 @@ class ModalComp extends Component{
                 className = {this.props.modalClassName}
                 show={this.props.modalShow}
                 onHide = {this.props.modalHide}
-                container={this}
                 aria-labelledby="contained-modal-title"
             >
                 <Modal.Header closeButton>
