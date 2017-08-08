@@ -16,7 +16,7 @@ export function save(req, res) {
     console.log("=======activity save called======");
 
     let activity = new Activity({
-      employeeId: req.body.employeeId,
+        employeeId: req.body.employeeId,
         employeeEmail: req.body.employeeEmail,
         date: req.body.date || new Date().getTimes(),
         duration: req.body.duration,
@@ -30,7 +30,7 @@ export function save(req, res) {
 
     activity.save((err, output) => {
         if(err) {console.log("err=====>>>>>>", err);}
-        console.log("output===>>>>", output);
+        res.status(200).end();
     });
 
     console.log("======activity saved====");
