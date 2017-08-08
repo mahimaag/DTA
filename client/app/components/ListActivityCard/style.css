@@ -28,6 +28,11 @@
     background-color: #DDDDDD;
 }
 
+.log-header {
+    background-color: lightgray;
+    box-shadow: 5px 5px 10px;
+}
+
 .collab-div {
     /*float:left;
     width:100%;*/
