@@ -21,11 +21,24 @@ export default function (app) {
   const distFolder = path.join(app.get('appPath'), 'dist');
   console.log('Dist folder - ', distFolder);
   console.log('Index file - ', indexFile);
-  app.use(authMiddlewares);
-  app.use(express.static(indexFile), logMiddleware('After index file'));
+  app.use(
+      logMiddleware('Before auth middleware'),
+      authMiddlewares,
+      logMiddleware('After auth middleware'));
+  // app.use(express.static(indexFile), logMiddleware('After index file'));
   app.use(express.static(distFolder), logMiddleware('After dist folder'));
-  app.use('/api', authMiddlewares);
-  app.use('/api/employees', require('./api/employee'));
+  app.use('/api',
+      logMiddleware('Before authMiddleware'),
+      authMiddlewares,
+      logMiddleware('After authMiddleware'));
+  app.use('/api/employees',
+      logMiddleware('Before Employee'),
+      require('./api/employee'),
+      logMiddleware('After employee'));
+  app.use('/api/activity',
+      logMiddleware('Before activity'),
+      require('./api/activity'),
+      logMiddleware('After activity'));
     app.use('/api/oauthServerCallback',redirectUrlFunction, (req, res) => {
       res.redirect('/');
     });
