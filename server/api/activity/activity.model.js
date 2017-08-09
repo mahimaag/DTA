@@ -5,9 +5,6 @@ import mongoose from 'mongoose';
 
 
 const ActivitySchema = new mongoose.Schema({
-    activityId: {
-        type: Number
-    },
     employeeId:{
         type:String,
     },

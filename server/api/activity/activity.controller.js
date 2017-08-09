@@ -37,7 +37,7 @@ export function show(req, res) {
               status: 1,
               collaborators: 1,
               duration: 1,
-              activityId: 1
+              _id: 1
 
           }
         },
@@ -46,7 +46,7 @@ export function show(req, res) {
                 _id: "$dateString",
                 "activities": {
                     $push: {
-                        "Id": "$activityId",
+                        "Id": "$_id",
                         "Activity":"$activity",
                         "Type": "$activityType",
                         "Duration": "$duration",
@@ -77,12 +77,13 @@ export function save(req, res) {
         activityType: req.body.activityType,
         description: req.body.description,
         status: req.body.status,
-        updatedDate: new Date().getTime()
+        updatedDate: new Date().getTime(),
+        collaborators: req.body.collaborators
     });
 
     activity.save((err, output) => {
         if(err) {console.log("err=====>>>>>>", err);}
-        res.status(200).end();
+        res.status(200).send({msg: "Activity successfully added.", id: output._id});
     });
 
     console.log("======activity saved====");
@@ -93,8 +94,8 @@ export function upsert(req, res) {
 
     return Activity.findOneAndUpdate({_id: req.params.id}, req.body,
         {new: true, upsert: true, setDefaultsOnInsert: true, runValidators: true}).exec()
-        .then(respondWithResult(res))
-        .catch(handleError(res));
+        .then(genericRepo.respondWithResult(res))
+        .catch(genericRepo.handleError(res));
 
 }
 
@@ -103,6 +104,7 @@ export function destroy(req, res) {
 
     Activity.findOneAndRemove({_id: req.params.id})
         .then(doc => {
+            console.log("-------------doc", doc);
         let response = {
             message: "activity successfully deleted",
             id: doc._id
