@@ -32,23 +32,23 @@ class ActivityLogRow extends Component{
                 {
                     this.props.timeLog.map((item, index) => {
                         return (
-                            <div key={index} className="activity-timelog">
-                                <ActivityLogHeader logDate={item.date}
+                            <div key={index} className = "activity-timelog">
+                                <ActivityLogHeader logDate = {item.date}
                                                    activities = {item.activities}
-                                                   onLogTimeClick={() => this.props.logItem(item.date)}
-                                                   onClearClick={() => this.props.onClearClick(item.date)}/>
-                                <Row className="show-grid">
+                                                   onLogTimeClick = {() => this.props.logItem(item.date)}
+                                                   onClearClick = {() => this.props.onClearClick(item.date)}/>
+                                <Row className = "show-grid">
                                     {/*{(this.state.newEntry === true)?
                                         <NewLogComp sampleData={item.activities} newLogCreated={(newLog) => this.newLogData(newLog,item.date)}/>:null
                                     }*/}
                                     {item.activities.map((activity, index) => {
                                         return ((activity.Status == TimeEntryStatus.New) ? <NewLogComp
-                                                                                         newLogCreated={(newLog) => this.props.newEntry(newLog, item.date)}
-                                                                                         closedWithoutCreate={() => {this.props.closedWithoutCreate(item.date)}} key={index}/> :
-                                            <ActivityLogComp activity={activity}
-                                                             deleteEntry={(deletedEntry) => this.props.deleteEntry(deletedEntry, item.date)}
-                                                             edittedLog={(editLog) => {this.props.edittedLog(editLog, item.date)}}
-                                                             key={index}
+                                                                                         newLogCreated = {(newLog) => this.props.newEntry(newLog, item.date)}
+                                                                                         closedWithoutCreate = {() => {this.props.closedWithoutCreate(item.date)}} key={index}/> :
+                                            <ActivityLogComp activity = {activity}
+                                                             deleteEntry = {(deletedEntry) => this.props.deleteEntry(deletedEntry, item.date)}
+                                                             edittedLog = {(editLog) => {this.props.edittedLog(editLog, item.date)}}
+                                                             key = {index}
                                             />
                                         )
                                     })}

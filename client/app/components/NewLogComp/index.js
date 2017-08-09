@@ -5,9 +5,10 @@
 import React, { Component } from 'react'
 import { Row, Col } from 'react-bootstrap'
 import LogDropdown from '../../Core/Dropdown/index'
-import { TSMS_IconButton } from './../../Core/Button'
+//import { TSMS_IconButton } from './../../Core/Button'
 import {TimeEntryStatus} from '../../../constants/Index'
 import MultiSelectDropdown from '../../Core/MultiSelectDropDown'
+import TtnButton from 'core/Button/btn';
 
 class NewLogComp extends Component{
     constructor(){
@@ -85,49 +86,60 @@ class NewLogComp extends Component{
         let durationTime = ['30 mins','1 hr','2 hrs','3 hrs','4 hrs','5 hrs','6 hrs','7 hrs','8 hrs'];
         let newCollabArray = ['Gaurav','Rubi','Mahima','Nitin'];
         return(
-            <div className="data-div">
+            <div className = "data-div">
                 <Row>
-                    <Col md={1} lg={1} className="log-col">
-                        <LogDropdown className='activity'
-                                     data={activityCategory}
-                                     title={this.state.newLogActivity}
-                                     onSelect={(item) => this.setSelectedValue(item, 'newLogActivity')}/>
+                    <Col md = {1} lg = {1} className = "log-col">
+                        <LogDropdown className = 'activity'
+                                     data = {activityCategory}
+                                     title = {this.state.newLogActivity}
+                                     onSelect = {(item) => this.setSelectedValue(item, 'newLogActivity')}/>
                     </Col>
-                    <Col md={2} lg={2} className="log-col">
-                        <LogDropdown className='type'
-                                     data={activityTitles}
-                                     title={this.state.newLogType}
-                                     onSelect={(item) => this.setSelectedValue(item, 'newLogType')}/>
+                    <Col md = {2} lg = {2} className = "log-col">
+                        <LogDropdown className = 'type'
+                                     data = {activityTitles}
+                                     title = {this.state.newLogType}
+                                     onSelect = {(item) => this.setSelectedValue(item, 'newLogType')}/>
                     </Col>
-                    <Col md={1} lg={1} className="log-col">
-                        <LogDropdown className='duration'
-                                     data={durationTime}
-                                     title={this.state.newLogDuration}
-                                     onSelect={(item) => this.setSelectedValue(item, 'newLogDuration')}/>
+                    <Col md = {1} lg = {1} className = "log-col">
+                        <LogDropdown className = 'duration'
+                                     data = {durationTime}
+                                     title = {this.state.newLogDuration}
+                                     onSelect = {(item) => this.setSelectedValue(item, 'newLogDuration')}/>
                     </Col>
-                    <Col md={4} lg={4} className="log-col">
-                        <input type="text" name="newLogDesc" value={this.state.newLogDesc} onChange={this.onValueChange.bind(this)}/>
+                    <Col md = {4} lg = {4} className = "log-col">
+                        <input type = "text"
+                               name = "newLogDesc"
+                               value = {this.state.newLogDesc}
+                               onChange = {this.onValueChange.bind(this)}/>
                     </Col>
-                    <Col md={1} lg={1} className="log-col">
+                    <Col md = {1} lg = {1} className = "log-col">
                         <span>{this.state.newLogStatus}</span>
                     </Col>
-                    <Col md={2} lg={2} lgOffset={1} className="log-col">
-                        <TSMS_IconButton bClassName="btn btn-default btn-sm edit-clear-button"
-                                         onClickFunc={() => this.onDoneClick()}
-                                         spanClass="glyphicon glyphicon-ok"/>
+                    <Col md = {2} lg = {2} lgOffset = {1} className = "log-col">
+                        <TtnButton iconButton
+                                   level = "primary"
+                                   rounded icon = "glyphicon glyphicon-ok"
+                                   onClick = {() => this.onDoneClick()}/>
+
+
+                        <TtnButton nature = "Decline"
+                                   onClick = {() => this.onCloseClick()}/>
+                        {/*<TSMS_IconButton bClassName="btn btn-default btn-sm edit-clear-button"
+                         onClickFunc={() => this.onDoneClick()}
+                         spanClass="glyphicon glyphicon-ok"/>
 
                         <TSMS_IconButton bClassName="btn btn-default btn-sm edit-clear-button"
                                          onClickFunc={() => this.onCloseClick()}
-                                         spanClass="glyphicon glyphicon-remove"/>
+                                         spanClass="glyphicon glyphicon-remove"/>*/}
 
 
                     </Col>
-                    <Col md={12} lg={12} className="log-col">
-                        Collaborators: <MultiSelectDropdown collabArray={newCollabArray}
-                                             newCollab={this.state.newCollaborators}
-                                             title='Select'
-                                             onSelectedVal = {(newCollab) => {this.onSelectedVal(newCollab)}}
-                                             onDeleteCollab={(deletedVal) => {this.onDeleteCollab(deletedVal)}}/>
+                    <Col md = {12} lg = {12} className = "log-col">
+                        Collaborators: <MultiSelectDropdown collabArray = {newCollabArray}
+                                                            newCollab = {this.state.newCollaborators}
+                                                            title = 'Select'
+                                                            onSelectedVal = {(newCollab) => {this.onSelectedVal(newCollab)}}
+                                                            onDeleteCollab = {(deletedVal) => {this.onDeleteCollab(deletedVal)}}/>
                     </Col>
                 </Row>
             </div>
