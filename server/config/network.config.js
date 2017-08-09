@@ -27,6 +27,4 @@ NetworkConfig.NW.Api.Authorize = {
     }
 }
 
-console.log(NetworkConfig.NW.Api.Authorize);
-
 module.exports = Object.freeze(NetworkConfig);

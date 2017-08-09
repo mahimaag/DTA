@@ -8,7 +8,6 @@ import TypeAhead from './../../Core/TypeAhead'
 import ActivityAutoComplete from './../../Core/ActivityAutoComplete'
 
 class Main extends React.Component {
-
     constructor(props){
         super(props);
         this.state = {
@@ -35,7 +34,7 @@ class Main extends React.Component {
         return (
             <div className="wrapper wrapper-content animated fadeInRight">
                 <div className="row">
-                    <div className="col-lg-12 ">
+                    <div className="col-lg-12">
                         <div className="text-center m-t-lg">
                             <div className="col-lg-9 pull-left ">
                                 <TypeAhead wrappedComponenent={ActivityAutoComplete} apiPath="apiPath"
@@ -67,7 +66,7 @@ class Main extends React.Component {
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div>                
                 </div>
             </div>
 
