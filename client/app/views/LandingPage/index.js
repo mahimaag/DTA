@@ -78,7 +78,7 @@ class Main extends React.Component {
             </div>
 
         )
-    }
+    }   // todo : get events from mongodb
 
     componentDidMount() {
 

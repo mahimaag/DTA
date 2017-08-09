@@ -25,7 +25,9 @@ class ModalContent extends Component{
             projectName:'Select',
             duration:'Select',
             repeatedDates : [],
-            savedEvent:false
+            savedEvent:false,
+            description:'',
+            collaborators:''
         }
     }
 
@@ -74,7 +76,7 @@ class ModalContent extends Component{
                 savedEvent:true
             })
         }
-    };
+    }; // todo: save this new event in mongodb
     saveRepeat = (event) => {
         event.preventDefault();
         this.state.repeatedDates.map((item) => {
@@ -83,6 +85,11 @@ class ModalContent extends Component{
                 'start': item,
                 'end': item,
             })
+        })
+    }; // todo : save the repeated event in mongodb
+    onInputChange = (event) => {
+        this.setState({
+            [event.target.name] : event.target.value
         })
     };
 
@@ -114,8 +121,16 @@ class ModalContent extends Component{
                         Duration : <Dropdown data={durationTime}
                                              title={this.state.duration}
                                              onSelect={(item) => this.setSelectedValue(item,'duration')}/>
-                        Description:<input type="text"/>
-                        Collaborators : <input type="text"/>
+                        Description:<input type="text"
+                                           onChange={(e)=> this.onInputChange(e)}
+                                           name = "description"
+                                           value={this.state.description}
+                    />
+                        Collaborators : <input type="text"
+                                               onChange={(e)=> this.onInputChange(e)}
+                                               name = "collaborators"
+                                               value={this.state.collaborators}
+                    />
                         {
                             this.state.savedEvent ?
                                 <TtnButton title="Repeat" level="primary" onClick = {this.repeatEvent}/>

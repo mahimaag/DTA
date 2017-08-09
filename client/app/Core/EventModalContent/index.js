@@ -43,13 +43,25 @@ class ModalContent extends Component {
                 this.state.edit ?
                     <div>
                         <input type="text" value={this.props.eventInfo.title}/>
-                        <TtnButton level="primary" title="Done" />
-                        <TtnButton level="primary" title="Cancel" onClick={this.cancelEdit}/>
+                        <TtnButton iconButton
+                                   level="secondary"
+                                   rounded icon ="glyphicon glyphicon-ok"
+                        />
+                        <TtnButton iconButton
+                                   level="secondary"
+                                   rounded icon ="glyphicon glyphicon-remove"
+                                   onClick={this.cancelEdit}/>
                     </div> :
                     <div>
                         {this.props.eventInfo.title}
-                        <TtnButton level="primary" title="Edit" onClick={this.onEdit}/>
-                        <TtnButton level="primary" title="Delete" onClick={this.deleteEvent}/>
+                        <TtnButton iconButton
+                                   level="secondary"
+                                   rounded icon ="glyphicon glyphicon-pencil"
+                                   onClick={this.onEdit}/>
+                        <TtnButton iconButton
+                                   level="secondary"
+                                   rounded icon ="glyphicon glyphicon-trash"
+                                   onClick={this.deleteEvent}/>
                     </div>
             }
             </div>
