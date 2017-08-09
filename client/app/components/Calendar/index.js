@@ -4,6 +4,7 @@ import moment from 'moment';
 import 'react-big-calendar/lib/css/react-big-calendar.css'
 
 import EventModalContent from './../../Core/EventModalContent'
+import ModalComp from './../../Core/ModalComp'
 
 BigCalendar.setLocalizer(
     BigCalendar.momentLocalizer(moment)
@@ -130,10 +131,13 @@ class Calendar extends Component {
                     onSelectEvent={(event) => this.onselectEvent(event)}
                     eventPropGetter={(this.eventStyleGetter)}
                 />
-                {
-                    this.state.showEventModal ?
-                        <EventModalContent close = {(e) => this.close(e)} showModal = {this.state.showEventModal} message={this.state.eventSelected.start} eventInfo={this.state.eventSelected}/>:null
-                }
+                <ModalComp modalShow={this.state.showEventModal}
+                           modalHide = {(e) => {this.close(e)}}
+                           modalHeaderMsg="Edit Event"
+                           modalBody = {<EventModalContent message={this.state.eventSelected.start} eventInfo={this.state.eventSelected}/>}
+                           modalFooterClose = {(e) => {this.close(e)}}
+                           modalFooterText = 'Close'
+                />
             </div>
         )
     }

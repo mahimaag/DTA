@@ -4,7 +4,6 @@ import React, {Component} from 'react'
 import BigCalendar from 'react-big-calendar';
 import moment from 'moment';
 
-import ModalComponent from './../CustomModal'
 import TtnButton from 'core/Button/btn';
 
 BigCalendar.setLocalizer(
@@ -58,4 +57,4 @@ class ModalContent extends Component {
     }
 }
 
-export default ModalComponent(ModalContent);
+export default ModalContent;

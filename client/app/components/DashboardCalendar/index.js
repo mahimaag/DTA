@@ -1,6 +1,7 @@
 import React,{Component} from 'react'
 
 import Calendar from 'components/Calendar'
+import ModalComp from './../../Core/ModalComp'
 import ModalContent from './../../Core/AddActivityModalContent'
 import 'components/Calendar/style.css'
 import TtnButton from 'core/Button/btn';
@@ -40,10 +41,14 @@ class CustomDateHeader extends Component{
                         this.props.date < new Date() ?
                             <div className="modal-container">
                                 <TtnButton level="secondary" title="+" onClick = {this.showModal}/>
-                                {
-                                    this.state.show ?
-                                        <ModalContent close={(e)=>this.close(e)} showModal={this.state.show} message={this.props.date}/>:null
-                                }
+                                <ModalComp modalShow={this.state.show}
+                                           modalHide = {(e) => {this.close(e)}}
+                                           modalHeaderMsg="Add Activity Log"
+                                           modalBody = {<ModalContent message={this.props.date}/>}
+                                           modalFooterClose = {(e) => {this.close(e)}}
+                                           modalFooterText = 'Close'
+                                />
+
                             </div>:null
                     }
                 </span>

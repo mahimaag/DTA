@@ -4,7 +4,6 @@ import moment from 'moment';
 import Dropdown from './../Dropdown'
 
 import events from '../../config/events'
-import ModalComponent from './../CustomModal'
 import TtnButton from 'core/Button/btn';
 
 BigCalendar.setLocalizer(
@@ -131,4 +130,4 @@ class ModalContent extends Component{
     }
 }
 
-export default ModalComponent(ModalContent);
+export default ModalContent;
