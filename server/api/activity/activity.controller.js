@@ -6,7 +6,8 @@ var genericRepo = require("../generic/genericRepo");
 // Gets a single Employee from the DB
 export function show(req, res) {
     console.log("=======activity show called======");
-    return Activity.find({employeeId: req.params.empid}).exec()
+
+    return Activity.find({employeeId: req.params.empid})
         .then(genericRepo.handleEntityNotFound(res))
         .then(genericRepo.respondWithResult(res))
         .catch(genericRepo.handleError(res));
