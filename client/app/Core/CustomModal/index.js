@@ -1,6 +1,7 @@
 import React,{Component} from 'react'
 
 import Modal from 'react-bootstrap/lib/Modal'
+import TtnButton from './../Button/btn'
 
 export default function ModalComponent(WrappedComponent) {
     return class extends React.Component {
@@ -17,7 +18,7 @@ export default function ModalComponent(WrappedComponent) {
                         <WrappedComponent {...this.props}/>
                     </Modal.Body>
                     <Modal.Footer>
-                        <button onClick={this.props.close}>Close</button>
+                        <TtnButton title=" Close " level = "primary" onClick={this.props.close}/>
                     </Modal.Footer>
                 </Modal>
             )

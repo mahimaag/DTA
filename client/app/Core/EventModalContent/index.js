@@ -45,12 +45,12 @@ class ModalContent extends Component {
                     <div>
                         <input type="text" value={this.props.eventInfo.title}/>
                         <TtnButton level="primary" title="Done" />
-                        <TtnButton level="primary" title="Cancel" onClick={(e) => this.cancelEdit(e)}/>
+                        <TtnButton level="primary" title="Cancel" onClick={this.cancelEdit}/>
                     </div> :
                     <div>
                         {this.props.eventInfo.title}
-                        <TtnButton level="primary" title="Edit" onClick={(e) => this.onEdit(e)}/>
-                        <TtnButton level="primary" title="Delete" onClick={(e) => this.deleteEvent(e)}/>
+                        <TtnButton level="primary" title="Edit" onClick={this.onEdit}/>
+                        <TtnButton level="primary" title="Delete" onClick={this.deleteEvent}/>
                     </div>
             }
             </div>

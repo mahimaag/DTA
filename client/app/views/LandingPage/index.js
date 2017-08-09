@@ -41,40 +41,40 @@ class Main extends React.Component {
                         <div className="text-center m-t-lg">
                             <div className="col-lg-9 pull-left">
 
-                            <div className="col-lg-9 pull-left ">
-                                <TypeAhead wrappedComponenent={ActivityAutoComplete} apiPath="apiPath"
-                                     icon={{name: "glyphicon glyphicon-search", position: 'place-right'}}
-                                     handleChange={(item) => this.handleChange(item)} searchedList={this.state.searchedList}
-                                     valueGenerator={this.displayText} searchItem={(item) => this.searchItem(item)}
+                                <div className="col-lg-9 pull-left ">
+                                    <TypeAhead wrappedComponenent={ActivityAutoComplete} apiPath="apiPath"
+                                               icon={{name: "glyphicon glyphicon-search", position: 'place-right'}}
+                                               handleChange={(item) => this.handleChange(item)} searchedList={this.state.searchedList}
+                                               valueGenerator={this.displayText} searchItem={(item) => this.searchItem(item)}
                                     />
-                                <DashboardCalendar
-                                    events={events}/>
-                                <ActivityLog/>
-                            </div>
-                            <div className="col-md-3 pull-right">
-                                <NotificationCards/>
+                                    <DashboardCalendar
+                                        events={events}/>
+                                    <ActivityLog/>
+                                </div>
+                                <div className="col-md-3 pull-right">
+                                    <NotificationCards/>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div className="row">
-                    <div className="col-lg-6">
-                        <div className="ibox float-e-margins">
-                            <div className="ibox-title">
-                                <h5>List of components</h5>
-                            </div>
-                            <div className="ibox-content">
-                                <div>
-                                    <h3> Buttons </h3>
-                                    <TtnButton level="primary" title="Flat Button"/>
-                                    <TtnButton nature="Decline"/>
-                                    <TtnButton iconButton level="primary" rounded icon="fa fa-address-book-o"/>
+                    <div className="row">
+                        <div className="col-lg-6">
+                            <div className="ibox float-e-margins">
+                                <div className="ibox-title">
+                                    <h5>List of components</h5>
+                                </div>
+                                <div className="ibox-content">
+                                    <div>
+                                        <h3> Buttons </h3>
+                                        <TtnButton level="primary" title="Flat Button"/>
+                                        <TtnButton nature="Decline"/>
+                                        <TtnButton iconButton level="primary" rounded icon="fa fa-address-book-o"/>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
             </div>
 
         )
@@ -86,7 +86,7 @@ class Main extends React.Component {
         $(window).bind("load resize", function() {
             correctHeight();
             detectBody();
-        })
+        });
 
         // Correct height of wrapper after metisMenu animation.
         $('.metismenu a').click(() => {

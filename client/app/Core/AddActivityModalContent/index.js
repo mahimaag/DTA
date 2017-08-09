@@ -35,13 +35,11 @@ class ModalContent extends Component{
             [property]: item
         })
     };
-
     repeatEvent = () => {
         this.setState({
             showCalendar:true
         })
     };
-
     selectSlot(slot) {
         let newRepeatedDates = this.state.repeatedDates;
             if(newRepeatedDates.indexOf(`${slot.start.getMonth()+1}/${slot.start.getDate()}/${slot.start.getFullYear()}`)>=0){
@@ -57,7 +55,6 @@ class ModalContent extends Component{
             });
 
     } // todo : change color of selected slot
-
     saveEvent = (event) => {
         event.preventDefault();
         if(this.state.duration === 'Select' || this.state.projectCategory === 'Select' || this.state.projectName==='Select'){
@@ -79,7 +76,6 @@ class ModalContent extends Component{
             })
         }
     };
-
     saveRepeat = (event) => {
         event.preventDefault();
         this.state.repeatedDates.map((item) => {
@@ -134,7 +130,5 @@ class ModalContent extends Component{
         )
     }
 }
-
-// export default ModalContent;
 
 export default ModalComponent(ModalContent);

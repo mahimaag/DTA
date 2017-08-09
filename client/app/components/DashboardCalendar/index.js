@@ -40,9 +40,6 @@ class CustomDateHeader extends Component{
                         this.props.date < new Date() ?
                             <div className="modal-container">
                                 <TtnButton level="secondary" title="+" onClick = {this.showModal}/>
-                               {/* <button onClick={(e) => this.showModal(e)}>
-                                    +
-                                </button>*/}
                                 {
                                     this.state.show ?
                                         <ModalContent close={(e)=>this.close(e)} showModal={this.state.show} message={this.props.date}/>:null
