@@ -1,6 +1,3 @@
-/**
- * Created by sourabh on 27/7/17.
- */
 import EmployeeSchema from "../../api/employee/employee.model";
 import jwt_token from "jsonwebtoken";
 import Network from "../network";
@@ -9,7 +6,6 @@ import path from 'path';
 const USER_DATA_URL = "http://newers-world-oauth.qa2.tothenew.net/oauth/user?access_token=";
 const AUTH_HRMS_TOKEN_COOKIE = 'nw_dev_oauthToken';
 const AUTH_TSMS_TOKEN_COOKIE = 'Tsms';
-//const indexFile = path.join(app.get('appPath'), 'client', 'assests', 'index.html' );
 const redirectUrl = (req, res, next) => {
 
   const hrmsToken = req.query.access_token;
@@ -41,19 +37,17 @@ const redirectUrl = (req, res, next) => {
             }
           }, {upsert: true}).exec()
             .then(employee => {
-                next()
+                return next()
             })
             .catch(error => {
-              res.send(error);
+               res.send(error)
             });
-
-
-
       }
     })
-    .catch(error => res.send("unable to fetch employee details"))
-
+    .catch(error => {
+        res.statusCode=error.statusCode;
+        next(error);
+    })
 };
-
 module.exports = redirectUrl;
 
