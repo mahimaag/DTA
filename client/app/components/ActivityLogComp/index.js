@@ -5,9 +5,10 @@
 import React, { Component } from 'react'
 import { Row, Col } from 'react-bootstrap'
 import LogDropdown from '../../Core/Dropdown/index'
-import {TSMS_IconButton} from './../../Core/Button'
+//import {TSMS_IconButton} from './../../Core/Button'
 import ActivityLogCollaborator from '../ActivityLogCollaborator'
 import MultiSelectDropdown from '../../Core/MultiSelectDropDown'
+import TtnButton from 'core/Button/btn';
 
 
 
@@ -17,7 +18,9 @@ class ActivityLogComp extends Component{
         const logActivity = Object.assign({}, this.props.activity);
         this.state = {
             editBtn:'false',
-            activity: logActivity
+            activity: logActivity,
+            newDesc: logActivity.Description,
+            //displayModal: false
         }
     }
 
@@ -29,7 +32,7 @@ class ActivityLogComp extends Component{
 
     onOkClick = () => {
         this.setState({
-            editBtn: 'false'
+            editBtn: 'false',
         });
         this.props.edittedLog(this.state.activity);
 
@@ -44,6 +47,12 @@ class ActivityLogComp extends Component{
     }
 
     onDeleteClick = (activity) => {
+        //console.log('displayModal**********------',this.state.displayModal);
+        /*this.setState({
+            displayModal: true,
+        })*/
+
+        //setTimeout(function() { this.setState({displayModal: false}); }.bind(this), 3000);
         this.props.deleteEntry(activity);
     }
 
@@ -80,6 +89,12 @@ class ActivityLogComp extends Component{
             activity: this.state.activity
         })
     };
+
+    /*onCloseModalClick = () => {
+        this.setState({
+            displayModal: false
+        })
+    }*/
 
     render(){
         const activity = this.props.activity;
@@ -119,22 +134,32 @@ class ActivityLogComp extends Component{
                                 <span>{this.state.activity.Status}</span>
                             </Col>
                             <Col md={2} lg={2} lgOffset={1} className="log-col">
-                                <TSMS_IconButton bClassName="btn btn-default btn-sm edit-clear-button"
+                                <TtnButton iconButton
+                                           level = "primary"
+                                           rounded icon = "glyphicon glyphicon-ok"
+                                           onClick = {() => this.onOkClick()}/>
+
+                                <TtnButton iconButton
+                                           level = "primary"
+                                           rounded icon = "glyphicon glyphicon-remove"
+                                           onClick = {() => this.onEditDeleteClick()}/>
+
+                                {/*<TSMS_IconButton bClassName="btn btn-default btn-sm edit-clear-button"
                                                  onClickFunc={() => this.onOkClick()}
                                                  spanClass="glyphicon glyphicon-ok"/>
 
                                 <TSMS_IconButton bClassName="btn btn-default btn-sm edit-clear-button"
                                                  onClickFunc={() => this.onEditDeleteClick()}
-                                                 spanClass="glyphicon glyphicon-remove"/>
+                                                 spanClass="glyphicon glyphicon-remove"/>*/}
 
 
                             </Col>
-                            <Col md={12} lg={12} className="log-col">
-                                <MultiSelectDropdown collabArray={newCollabArray}
-                                                     newCollab={this.state.activity.Collaborators}
-                                                     title='Select'
+                            <Col md={12} lg={12} className = "log-col">
+                                <MultiSelectDropdown collabArray = {newCollabArray}
+                                                     newCollab = {this.state.activity.Collaborators}
+                                                     title = 'Select'
                                                      onSelectedVal = {(newCollab) => {this.onSelectedVal(newCollab)}}
-                                                     onDeleteCollab={(deletedVal) => {this.onDeleteCollab(deletedVal)}}/>
+                                                     onDeleteCollab = {(deletedVal) => {this.onDeleteCollab(deletedVal)}}/>
                                 {/*<ActivityLogCollaborator collaborators={activity.Collaborators}
                                                          onCollabChange={(collaborators) => {this.onCollabChange(collaborators)}}
                                                          editable='true'/>*/}
@@ -163,13 +188,23 @@ class ActivityLogComp extends Component{
                                 {/* <button className="edit-clear-button"><img src={editIcon}/></button>
                                  <button className="edit-clear-button"><img src={deleteIcon}/></button>*/}
 
-                                <TSMS_IconButton bClassName="btn btn-default btn-sm edit-clear-button"
+                                <TtnButton iconButton
+                                           level = "primary"
+                                           rounded icon = "glyphicon glyphicon-pencil"
+                                           onClick = {() => this.onEditClick()}/>
+
+                                <TtnButton iconButton
+                                           level = "primary"
+                                           rounded icon = "glyphicon glyphicon-trash"
+                                           onClick = {() => this.onDeleteClick(activity)}/>
+
+                                {/*<TSMS_IconButton bClassName="btn btn-default btn-sm edit-clear-button"
                                                  onClickFunc={() => this.onEditClick()}
                                                  spanClass="glyphicon glyphicon-pencil"/>
 
                                 <TSMS_IconButton bClassName="btn btn-default btn-sm edit-clear-button"
                                                  onClickFunc={() => this.onDeleteClick(activity)}
-                                                 spanClass="glyphicon glyphicon-trash"/>
+                                                 spanClass="glyphicon glyphicon-trash"/>*/}
 
 
                             </Col>
@@ -177,6 +212,7 @@ class ActivityLogComp extends Component{
                                 <ActivityLogCollaborator collaborators={activity.Collaborators}/>
                             </Col>
                         </Row>
+
                     </div>
                 }
             </div>
@@ -185,3 +221,5 @@ class ActivityLogComp extends Component{
 }
 
 export default ActivityLogComp;
+
+

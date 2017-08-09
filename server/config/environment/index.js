@@ -63,7 +63,8 @@ let all = {
 
 // Export the config object based on the NODE_ENV
 // ==============================================
+const env = process.env.NODE_ENV || 'development';
 module.exports = _.merge(
   all,
   require('./shared'),
-  require(`./${process.env.NODE_ENV}.js`) || {});
+  require(`./${env}.js`) || {});

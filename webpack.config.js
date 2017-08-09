@@ -6,12 +6,10 @@ const clientLocation = '/client'
 
 var config = {
     entry: {
-        app: [
-            './client/app/index'
-        ],
+        app: './client/app/index',
         vendor: ['react', 'react-dom']
     },
-    devtool: 'eval',
+    devtool: 'inline-source-map',
     output: {
         path: path.join(__dirname ,'/dist/'),
         filename: 'bundle.js',
@@ -36,16 +34,17 @@ var config = {
     module: {
         loaders: [
             {
-                test: /\.js$/,
-                loaders: ['react-hot-loader', 'babel-loader'],
-                include: [path.join(__dirname, clientLocation, 'app'),path.join(__dirname, 'constants')]
+                test: /\.(js|jsx)$/,
+                loaders: ['babel-loader'],
+              exclude:[path.join(__dirname,'node_modules')]//,
+              //include: [path.join(__dirname, clientLocation, 'app'),path.join(__dirname, 'constants')]
             },
             {   
                 test: /\.css$/,
-                loader: ExtractTextPlugin.extract({
-                    fallback: 'style-loader',
-                    use: ['css-loader']
-                })
+                  use: [
+                    'style-loader',
+                    'css-loader'
+                  ]
 
             },
             {
