@@ -6,12 +6,65 @@ var genericRepo = require("../generic/genericRepo");
 // Gets a single Employee from the DB
 export function show(req, res) {
     console.log("=======activity show called======");
+    let date = new Date(),
+        y = date.getFullYear(),
+        m = date.getMonth(),
+        firstDate = new Date(y, m ,1).getTime();
 
-    return Activity.find({employeeId: req.params.empid})
+    return Activity.aggregate([
+        {
+            $match: {
+                employeeId: req.params.empid,
+                date: {
+                    $lte: new Date().getTime(),
+                    $gte: firstDate
+                }
+            }
+        },
+        {
+          $project: {
+              "dateString": {
+                  $dateToString: {
+                      "format": "%d/%m/%Y",
+                      "date": {
+                          $add: [new Date(0), "$date"]
+                      }
+                  }
+              },
+              activity: 1,
+              activityType: 1,
+              description: 1,
+              status: 1,
+              collaborators: 1,
+              duration: 1,
+              activityId: 1
+
+          }
+        },
+        {
+            $group: {
+                _id: "$dateString",
+                "activities": {
+                    $push: {
+                        "Id": "$activityId",
+                        "Activity":"$activity",
+                        "Type": "$activityType",
+                        "Duration": "$duration",
+                        "Description": "$description",
+                        "Status": "$status",
+                        "Collaborators": "$collaborators"
+                    }
+                }
+            }
+        }
+        ]
+
+    )
         .then(genericRepo.handleEntityNotFound(res))
         .then(genericRepo.respondWithResult(res))
         .catch(genericRepo.handleError(res));
 }
+
 
 export function save(req, res) {
     console.log("=======activity save called======");
