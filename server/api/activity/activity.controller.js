@@ -2,6 +2,7 @@
 
 import Activity from './activity.model';
 var genericRepo = require("../generic/genericRepo");
+import mongoose from "mongoose";
 
 // Gets a single Employee from the DB
 export function show(req, res) {
@@ -65,7 +66,6 @@ export function show(req, res) {
         .catch(genericRepo.handleError(res));
 }
 
-
 export function save(req, res) {
     console.log("=======activity save called======");
 
@@ -101,16 +101,17 @@ export function upsert(req, res) {
 
 export function destroy(req, res) {
     console.log("=======activity upsert called======");
-
-    Activity.findOneAndRemove({_id: req.params.id})
-        .then(doc => {
-            console.log("-------------doc", doc);
-        let response = {
-            message: "activity successfully deleted",
-            id: doc._id
-        };
-        res.send(response);
-    });
-
+    if(mongoose.Types.ObjectId.isValid(req.params.id)) {
+        Activity.findOneAndRemove({_id: req.params.id})
+            .then(doc => {
+                let response = {
+                    message: "activity successfully deleted",
+                    id: doc._id
+                };
+                res.send(response);
+            });
+    } else {
+        res.send({err: "Invalid activity id"});
+    }
 }
 

@@ -1,3 +1,5 @@
+"use strict";
+
 export function handleEntityNotFound(res) {
     return function(entity) {
         if(!entity || entity.length === 0) {
@@ -24,3 +26,5 @@ export function respondWithResult(res, statusCode) {
         return null;
     };
 }
+
+
