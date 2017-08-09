@@ -5,16 +5,16 @@ import mongoose from 'mongoose';
 
 
 const ActivitySchema = new mongoose.Schema({
-    employeeId:{
-        type:String,
+    activityId: {
+        type: Number
     },
-    employeeEmail:{
+    employeeId:{
         type:String,
     },
     date:{
         type: Number
     },
-    dureation: {
+    duration: {
         type: String
     },
     activity: {
@@ -29,8 +29,8 @@ const ActivitySchema = new mongoose.Schema({
     status: {
         type: String
     },
-    createdDate: {
-        type: Number
+    collaborators: {
+        type: Array
     },
     updatedDate: {
         type: Number

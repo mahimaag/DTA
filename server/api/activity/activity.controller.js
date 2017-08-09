@@ -17,14 +17,12 @@ export function save(req, res) {
 
     let activity = new Activity({
         employeeId: req.body.employeeId,
-        employeeEmail: req.body.employeeEmail,
         date: req.body.date || new Date().getTimes(),
         duration: req.body.duration,
         activity: req.body.activity,
         activityType: req.body.activityType,
         description: req.body.description,
         status: req.body.status,
-        createdDate: new Date().getTime(),
         updatedDate: new Date().getTime()
     });
 
@@ -34,5 +32,29 @@ export function save(req, res) {
     });
 
     console.log("======activity saved====");
+}
+
+export function upsert(req, res) {
+    console.log("=======activity upsert called======");
+
+    return Activity.findOneAndUpdate({_id: req.params.id}, req.body,
+        {new: true, upsert: true, setDefaultsOnInsert: true, runValidators: true}).exec()
+        .then(respondWithResult(res))
+        .catch(handleError(res));
+
+}
+
+export function destroy(req, res) {
+    console.log("=======activity upsert called======");
+
+    Activity.findOneAndRemove({_id: req.params.id})
+        .then(doc => {
+        let response = {
+            message: "activity successfully deleted",
+            id: doc._id
+        };
+        res.send(response);
+    });
+
 }
 

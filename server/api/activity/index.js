@@ -9,8 +9,8 @@ router.get('/:empid', controller.show);
 
 router.post('/:empid', controller.save);
 
-//router.put('/:id', controller.upsert);
+router.put('/:id', controller.upsert);
 
-//router.delete('/:id', controller.destroy);
+router.delete('/:id', controller.destroy);
 
 module.exports = router;
