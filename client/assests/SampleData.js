@@ -59,54 +59,6 @@ let SampleData = [
     }
 ];
 
-let TimeEnteries = [
-    {
-        date: '24/07/2017',
-        day: 'Tue',
-        activities: [
-            {
-                "Activity":"Project",
-                "Type": "Westcon",
-                "Duration": "30 mins",
-                "Description": "Project Westcon sync - meeting!!!!!!!!!!!!",
-                "Status": "Pending"
-            },
-            {
-                "Activity":"Non-Project",
-                "Type": "Knowledge Meet",
-                "Duration": "2 hrs",
-                "Description": "Knowledge meet!!!!!!!!!!!!",
-                "Status": "Pending"
-            },
-            {
-                "Activity":"Project",
-                "Type": "Daily Time Analysis",
-                "Duration": "1 hr",
-                "Description": "Project DTA sync - meeting!!!!!!!!!!!!",
-                "Status": "Pending"
-            }]
-    },
-    {
-        date: '23/07/2017',
-        day: 'Mon',
-        activities: [
-            {
-                "Activity":"Project",
-                "Type": "Westcon",
-                "Duration": "30 mins",
-                "Description": "Project Westcon sync - meeting!!!!!!!!!!!!",
-                "Status": "Pending"
-            },
-            {
-                "Activity":"Non-Project",
-                "Type": "Knowledge Meet",
-                "Duration": "2 hrs",
-                "Description": "Knowledge meet!!!!!!!!!!!!",
-                "Status": "Pending"
-            }
-        ]
-    }
-];
 
 
 export default SampleData;

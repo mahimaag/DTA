@@ -1,9 +1,6 @@
 /**
  * Created by saubhagya on 27/7/17.
  */
-/**
- * Created by saubhagya on 20/7/17.
- */
 
 import React, { Component } from 'react'
 import ActivityLogRow from './../ActivityLogRow'
@@ -13,6 +10,8 @@ import { TimeEntryStatus, HeadingArray } from './../../../constants/Index'
 import './style.css'
 import ModalComp from '../../Core/ModalComp'
 import ModalBodyComp from '../../Core/ModalBodyComp'
+import { connect } from 'react-redux';
+import {getActivities} from './action';
 
 class ActivityLog extends Component{
     constructor(props){
@@ -23,6 +22,9 @@ class ActivityLog extends Component{
         }
     }
 
+    componentWillMount() {
+        this.props.dispatch(getActivities());
+    };
     newEntry = (newTimeLog, date) => {
         this.state.timeEnteries.map((item) => {
             if(item.date === date){
@@ -30,7 +32,6 @@ class ActivityLog extends Component{
                 item.activities.map((childItem) => childItem.Status === TimeEntryStatus.New ? Object.assign(childItem, newTimeLog) : null);
             }
         });
-
 
         this.setState({
             timeEnteries: this.state.timeEnteries
@@ -97,6 +98,7 @@ class ActivityLog extends Component{
     }
 
     render(){
+        console.log('222222222222', this.props);
         return(
                 <div className="col-md-12 activity-list-comp">
                     <Row className="show-grid log-header">
@@ -128,7 +130,13 @@ class ActivityLog extends Component{
     }
 }
 
-export default ActivityLog;
+const mapStateToProps = (state) => {
+    return {
+        activity: state.activity
+    }
+};
+
+export default connect(mapStateToProps)(ActivityLog);
 
 //Modal component ---------------------------
 // Can also be used as below when we need to pass another component inside it's body..

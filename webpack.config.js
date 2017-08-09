@@ -6,7 +6,7 @@ const clientLocation = '/client'
 
 var config = {
     entry: {
-        app: './client/app/index',
+        app: './client/index',
         vendor: ['react', 'react-dom']
     },
     devtool: 'inline-source-map',
