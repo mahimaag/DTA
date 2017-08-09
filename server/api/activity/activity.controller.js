@@ -10,54 +10,57 @@ export function show(req, res) {
     let date = new Date(),
         y = date.getFullYear(),
         m = date.getMonth(),
-        firstDate = new Date(y, m ,1).getTime();
+        firstDate = new Date(y, m ,1).getTime(),
+        lastDate = new Date(y, m + 1, 0).getTime();
 
+    console.log("=======first Date===>>>", firstDate);
+    console.log("=======last Date===>>>", lastDate);
     return Activity.aggregate([
-        {
-            $match: {
-                employeeId: req.params.empid,
-                date: {
-                    $lte: new Date().getTime(),
-                    $gte: firstDate
+            {
+                $match: {
+                    employeeId: req.params.empid,
+                    date: {
+                        $lte: lastDate, // last date of current month
+                        $gte: firstDate // first date of current month
+                    }
                 }
-            }
-        },
-        {
-          $project: {
-              "dateString": {
-                  $dateToString: {
-                      "format": "%d/%m/%Y",
-                      "date": {
-                          $add: [new Date(0), "$date"]
-                      }
-                  }
-              },
-              activity: 1,
-              activityType: 1,
-              description: 1,
-              status: 1,
-              collaborators: 1,
-              duration: 1,
-              _id: 1
+            },
+            {
+                $project: {
+                    "dateString": {
+                        $dateToString: {
+                            "format": "%d/%m/%Y",
+                            "date": {
+                                $add: [new Date(0), "$date"]
+                            }
+                        }
+                    },
+                    activity: 1,
+                    activityType: 1,
+                    description: 1,
+                    status: 1,
+                    collaborators: 1,
+                    duration: 1,
+                    _id: 1
 
-          }
-        },
-        {
-            $group: {
-                _id: "$dateString",
-                "activities": {
-                    $push: {
-                        "Id": "$_id",
-                        "Activity":"$activity",
-                        "Type": "$activityType",
-                        "Duration": "$duration",
-                        "Description": "$description",
-                        "Status": "$status",
-                        "Collaborators": "$collaborators"
+                }
+            },
+            {
+                $group: {
+                    _id: "$dateString",
+                    "activities": {
+                        $push: {
+                            "Id": "$_id",
+                            "Activity":"$activity",
+                            "Type": "$activityType",
+                            "Duration": "$duration",
+                            "Description": "$description",
+                            "Status": "$status",
+                            "Collaborators": "$collaborators"
+                        }
                     }
                 }
             }
-        }
         ]
 
     )
@@ -71,18 +74,20 @@ export function save(req, res) {
 
     let activity = new Activity({
         employeeId: req.body.employeeId,
-        date: req.body.date || new Date().getTimes(),
+        date: req.body.date,
         duration: req.body.duration,
         activity: req.body.activity,
         activityType: req.body.activityType,
         description: req.body.description,
         status: req.body.status,
-        updatedDate: new Date().getTime(),
         collaborators: req.body.collaborators
     });
 
     activity.save((err, output) => {
-        if(err) {console.log("err=====>>>>>>", err);}
+        if(err) {
+            console.log("err=====>>>>>>", err);
+            res.status(500).send({err: "error while saving data", error: err});
+        }
         res.status(200).send({msg: "Activity successfully added.", id: output._id});
     });
 

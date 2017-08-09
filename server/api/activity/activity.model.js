@@ -7,21 +7,28 @@ import mongoose from 'mongoose';
 const ActivitySchema = new mongoose.Schema({
     employeeId:{
         type:String,
+        required: true
     },
     date:{
-        type: Number
+        type: Number,
+        required: true,
+        default: new Date().getTime()
     },
     duration: {
-        type: String
+        type: String,
+        required: true
     },
     activity: {
-        type: String
+        type: String,
+        required: true
     },
     activityType: {
-        type: String
+        type: String,
+        required: true
     },
     description: {
-        type: String
+        type: String,
+        default: "Submitted"
     },
     status: {
         type: String
