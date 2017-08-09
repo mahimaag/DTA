@@ -5,6 +5,7 @@ import React, { Component } from 'react'
 import { Row, Col} from 'react-bootstrap'
 //import { TSMS_TextButton } from './../../Core/Button'
 import TtnButton from 'core/Button/btn';
+import {monthArray} from '../../../constants/Index'
 
 
 class ActivityLogHeader extends Component{
@@ -21,12 +22,30 @@ class ActivityLogHeader extends Component{
                 totalTime = totalTime + timeLog;
             }
         })
-        //console.log('total time is =',totalTime);
+        let month = '';
+        let str = this.props.logDate.split('/');
+
+        /*const monthArray = [{num:"01",month:"January"},{num:"02",month:"February"},
+            {num:"03",month:"March"},{num:"04",month:"April"},
+            {num:"05",month:"May"},{num:"06",month:"June"},
+            {num:"07",month:"July"},{num:"08",month:"August"},
+            {num:"09",month:"September"},{num:"10",month:"October"},
+            {num:"11",month:"November"},{num:"12",month:"December"}];*/
+
+        monthArray.forEach((item) => {
+            (item.num === str[1])?month = item.month:null
+        });
+
+        let newDate = month + ' ' + str[0] + ',' + str[2];
+        let days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+        let logDate = new Date(newDate);
+        let logDay = days[logDate.getDay()];
+
         return(
             <Row className = "show-grid">
                 <Col md = {2} lg = {2} className = "log-col">
                     <span className = "log-date-day">{this.props.logDate}</span>
-                    <span className = "log-date-day">thu</span>
+                    <span className = "log-date-day">{logDay}</span>
                 </Col>
                 <Col md = {1} lg = {1} lgOffset = {1} className = "log-col">
                     <span>{totalTime} Hrs</span>

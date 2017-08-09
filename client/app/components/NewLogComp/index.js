@@ -117,7 +117,7 @@ class NewLogComp extends Component{
                     </Col>
                     <Col md = {2} lg = {2} lgOffset = {1} className = "log-col">
                         <TtnButton iconButton
-                                   level = "primary"
+                                   level = "secondary"
                                    rounded icon = "glyphicon glyphicon-ok"
                                    onClick = {() => this.onDoneClick()}/>
 
