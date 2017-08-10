@@ -39,9 +39,7 @@ const ActivitySchema = new mongoose.Schema({
     updatedDate: {
         type: Number
     }
-
-
-});
+}, {versionKey: false});
 
 
 // registerEvents(EmployeeSchema);
