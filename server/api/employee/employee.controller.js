@@ -116,3 +116,12 @@ export function destroy(req, res) {
     .then(removeEntity(res))
     .catch(handleError(res));
 }
+
+export default {
+    destroy,
+    patch,
+    upsert,
+    create,
+    show,
+    index
+}

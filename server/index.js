@@ -1,8 +1,8 @@
 'use strict';
-
 // Set default node environment to development
-import node_acl from 'acl'
-var env = process.env.NODE_ENV = process.env.NODE_ENV || 'development';
+import config from "./config/environment";
+const env = process.env.NODE_ENV = process.env.NODE_ENV || 'development';
+console.log("env----------",env)
 
 if(env === 'development' || env === 'test') {
   // Register the Babel require hook
@@ -10,13 +10,12 @@ if(env === 'development' || env === 'test') {
 }
 let app =require('./app');
 const startServer = (buildStats) => {
-  // console.log('We are all set for starting the server.Yieppeee ');  
-  const server = app.listen(3000, 'localhost', () => {
+  // console.log('We are all set for starting the server.Yieppeee ');
+    const server = app.listen(config.port, 'localhost', () => {
     console.log('Express server listening on in mode');
   });
-}
+};
 
 startServer();
 // Export the application
-
-exports = module.exports = require('./app');
+ module.exports = require('./app');

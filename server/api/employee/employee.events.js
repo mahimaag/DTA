@@ -5,20 +5,20 @@
 'use strict';
 
 import {EventEmitter} from 'events';
-var ThingEvents = new EventEmitter();
+const ThingEvents = new EventEmitter();
 
 // Set max event listeners (0 == unlimited)
 ThingEvents.setMaxListeners(0);
 
 // Model events
-var events = {
+const events = {
   save: 'save',
   remove: 'remove'
 };
 
 // Register the event emitter to the model events
 function registerEvents(Thing) {
-  for(var e in events) {
+  for(let e in events) {
     let event = events[e];
     Thing.post(e, emitEvent(event));
   }

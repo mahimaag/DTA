@@ -1,9 +1,7 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
+import React, {Component} from 'react';
 import { HashRouter as Router, Route, Switch } from 'react-router-dom';
 import Main from './views/Main';
 
-//import { AppContainer } from 'react-hot-loader';
 
 import jquery from 'jquery';
 import metismenu from 'metismenu';
@@ -14,11 +12,20 @@ import './../../node_modules/font-awesome/css/font-awesome.css'
 import './../../node_modules/animate.css/animate.min.css'
 import './../assests/styles/style.css'
 
+export default class App extends Component {
+    render() {
+        return (
+            <Router>
+                <Main />
+            </Router>
+        );
+    }
+}
 
-ReactDOM.render(
+/*ReactDOM.render(
     <Router><Main/></Router>
 ,    document.getElementById('root')
-);
+);*/
 
 /*
   </AppContainer>,
