@@ -1,10 +1,13 @@
 import React, {Component} from 'react'
 import BigCalendar from 'react-big-calendar';
 import moment from 'moment';
-import Dropdown from './../Dropdown'
+import {connect} from 'react-redux'
 
 import events from '../../config/events'
+import {TimeEntryStatus} from './../../../constants/Index'
+import Dropdown from './../Dropdown'
 import TtnButton from 'core/Button/btn';
+import {postActivities} from './../../actions/activity.actions'
 
 BigCalendar.setLocalizer(
     BigCalendar.momentLocalizer(moment)
@@ -31,31 +34,34 @@ class ModalContent extends Component{
         }
     }
 
+    selectSlot(slot) {
+        let newRepeatedDates = this.state.repeatedDates;
+        if(newRepeatedDates.indexOf(`${slot.start.getMonth()+1}/${slot.start.getDate()}/${slot.start.getFullYear()}`)>=0){
+            newRepeatedDates.splice((newRepeatedDates.indexOf(`${slot.start.getMonth()+1}/${slot.start.getDate()}/${slot.start.getFullYear()}`)),1)
+        }else{
+            newRepeatedDates.push(`${slot.start.getMonth()+1}/${slot.start.getDate()}/${slot.start.getFullYear()}`);
+        }
+
+        this.setState({
+            repeatedDates:newRepeatedDates
+        },() => {
+            console.log("Event repeats on",this.state.repeatedDates)
+        });
+
+    } // todo : change color of selected slot
+
     setSelectedValue = (item, property) => {
         this.setState({
             [property]: item
         })
     };
+
     repeatEvent = () => {
         this.setState({
             showCalendar:true
         })
     };
-    selectSlot(slot) {
-        let newRepeatedDates = this.state.repeatedDates;
-            if(newRepeatedDates.indexOf(`${slot.start.getMonth()+1}/${slot.start.getDate()}/${slot.start.getFullYear()}`)>=0){
-                newRepeatedDates.splice((newRepeatedDates.indexOf(`${slot.start.getMonth()+1}/${slot.start.getDate()}/${slot.start.getFullYear()}`)),1)
-            }else{
-                newRepeatedDates.push(`${slot.start.getMonth()+1}/${slot.start.getDate()}/${slot.start.getFullYear()}`);
-            }
 
-            this.setState({
-                repeatedDates:newRepeatedDates
-            },() => {
-                console.log("Event repeats on",this.state.repeatedDates)
-            });
-
-    } // todo : change color of selected slot
     saveEvent = (event) => {
         event.preventDefault();
         if(this.state.duration === 'Select' || this.state.projectCategory === 'Select' || this.state.projectName==='Select'){
@@ -69,6 +75,19 @@ class ModalContent extends Component{
                 'end': new Date(dated),
             });
 
+            let activityLog = {
+                "activityId":1,
+                "employeeId":"2590",
+                "date":Date.now(),
+                "activity":this.state.projectCategory,
+                "activityType":this.state.projectName,
+                "description":this.state.description,
+                "status":TimeEntryStatus.Pending,
+                "duration":this.state.duration,
+                "collaborators":[this.state.collaborators]
+            };
+
+            this.props.postActivities(activityLog); // todo : dispatch(asyncAction(activityLog))
             console.log("saved event is ",this.state);
             console.log("date clicked is -----------", dated);
 
@@ -77,6 +96,7 @@ class ModalContent extends Component{
             })
         }
     }; // todo: save this new event in mongodb
+
     saveRepeat = (event) => {
         event.preventDefault();
         this.state.repeatedDates.map((item) => {
@@ -87,6 +107,7 @@ class ModalContent extends Component{
             })
         })
     }; // todo : save the repeated event in mongodb
+
     onInputChange = (event) => {
         this.setState({
             [event.target.name] : event.target.value
@@ -139,10 +160,14 @@ class ModalContent extends Component{
 
                         }
                     </div>
-                 }
+            }
             </div>
         )
     }
 }
 
-export default ModalContent;
+const mapDispatchToProps = (dispatch) => ({
+    postActivities : (activityLog) => {dispatch(postActivities(activityLog))}
+});
+
+export default connect(null,mapDispatchToProps)(ModalContent);
