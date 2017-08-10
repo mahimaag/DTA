@@ -70,7 +70,7 @@ class ModalContent extends Component{
             });
 
             console.log("saved event is ",this.state);
-            console.log("date clicked is ---------", dated);
+            console.log("date clicked is -----------", dated);
 
             this.setState({
                 savedEvent:true

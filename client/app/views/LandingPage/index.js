@@ -4,7 +4,31 @@ import { correctHeight, detectBody } from './../../../utils/common';
 import Calendar from './../../components/Calendar';
 import ActivityLog from './../../components/ListActivityCard';
 import TtnButton from 'core/Button/btn';
+import TypeAhead from './../../Core/TypeAhead'
+import ActivityAutoComplete from './../../Core/ActivityAutoComplete'
+
 class Main extends React.Component {
+    constructor(props){
+        super(props);
+        this.state = {
+            searchedList: [],
+            textValue: ''
+        }
+    }
+
+    handleChange = (item) => {
+        let itemList = [];
+        item ? itemList = [{id: 1, name: "item 1"}, {id: 2, name: "item 2"},{id: 3, name: "item 3"}, {id: 4, name: "item 4"}] : itemList = [];
+        setTimeout(() => this.setState({searchedList: itemList}), 500)
+    };
+
+    searchItem = (item) => {
+      this.setState({searchedList: []})
+    };
+
+    displayText = (item) => {
+        return item.name + ' : ' + item.id;
+    };
 
     render() {
         return (
@@ -13,6 +37,11 @@ class Main extends React.Component {
                     <div className="col-lg-12">
                         <div className="text-center m-t-lg">
                             <div className="col-lg-9 pull-left ">
+                                <TypeAhead wrappedComponenent={ActivityAutoComplete} apiPath="apiPath"
+                                     icon={{name: "glyphicon glyphicon-search", position: 'place-right'}}
+                                     handleChange={(item) => this.handleChange(item)} searchedList={this.state.searchedList}
+                                     valueGenerator={this.displayText} searchItem={(item) => this.searchItem(item)}
+                                    />
                                 <Calendar />
                                 <ActivityLog/>
                             </div>

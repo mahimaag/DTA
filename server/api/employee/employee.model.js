@@ -2,9 +2,7 @@
 
 import mongoose from 'mongoose';
 import {registerEvents} from './employee.events';
-/**
- * Created by sourabh on 24/7/17.
- */
+
 
 const EmployeeSchema = new mongoose.Schema({
   employeeId:{

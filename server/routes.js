@@ -30,21 +30,28 @@ export default function (app) {
     app.use('/api/oauthServerCallback',redirectUrlFunction, (req, res) => {
         res.redirect('/');
     });
-    app.get('/logout', logout);
+  app.get('/logout', logout);
 
+    //Error handler for 500 res
+    app.use(function _500ErrorMiddleware(err, req, res, next) {
+        if (res.statusCode != 500) {
+            return next(err);
+        }
+        res.sendfile(path.resolve("server/views/500.html"));
+    });
 
     // All undefined asset or api routes should return a 404
-    app.route('/:url(api|auth|components|app|bower_components|assets)/*')
+
+    app.route('/:url(api|auth|app|assets)/*')
         .get(errors[404]);
-    /*app.route('/!*', authMiddlewares)
-        .get((req, res) => {
-        console.log('NOT MATCHING ANY ROUTE...');
-        res.sendFile(indexFile);
-    });*/
+
+    //Error handler for 404 res
+    app.use(function _404ErrorMiddleware(err, req, res, next) {
+        res.sendfile(path.resolve("server/views/404.html"));
+    });
     // All other routes should redirect to the index.html
     app.route('/*')
         .get((req, res) => {
-            console.log('NOT MATCHING ANY ROUTE...');
             res.sendFile(indexFile);
         });
 }
