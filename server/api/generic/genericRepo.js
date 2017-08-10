@@ -27,4 +27,9 @@ export function respondWithResult(res, statusCode) {
     };
 }
 
+export function badInput(res, statusCode) {
+    statusCode = statusCode || 500;
+    res.status(statusCode).send({"Error": "Invalid input"});
+}
+
 

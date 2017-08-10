@@ -16,54 +16,52 @@ export function show(req, res) {
     console.log("=======first Date===>>>", firstDate);
     console.log("=======last Date===>>>", lastDate);
     return Activity.aggregate([
-            {
-                $match: {
-                    employeeId: req.params.empid,
-                    date: {
-                        $lte: lastDate, // last date of current month
-                        $gte: firstDate // first date of current month
+        {
+            $match: {
+                employeeId: req.params.id,
+                date: {
+                    $lte: lastDate, // last date of current month
+                    $gte: firstDate // first date of current month
+                }
+            }
+        },
+        {
+            $project: {
+                "dateString": {
+                    $dateToString: {
+                        "format": "%d/%m/%Y",
+                        "date": {
+                            $add: [new Date(0), "$date"]
+                        }
                     }
-                }
-            },
-            {
-                $project: {
-                    "dateString": {
-                        $dateToString: {
-                            "format": "%d/%m/%Y",
-                            "date": {
-                                $add: [new Date(0), "$date"]
-                            }
-                        }
-                    },
-                    activity: 1,
-                    activityType: 1,
-                    description: 1,
-                    status: 1,
-                    collaborators: 1,
-                    duration: 1,
-                    _id: 1
+                },
+                activity: 1,
+                activityType: 1,
+                description: 1,
+                status: 1,
+                collaborators: 1,
+                duration: 1,
+                _id: 1
 
-                }
-            },
-            {
-                $group: {
-                    _id: "$dateString",
-                    "activities": {
-                        $push: {
-                            "Id": "$_id",
-                            "Activity":"$activity",
-                            "Type": "$activityType",
-                            "Duration": "$duration",
-                            "Description": "$description",
-                            "Status": "$status",
-                            "Collaborators": "$collaborators"
-                        }
+            }
+        },
+        {
+            $group: {
+                _id: "$dateString",
+                "activities": {
+                    $push: {
+                        "Id": "$_id",
+                        "Activity":"$activity",
+                        "Type": "$activityType",
+                        "Duration": "$duration",
+                        "Description": "$description",
+                        "Status": "$status",
+                        "Collaborators": "$collaborators"
                     }
                 }
             }
-        ]
-
-    )
+        }
+    ])
         .then(genericRepo.handleEntityNotFound(res))
         .then(genericRepo.respondWithResult(res))
         .catch(genericRepo.handleError(res));
@@ -72,24 +70,26 @@ export function show(req, res) {
 export function save(req, res) {
     console.log("=======activity save called======");
 
-    let activity = new Activity({
-        employeeId: req.body.employeeId,
-        date: req.body.date,
-        duration: req.body.duration,
-        activity: req.body.activity,
-        activityType: req.body.activityType,
-        description: req.body.description,
-        status: req.body.status,
-        collaborators: req.body.collaborators
-    });
+    Activity.create(req.body)
+        .then(output => {
+            console.log("output=========>>>", output);
+            if(req.body.hasOwnProperty("collaborators") && req.body.collaborators.length > 0) {
+                req.body.collaborators.forEach(item => {
+                    req.body.employeeId = item;
+                    req.body.status = "Draft";
+                    req.body.collaborators = [];
 
-    activity.save((err, output) => {
-        if(err) {
-            console.log("err=====>>>>>>", err);
-            res.status(500).send({err: "error while saving data", error: err});
-        }
-        res.status(200).send({msg: "Activity successfully added.", id: output._id});
-    });
+                    console.log("=======req.body=====", req.body);
+
+                    Activity.create(req.body)
+                        .then(r1 => {
+                            console.log("activity cloned..", r1);
+                        });
+                });
+               done();
+            }
+        })
+        .catch(genericRepo.handleError(res))
 
     console.log("======activity saved====");
 }
