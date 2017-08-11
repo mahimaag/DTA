@@ -2,9 +2,11 @@ import React, {Component} from 'react'
 import BigCalendar from 'react-big-calendar';
 import moment from 'moment';
 import Dropdown from './../Dropdown'
+import {FormGroup, ControlLabel, FormControl} from 'react-bootstrap';
 
 import events from '../../config/events'
-import ModalComponent from './../CustomModal'
+import TtnButton from './../Button/btn';
+import TsmsForm from './../Form';
 
 BigCalendar.setLocalizer(
     BigCalendar.momentLocalizer(moment)
@@ -106,26 +108,47 @@ class ModalContent extends Component{
                         />
                         <button onClick={(e) => this.saveRepeat(e)}>Save </button>
                     </div>:
-                    <div>
-                        Activity : <Dropdown data={activityCategory}
-                                             title={this.state.projectCategory}
-                                             onSelect={(item) => this.setSelectedValue(item,'projectCategory')}
-                    />
-                        Type : <Dropdown data={activityTitles}
-                                         title={this.state.projectName}
-                                         onSelect={(item) => this.setSelectedValue(item,'projectName')}/>
-                        Duration : <Dropdown data={durationTime}
-                                             title={this.state.duration}
-                                             onSelect={(item) => this.setSelectedValue(item,'duration')}/>
-                        Description:<input type="text"/>
-                        Collaborators : <input type="text"/>
-                        {
-                            this.state.savedEvent ?
-                                <button onClick={(e) => this.repeatEvent(e)}>Repeat </button>
-                                :
-                                <button onClick={(e) => this.saveEvent(e)}>Save</button>
-                        }
-                    </div>
+                    <TsmsForm formClassName="add-activity">
+                        <div>
+                            <FormGroup controlId="projectCategory">
+                                <ControlLabel>Activity:</ControlLabel>
+                                <Dropdown data={activityCategory}
+                                                 title={this.state.projectCategory}
+                                                 onSelect={(item) => this.setSelectedValue(item,'projectCategory')}
+                                />
+                            </FormGroup>
+                            <FormGroup controlId="projectName">
+                                <ControlLabel>Type:</ControlLabel>
+                                <Dropdown data={activityTitles}
+                                             title={this.state.projectName}
+                                             onSelect={(item) => this.setSelectedValue(item,'projectName')}/>
+                            </FormGroup>
+                            <FormGroup controlId="duration">
+                                <ControlLabel>Duration:</ControlLabel>
+                                <Dropdown data={durationTime}
+                                                 title={this.state.duration}
+                                                 onSelect={(item) => this.setSelectedValue(item,'duration')}/>
+                            </FormGroup>
+                            <FormGroup controlId="description">
+                                <ControlLabel>Description:</ControlLabel>
+                                <FormControl type="text" label="Description" placeholder="Description"/>
+                            </FormGroup>
+                            <FormGroup controlId="collaborators">
+                                <ControlLabel>Collaborators:</ControlLabel>
+                                <FormControl type="text" label="Collaborators" placeholder="Collaborators"/>
+                            </FormGroup>
+                            {
+                                this.state.savedEvent ?
+                                    <TtnButton level = "primary"
+                                               title = "Repeat"
+                                               onClick={(e) => this.repeatEvent(e)}/>
+                                    :
+                                    <TtnButton level = "primary"
+                                               title = "Save"
+                                               onClick={(e) => this.saveEvent(e)}/>
+                            }
+                        </div>
+                    </TsmsForm>
                  }
             </div>
         )
@@ -134,4 +157,4 @@ class ModalContent extends Component{
 
 // export default ModalContent;
 
-export default ModalComponent(ModalContent);
+export default (ModalContent);
