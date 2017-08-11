@@ -3,88 +3,78 @@ import BigCalendar from 'react-big-calendar';
 import moment from 'moment';
 import 'react-big-calendar/lib/css/react-big-calendar.css'
 
-import events from './../../config/events'
-import styles from './style.css';
-import AddButton from './../../Core/PlusButton'
+import EventModalContent from './../../Core/EventModalContent'
+import ModalComp from './../../Core/ModalComp'
 
 BigCalendar.setLocalizer(
     BigCalendar.momentLocalizer(moment)
 );
 
-// let customEventWrapper = (props) => {
-//     console.log('customEventWrapper -> ', props);
-//     const customEventStyles = {
-//         'border-style': 'dotted',
-//         'border-radius': 10,
-//         'border-color': 'blue'
-//     };
-//     return (
-//         <div style={ customEventStyles}
-//              onClick={(e) => console.log('customEventSelected ->', props)}
-//              title={props && props.event && props.event.desc}>
-//             { props && props.event && props.event.title }
-//         </div>
-//     )
-// }
-/*let clicked = (props) => {
- event.preventDefault();
- let dated = props.date.getMonth()+1+'/'+props.date.getDate()+'/'+props.date.getFullYear();
- events.push({
- 'title': '8hrs on project work',
- 'start': new Date(dated),
- 'end': new Date(dated),
- });
- };*/
-// let addEvent = (props) => {
-//     /*let dated = props.date.getMonth() + 1 + '/' + props.date.getDate() + '/' + props.date.getFullYear();
-//     events.push({
-//         'title': '8hrs on project work',
-//         'start': new Date(dated),
-//         'end': new Date(dated),
-//     });
-//     console.log("date clicked is ---------", dated)*/
-// };
+/*function CustomToolbar() {
+    return (
+        <div className="fc-toolbar">
+            <div className="fc-center">
+                Aug-Sept 2016
+            </div>
+        </div >
+    )
+}*/
+//add custom toolbar in Calendar
+
+let msg = {
+    showMore: total => `+${total} ...`,
+    };
 let customHeader = (props) => {
     return (
-        <div style={{color: 'black', background: 'grey'}}>
+        <div className="fc-day-header fc-widget-header ">
             { props && props.label }
         </div>
     );
 };
-let customDateHeader =(props) =>{
-    return (
-        <div className="date-header clearfix" >
-            <span>{ props && props.label }</span>
-            <span>
-                {
-                    props.date < new Date() ?
-                        <AddButton currentDated={props}/>:null
-                }
-            </span>
-        </div>
-    );
-};
-/*(props) => {
- return (
- <div className="date-header clearfix" >
- <span>{ props && props.label }</span>
- {
- props.date < new Date() ?
- <a href="#" data-toggle="modal" data-target="#modalBill">+</a>:null
- }
- </div>
 
- );
- };*/
-// let customDayWrapper = (props) => {
-//     console.log('customDayWrapper -> ', props);
-//     return (
-//         <div style={{color: 'green'}}>
-//             Hi
-//         </div>
-//     )
-// }
-let getComponents  = (props) => {
+class CustomDateHeader extends Component{
+    constructor(props){
+        super(props);
+        this.state = {
+            show:false
+        };
+    }
+
+    showModal = (e) => {
+        e.preventDefault();
+        this.setState({show: true});
+    };
+
+    close = (e) => {
+        e.preventDefault();
+        this.setState({show: false})
+    };
+
+    render(){
+        return (
+            <div className="fc-day-number fc-future date-header" >
+                <span>{ this.props.label }</span>
+                <span>
+                    {
+                        this.props.date < new Date() ?
+                            <div className="modal-container">
+                                <TtnButton level="secondary" title="+" onClick = {this.showModal}/>
+                                {/* <button onClick={(e) => this.showModal(e)}>
+                                 +
+                                 </button>*/}
+                                {
+                                    this.state.show ?
+                                        <ModalContent close={(e)=>this.close(e)} showModal={this.state.show} message={this.props.date}/>:null
+                                }
+                            </div>:null
+                    }
+                </span>
+            </div>
+        );
+    }
+}
+
+let defaultComponent  = (props) => {
     return {
         // event: customEvent,
         // eventWrapper: customEventWrapper,
@@ -93,26 +83,23 @@ let getComponents  = (props) => {
         month: {
             header: customHeader,
             // event: customEvent,
-            dateHeader: customDateHeader
+            dateHeader: CustomDateHeader   // refer source code DateHeader.js
         }
     };
 };
-let msg = {
-    showMore: total => `+${total} ...`
-};
-
 class Calendar extends Component {
-    eventStyleGetter(event, start, end, isSelected) {
-        let cssClass;
-        if (event.title === 'img') {
-            cssClass = 'flag'
-        }else if (event.title === ''){
-            cssClass = 'pending'
+    constructor(props){
+        super(props)
+        this.state = {
+            showEventModal : false,
+            eventSelected : ''
         }
+    }
 
+    eventStyleGetter(event, start, end, isSelected) {
+        let cssClass = "fc-day-grid-event fc-event  ";
         return {
             className:cssClass,
-
         };
     }
     onselectSlot(slot) {
@@ -120,23 +107,37 @@ class Calendar extends Component {
     } //called when tile is clicked
     onselectEvent(slotId) {
         console.log("event selected",slotId);
+        this.setState({
+            showEventModal : true,
+            eventSelected : slotId
+        })
     } //called when event is clicked
+    close  = (event) => {
+        event.preventDefault();
+        this.setState({showEventModal:false})
+    };
 
     render() {
         return (
-            <div className="wrapper-calendar">
+            <div className=" ibox-content wrapper-calendar">
                 <BigCalendar
                     selectable
-                    events={events}
+                    events={this.props.events}
                     popup
                     views={['month']}
                     messages={msg}
-                    components={getComponents(this.props)}
+                    components={this.props.getComponents(this.props) || this.defaultComponent(this.props)}
                     onSelectSlot = { (slot) => this.onselectSlot(slot)}
                     onSelectEvent={(event) => this.onselectEvent(event)}
                     eventPropGetter={(this.eventStyleGetter)}
                 />
-
+                <ModalComp modalShow={this.state.showEventModal}
+                           modalHide = {(e) => {this.close(e)}}
+                           modalHeaderMsg="Edit Event"
+                           modalBody = {<EventModalContent message={this.state.eventSelected.start} eventInfo={this.state.eventSelected}/>}
+                           modalFooterClose = {(e) => {this.close(e)}}
+                           modalFooterText = 'Close'
+                />
             </div>
         )
     }

@@ -81,7 +81,6 @@ class TtnIconButton extends React.Component{
 
     render() {
         const _frequentBtn = this.getFrequentBtn();
-        console.log('Frequent button -> ', _frequentBtn);
         const _iconClass = this.props.icon || _frequentBtn._icon;
         const _title = this.props.title || _frequentBtn.title;
         const _btnLevelClass = getBtnLevelClass(this.props.level) || _frequentBtn._class;

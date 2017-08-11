@@ -1,19 +1,28 @@
 import React from 'react';
-import NotificationCards from './../../components/NotificationCard';
+import {connect} from 'react-redux'
+
+import NotificationCards from 'components/NotificationCard';
 import { correctHeight, detectBody } from './../../../utils/common';
-import Calendar from './../../components/Calendar';
-import ActivityLog from './../../components/ListActivityCard';
+import DashboardCalendar from 'components/DashboardCalendar';
+import ActivityLog from 'components/ListActivityCard';
 import TtnButton from 'core/Button/btn';
 import TypeAhead from './../../Core/TypeAhead'
 import ActivityAutoComplete from './../../Core/ActivityAutoComplete'
+import {getActivities} from './../../actions/activity.actions'
 
 class Main extends React.Component {
     constructor(props){
         super(props);
         this.state = {
             searchedList: [],
-            textValue: ''
+            textValue: '',
         }
+    }
+
+    componentWillMount () {
+        console.log("component will mount");
+        // get events/activities from db
+        this.props.getActivities();
     }
 
     handleChange = (item) => {
@@ -30,51 +39,76 @@ class Main extends React.Component {
         return item.name + ' : ' + item.id;
     };
 
+    mapDataToEvents = () => {
+        let events = [];
+        console.log("inside landing page**",this.props.activity);
+        if(this.props.activity && this.props.activity.activities.length >0){
+            const timeLogs = this.props.activity.activities;
+            timeLogs.map((dates) => {
+                console.log(dates);
+                dates.activities.map((tasks) => {
+                    events.push({
+                        title : `${tasks.Duration} ${tasks.Type}`,
+                        start: new Date(dates._id),
+                        end:new Date(dates._id)
+                    })
+                })
+            })
+
+        }
+
+        return events;
+    }
+
     render() {
+        let events = this.mapDataToEvents();
         return (
             <div className="wrapper wrapper-content animated fadeInRight">
                 <div className="row">
                     <div className="col-lg-12">
                         <div className="text-center m-t-lg">
-                            <div className="col-lg-9 pull-left ">
-                                <TypeAhead wrappedComponenent={ActivityAutoComplete} apiPath="apiPath"
-                                     icon={{name: "glyphicon glyphicon-search", position: 'place-right'}}
-                                     handleChange={(item) => this.handleChange(item)} searchedList={this.state.searchedList}
-                                     valueGenerator={this.displayText} searchItem={(item) => this.searchItem(item)}
+                            <div className="col-lg-9 pull-left">
+
+                                <div className="col-lg-9 pull-left ">
+                                    <TypeAhead wrappedComponenent={ActivityAutoComplete} apiPath="apiPath"
+                                               icon={{name: "glyphicon glyphicon-search", position: 'place-right'}}
+                                               handleChange={(item) => this.handleChange(item)} searchedList={this.state.searchedList}
+                                               valueGenerator={this.displayText} searchItem={(item) => this.searchItem(item)}
                                     />
-                                <Calendar />
-                                <ActivityLog/>
-                            </div>
-                            <div className="col-md-3 pull-right">
-                                <NotificationCards/>
+                                    <DashboardCalendar
+                                        events={events}/>
+                                    <ActivityLog/>
+                                </div>
+                                <div className="col-md-3 pull-right">
+                                    <NotificationCards/>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div className="row">
-                    <div className="col-lg-6">
-                        <div className="ibox float-e-margins">
-                            <div className="ibox-title">
-                                <h5>List of components</h5>
-                            </div>
-                            <div className="ibox-content">
-                                <div>
-                                    <h3> Buttons </h3>
-                                    <TtnButton level="primary" title="Flat Button"/>
-                                    <TtnButton nature="Decline"/>
-                                    <TtnButton iconButton level="primary" rounded icon="fa fa-address-book-o"/>
+                    <div className="row">
+                        <div className="col-lg-6">
+                            <div className="ibox float-e-margins">
+                                <div className="ibox-title">
+                                    <h5>List of components</h5>
+                                </div>
+                                <div className="ibox-content">
+                                    <div>
+                                        <h3> Buttons </h3>
+                                        <TtnButton level="primary" title="Flat Button"/>
+                                        <TtnButton nature="Decline"/>
+                                        <TtnButton iconButton level="primary" rounded icon="fa fa-address-book-o"/>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>                
                 </div>
             </div>
-
         )
-    }
+    }   // todo : get events from mongodb
 
     componentDidMount() {
-
+        console.log('component did mount')
         // Run correctHeight function on load and resize window event
         $(window).bind("load resize", function() {
             correctHeight();
@@ -90,4 +124,15 @@ class Main extends React.Component {
     }
 }
 
-export default Main
+const mapDispatchToProps = (dispatch) => ({
+    getActivities : () => {dispatch(getActivities())}
+});
+
+const mapStateToProps = (state) => {
+    return {
+        activity: state.activity
+    }
+};
+
+export default connect(mapStateToProps,mapDispatchToProps)(Main);
+
