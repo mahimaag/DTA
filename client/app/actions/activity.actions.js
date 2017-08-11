@@ -13,7 +13,7 @@ export const postActivities = (activityLog) => {
         })
             .then(response => response.json())
             .then((data) => {
-            console.log('post success')
+            console.log('post success', data)
                 dispatch({type:ActivityActions.PostActivity.Success, data:activityLog})
             })
             .catch((error)=>{

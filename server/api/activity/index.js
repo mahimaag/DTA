@@ -13,6 +13,7 @@ activityRouter
 
 activityRouter
     .post(service.validateInput)
+    .post(service.buildActivity)
     .post(controller.save);
 
 activityRouter

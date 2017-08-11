@@ -6,7 +6,7 @@ import mongoose from "mongoose";
 
 // Gets a single Employee from the DB
 export function show(req, res) {
-    console.log("=======activity show called======");
+    console.log("======actvity controller // show()=========");
     let date = new Date(),
         y = date.getFullYear(),
         m = date.getMonth(),
@@ -68,7 +68,7 @@ export function show(req, res) {
 }
 
 export function save(req, res) {
-    console.log("=======activity save called======");
+    console.log("======actvity controller // save()=========");
 
     Activity.create(req.body)
         .then(output => {
@@ -85,17 +85,17 @@ export function save(req, res) {
                         .then(r1 => {
                             console.log("activity cloned..", r1);
                         });
-                });
-               done();
-            }
-        })
-        .catch(genericRepo.handleError(res))
 
-    console.log("======activity saved====");
+                });
+
+            }
+            res.status(200).json({"msg": "Activity saved successfully"});
+        })
+        .catch(genericRepo.handleError(res));
 }
 
 export function upsert(req, res) {
-    console.log("=======activity upsert called======");
+    console.log("======actvity controller // upsert()=========");
 
     return Activity.findOneAndUpdate({_id: req.params.id}, req.body,
         {new: true, upsert: true, setDefaultsOnInsert: true, runValidators: true}).exec()
@@ -105,7 +105,7 @@ export function upsert(req, res) {
 }
 
 export function destroy(req, res) {
-    console.log("=======activity upsert called======");
+    console.log("======actvity controller // destroy()=========");
     if(mongoose.Types.ObjectId.isValid(req.params.id)) {
         Activity.findOneAndRemove({_id: req.params.id})
             .then(doc => {

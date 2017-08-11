@@ -14,10 +14,8 @@ const ActivityReducer = (state = initialState, action) => {
     switch (action.type) {
         case ActivityActions.GetActivity.Success:
             console.log('reducer--------', state)
-            return {
-                ...state,
-                activities: action.data
-            };
+            duplicateState.activities = action.data;
+            break;
         case ActivityActions.GetActivity.Failure:
             duplicateState.error = action.error;
             break;
@@ -27,17 +25,19 @@ const ActivityReducer = (state = initialState, action) => {
 
         case ActivityActions.PostActivity.Success:
             console.log("adding data in reducer *******",action.data)
-            return{
+            /*return{
                 ...state,
-                activities:action.data
-            };
+                activities:
+            };*/
+            duplicateState.activities && duplicateState.activities[0].activities.push(action.data);
+            break;
         case ActivityActions.PostActivity.Failure:
             console.log('error in reducer');
             break;
         default:
             break;
     }
-    return state;
+    return duplicateState;
 };
 
 export default ActivityReducer;

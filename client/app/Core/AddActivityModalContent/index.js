@@ -2,11 +2,13 @@ import React, {Component} from 'react'
 import BigCalendar from 'react-big-calendar';
 import moment from 'moment';
 import {connect} from 'react-redux'
+import Dropdown from './../Dropdown'
+import {FormGroup, ControlLabel, FormControl} from 'react-bootstrap';
 
 import events from '../../config/events'
+import TtnButton from './../Button/btn';
+import TsmsForm from './../Form';
 import {TimeEntryStatus} from './../../../constants/Index'
-import Dropdown from './../Dropdown'
-import TtnButton from 'core/Button/btn';
 import {postActivities} from './../../actions/activity.actions'
 
 BigCalendar.setLocalizer(
@@ -64,16 +66,12 @@ class ModalContent extends Component{
     };
 
     saveEvent = (event) => {
+        event.preventDefault();
         if(this.state.duration === 'Select' || this.state.projectCategory === 'Select' || this.state.projectName==='Select'){
             alert("Fields cannot be empty")
         }else{
             console.log(this.props.message,typeof (this.props.message));
             let dated = `${this.props.message.getMonth() + 1 }/${this.props.message.getDate()}/${this.props.message.getFullYear()}`;
-            events.push({
-                'title': this.state.duration +" " +this.state.projectName,
-                'start': new Date(dated),
-                'end': new Date(dated),
-            });
 
             let activityLog = {
                 "employeeId":"2590",
@@ -130,36 +128,48 @@ class ModalContent extends Component{
                         />
                         <TtnButton title="Save" level="primary" onClick = {this.saveRepeat}/>
                     </div>:
-                    <div>
-                        Activity : <Dropdown data={activityCategory}
-                                             title={this.state.projectCategory}
-                                             onSelect={(item) => this.setSelectedValue(item,'projectCategory')}
-                    />
-                        Type : <Dropdown data={activityTitles}
-                                         title={this.state.projectName}
-                                         onSelect={(item) => this.setSelectedValue(item,'projectName')}/>
-                        Duration : <Dropdown data={durationTime}
-                                             title={this.state.duration}
-                                             onSelect={(item) => this.setSelectedValue(item,'duration')}/>
-                        Description:<input type="text"
-                                           onChange={(e)=> this.onInputChange(e)}
-                                           name = "description"
-                                           value={this.state.description}
-                    />
-                        Collaborators : <input type="text"
-                                               onChange={(e)=> this.onInputChange(e)}
-                                               name = "collaborators"
-                                               value={this.state.collaborators}
-                    />
-                        {
-                            this.state.savedEvent ?
-                                <TtnButton title="Repeat" level="primary" onClick = {this.repeatEvent}/>
-                                :
-                                <TtnButton title="Save" level="primary" onClick = {this.saveEvent}/>
-
-                        }
-                    </div>
-            }
+                    <TsmsForm formClassName="add-activity">
+                        <div>
+                            <FormGroup controlId="projectCategory">
+                                <ControlLabel>Activity:</ControlLabel>
+                                <Dropdown data={activityCategory}
+                                                 title={this.state.projectCategory}
+                                                 onSelect={(item) => this.setSelectedValue(item,'projectCategory')}
+                                />
+                            </FormGroup>
+                            <FormGroup controlId="projectName">
+                                <ControlLabel>Type:</ControlLabel>
+                                <Dropdown data={activityTitles}
+                                             title={this.state.projectName}
+                                             onSelect={(item) => this.setSelectedValue(item,'projectName')}/>
+                            </FormGroup>
+                            <FormGroup controlId="duration">
+                                <ControlLabel>Duration:</ControlLabel>
+                                <Dropdown data={durationTime}
+                                                 title={this.state.duration}
+                                                 onSelect={(item) => this.setSelectedValue(item,'duration')}/>
+                            </FormGroup>
+                            <FormGroup controlId="description">
+                                <ControlLabel>Description:</ControlLabel>
+                                <FormControl type="text" label="Description" placeholder="Description" value={this.state.description} onChange={this.onInputChange} name="description"/>
+                            </FormGroup>
+                            <FormGroup controlId="collaborators">
+                                <ControlLabel>Collaborators:</ControlLabel>
+                                <FormControl type="text" label="Collaborators" placeholder="Collaborators"/>
+                            </FormGroup>
+                            {
+                                this.state.savedEvent ?
+                                    <TtnButton level = "primary"
+                                               title = "Repeat"
+                                               onClick={(e) => this.repeatEvent(e)}/>
+                                    :
+                                    <TtnButton level = "primary"
+                                               title = "Save"
+                                               onClick={(e) => this.saveEvent(e)}/>
+                            }
+                        </div>
+                    </TsmsForm>
+                 }
             </div>
         )
     }

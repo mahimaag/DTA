@@ -40,7 +40,8 @@ class Main extends React.Component {
     };
 
     mapDataToEvents = () => {
-        let events = []
+        let events = [];
+        console.log("inside landing page**",this.props.activity);
         if(this.props.activity && this.props.activity.activities.length >0){
             const timeLogs = this.props.activity.activities;
             timeLogs.map((dates) => {
