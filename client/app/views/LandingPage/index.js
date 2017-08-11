@@ -1,6 +1,6 @@
 import React from 'react';
+import {connect} from 'react-redux'
 
-import events from './../../config/events'
 import NotificationCards from 'components/NotificationCard';
 import { correctHeight, detectBody } from './../../../utils/common';
 import DashboardCalendar from 'components/DashboardCalendar';
@@ -8,14 +8,21 @@ import ActivityLog from 'components/ListActivityCard';
 import TtnButton from 'core/Button/btn';
 import TypeAhead from './../../Core/TypeAhead'
 import ActivityAutoComplete from './../../Core/ActivityAutoComplete'
+import {getActivities} from './../../actions/activity.actions'
 
 class Main extends React.Component {
     constructor(props){
         super(props);
         this.state = {
             searchedList: [],
-            textValue: ''
+            textValue: '',
         }
+    }
+
+    componentWillMount () {
+        console.log("component will mount");
+        // get events/activities from db
+        this.props.getActivities();
     }
 
     handleChange = (item) => {
@@ -32,7 +39,28 @@ class Main extends React.Component {
         return item.name + ' : ' + item.id;
     };
 
+    mapDataToEvents = () => {
+        let events = []
+        if(this.props.activity && this.props.activity.activities.length >0){
+            const timeLogs = this.props.activity.activities;
+            timeLogs.map((dates) => {
+                console.log(dates);
+                dates.activities.map((tasks) => {
+                    events.push({
+                        title : `${tasks.Duration} ${tasks.Type}`,
+                        start: new Date(dates._id),
+                        end:new Date(dates._id)
+                    })
+                })
+            })
+
+        }
+
+        return events;
+    }
+
     render() {
+        let events = this.mapDataToEvents();
         return (
             <div className="wrapper wrapper-content animated fadeInRight">
                 <div className="row">
@@ -75,12 +103,11 @@ class Main extends React.Component {
                     </div>                
                 </div>
             </div>
-
         )
     }   // todo : get events from mongodb
 
     componentDidMount() {
-
+        console.log('component did mount')
         // Run correctHeight function on load and resize window event
         $(window).bind("load resize", function() {
             correctHeight();
@@ -96,4 +123,15 @@ class Main extends React.Component {
     }
 }
 
-export default Main
+const mapDispatchToProps = (dispatch) => ({
+    getActivities : () => {dispatch(getActivities())}
+});
+
+const mapStateToProps = (state) => {
+    return {
+        activity: state.activity
+    }
+};
+
+export default connect(mapStateToProps,mapDispatchToProps)(Main);
+

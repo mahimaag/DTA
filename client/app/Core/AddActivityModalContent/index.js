@@ -30,7 +30,7 @@ class ModalContent extends Component{
             repeatedDates : [],
             savedEvent:false,
             description:'',
-            collaborators:''
+            collaborators:[]
         }
     }
 
@@ -58,12 +58,12 @@ class ModalContent extends Component{
 
     repeatEvent = () => {
         this.setState({
-            showCalendar:true
+            showCalendar:true,
+
         })
     };
 
     saveEvent = (event) => {
-        event.preventDefault();
         if(this.state.duration === 'Select' || this.state.projectCategory === 'Select' || this.state.projectName==='Select'){
             alert("Fields cannot be empty")
         }else{
@@ -76,7 +76,6 @@ class ModalContent extends Component{
             });
 
             let activityLog = {
-                "activityId":1,
                 "employeeId":"2590",
                 "date":Date.now(),
                 "activity":this.state.projectCategory,
@@ -84,7 +83,7 @@ class ModalContent extends Component{
                 "description":this.state.description,
                 "status":TimeEntryStatus.Pending,
                 "duration":this.state.duration,
-                "collaborators":[this.state.collaborators]
+                "collaborators":this.state.collaborators
             };
 
             this.props.postActivities(activityLog); // todo : dispatch(asyncAction(activityLog))
@@ -92,13 +91,13 @@ class ModalContent extends Component{
             console.log("date clicked is -----------", dated);
 
             this.setState({
-                savedEvent:true
+                savedEvent:true,
+
             })
         }
     }; // todo: save this new event in mongodb
 
     saveRepeat = (event) => {
-        event.preventDefault();
         this.state.repeatedDates.map((item) => {
             events.push({
                 'title': this.state.duration +" " +this.state.projectName,

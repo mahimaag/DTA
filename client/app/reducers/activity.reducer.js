@@ -3,28 +3,41 @@ import { ActivityActions } from './../../constants/actions';
 import _ from 'lodash';
 
 // Represents an activity object and its current state.
-const initialState = Object.freeze({
+const initialState = {
     activities: [],                // activities Array from Apis.
     error: {}                  // error from Apis.
-});
+};
 
 const ActivityReducer = (state = initialState, action) => {
     let duplicateState = _.cloneDeep(state);
+    console.log('11111111111111111')
     switch (action.type) {
         case ActivityActions.GetActivity.Success:
-            duplicateState.activities = action.data;
-            break;
-
+            console.log('reducer--------', state)
+            return {
+                ...state,
+                activities: action.data
+            };
         case ActivityActions.GetActivity.Failure:
             duplicateState.error = action.error;
             break;
 
         case ActivityActions.GetActivity.Start:
             break;
+
+        case ActivityActions.PostActivity.Success:
+            console.log("adding data in reducer *******",action.data)
+            return{
+                ...state,
+                activities:action.data
+            };
+        case ActivityActions.PostActivity.Failure:
+            console.log('error in reducer');
+            break;
         default:
             break;
     }
-    return duplicateState;
+    return state;
 };
 
 export default ActivityReducer;
