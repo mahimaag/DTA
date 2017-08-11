@@ -20,12 +20,8 @@ const redirectUrl = (req, res, next) => {
           const tsmsToken = jwt_token.sign(employeeDetails, config.token.SecretKey, {
             expiresIn: config.token.ExpireTime,
           });
-          res.cookie(AUTH_HRMS_TOKEN_COOKIE, hrmsToken, {
-            maxAge: config.cookie.MaximumAge,
-          });
-          res.cookie(AUTH_TSMS_TOKEN_COOKIE, tsmsToken, {
-            maxAge: config.cookie.MaximumAge,
-          });
+          res.cookie(AUTH_HRMS_TOKEN_COOKIE, hrmsToken);
+          res.cookie(AUTH_TSMS_TOKEN_COOKIE, tsmsToken);
 
           EmployeeSchema.update({
             employeeId: employee.employeeCode,

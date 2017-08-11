@@ -11,14 +11,23 @@ import redirectUrlFunction from "./components/auth/redirectUrl";
 import logout from "./components/auth/logout";
 import express from 'express';
 export default function (app) {
+
+    const logMiddleware = (m) => (r1, r2, n) => {
+        console.log(m);
+        n();
+    }
     //middlewares
-    const indexFile = path.join(app.get('appPath'), 'client', 'assests', 'index.html');
+    const indexFile = path.join(app.get('appPath'), 'client', 'assests', 'index.html' );
     const distFolder = path.join(app.get('appPath'), 'dist');
+    console.log('Dist folder - ', distFolder);
+    console.log('Index file - ', indexFile);
     app.use(authMiddlewares);
-    app.use(express.static(indexFile));
-    app.use(express.static(distFolder));
+    // app.use(express.static(indexFile), logMiddleware('After index file'));
+    app.use(express.static(distFolder), logMiddleware('After dist folder'));
+    app.use('/api', authMiddlewares);
     app.use('/api/employees', require('./api/employee'));
-    app.use('/api/oauthServerCallback', redirectUrlFunction, (req, res) => {
+    app.use('/api/activity', require('./api/activity'));
+    app.use('/api/oauthServerCallback',redirectUrlFunction, (req, res) => {
         res.redirect('/');
     });
   app.get('/logout', logout);
