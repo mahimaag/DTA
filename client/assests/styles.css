@@ -655,18 +655,16 @@ button.rbc-input::-moz-focus-inner {
 .completed {
     background-color: transparent;
 }
-
-.date-header {
-    text-align:left;
+.modal-container button{
+  float: right;
 }
-.date-header span:first-child {
-    float:right;
-}
-
-.date-header div{
-    float:right;
+.date-header span:last-child{
+  float:left;
 }
 
+.fc-event div:first-child{
+  color:white;
+}
 .clearfix {
     content:'';
     clear:both;

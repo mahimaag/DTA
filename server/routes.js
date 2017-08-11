@@ -10,6 +10,11 @@ import authMiddlewares from "./components/auth";
 import redirectUrlFunction from "./components/auth/redirectUrl";
 import logout from "./components/auth/logout";
 import express from 'express';
+import aclMiddleware from './acl'
+import logger from './components/logger';
+import cors from 'cors'
+
+
 export default function (app) {
 
     const logMiddleware = (m) => (r1, r2, n) => {
@@ -17,20 +22,32 @@ export default function (app) {
         n();
     }
     //middlewares
-    const indexFile = path.join(app.get('appPath'), 'client', 'assests', 'index.html' );
+    const indexFile = path.join(app.get('appPath'), 'client', 'assests', 'index.html');
     const distFolder = path.join(app.get('appPath'), 'dist');
     console.log('Dist folder - ', distFolder);
     console.log('Index file - ', indexFile);
-    app.use(authMiddlewares);
-    // app.use(express.static(indexFile), logMiddleware('After index file'));
+    // app.use(authMiddlewares);
+    const checkAccess = (req,res,next) => {
+        logger.silly("checked acl middleware");
+    };
+    app.use(cors());
+  app.use(express.static(indexFile), logMiddleware('After index file'));
+  app.use(express.static(distFolder), logMiddleware('After dist folder'));
+  // app.use('/api', authMiddlewares);
+  app.use('/api/employees', require('./api/employee'));
+    app.use('/api/oauthServerCallback',redirectUrlFunction, (req, res) => {
+        res.redirect('/');
+    });
+    app.use(express.static(indexFile), logMiddleware('After index file'));
     app.use(express.static(distFolder), logMiddleware('After dist folder'));
-    app.use('/api', authMiddlewares);
+    // app.use('/api', authMiddlewares);
     app.use('/api/employees', require('./api/employee'));
     app.use('/api/activity', require('./api/activity'));
     app.use('/api/oauthServerCallback',redirectUrlFunction, (req, res) => {
         res.redirect('/');
     });
-  app.get('/logout', logout);
+    app.get('/logout', logout);
+    app.get('/api/projects/:role',aclMiddleware,checkAccess); //api is /api/resource/:role role can be('NEWER','ADMIN','SUPER_ADMIN','AP1','AP2')
 
     //Error handler for 500 res
     app.use(function _500ErrorMiddleware(err, req, res, next) {

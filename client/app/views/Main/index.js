@@ -5,7 +5,6 @@ import Progress from 'core/Progress';
 import Navigation from 'core/Navigation';
 import Footer from 'core/Footer';
 import TopHeader from 'core/TopHeader';
-import Sample from  'components/Sample';
 
 class Main extends Component {
     constructor(props){

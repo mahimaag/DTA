@@ -20,6 +20,7 @@ mongoose.connection.on('error', function(err) {
   process.exit(-1); // eslint-disable-line no-process-exit
 });
 
+
 // Setup server
 const app = express();
 require('./config/express').default(app);

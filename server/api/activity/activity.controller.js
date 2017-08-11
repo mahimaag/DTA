@@ -29,7 +29,7 @@ export function show(req, res) {
             $project: {
                 "dateString": {
                     $dateToString: {
-                        "format": "%d/%m/%Y",
+                        "format": "%m/%d/%Y",
                         "date": {
                             $add: [new Date(0), "$date"]
                         }
@@ -89,7 +89,7 @@ export function save(req, res) {
                 });
 
             }
-            res.status(200).end();
+            res.status(200).json({"msg": "Activity saved successfully"});
         })
         .catch(genericRepo.handleError(res));
 }

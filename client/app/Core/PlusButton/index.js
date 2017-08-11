@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 
 import ModalContent from '../../Core/AddActivityModalContent'
+import ModalComp from './../ModalComp';
 
 class AddButton extends Component {
     constructor() {
@@ -16,8 +17,7 @@ class AddButton extends Component {
         this.props.addEvent();
     };
 
-    close = (e) => {
-        e.preventDefault();
+    close = () => {
         this.setState({show: false})
     };
 
@@ -27,10 +27,13 @@ class AddButton extends Component {
                 <button onClick={(e) => this.showModal(e)}>
                     +
                 </button>
-                {
-                    this.state.show ?
-                        <ModalContent close={(e)=>this.close(e)} message={this.props.currentDated.date}/>:null
-                }
+                <ModalComp modalClassName = 'inmodal'
+                           modalShow = {this.state.show}
+                           modalHide = {() => {this.close()}}
+                           modalHeaderMsg = "Add Activity"
+                           modalBody = {<ModalContent/>}
+                           modalFooterClose = {() => {this.close()}}
+                           modalFooterText = 'Close'/>
             </div>
         );
     }
