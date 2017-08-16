@@ -34,7 +34,7 @@ export function show(req, res) {
                 status: 1,
                 collaborators: 1,
                 duration: 1,
-                _id: 1
+                activityId: "$_id"
 
             }
         },
@@ -43,7 +43,7 @@ export function show(req, res) {
                 _id: "$date",
                 "activities": {
                     $push: {
-                        "_id": "$_id",
+                        "activityId": "$activityId",
                         "activity":"$activity",
                         "activityType": "$activityType",
                         "duration": "$duration",
