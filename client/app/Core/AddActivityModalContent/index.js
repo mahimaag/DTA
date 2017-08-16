@@ -48,8 +48,6 @@ class ModalContent extends Component{
 
         this.setState({
             repeatedDates:newRepeatedDates
-        },() => {
-            console.log("Event repeats on",this.state.repeatedDates)
         });
 
     } // todo : change color of selected slot
@@ -72,9 +70,7 @@ class ModalContent extends Component{
         if(this.state.duration === 'Select' || this.state.projectCategory === 'Select' || this.state.projectName==='Select'){
             alert("Fields cannot be empty")
         }else{
-            console.log(this.props.message,typeof (this.props.message));
             let dated = getDate(this.props.message);
-            console.log("event to be added on date :",dated)
             let activityLog = {
                 "employeeId":"2590",
                 "date":+ new Date(dated), //todo : send selected date timestamp
@@ -87,8 +83,6 @@ class ModalContent extends Component{
             };
 
             this.props.postActivities(activityLog); // todo : dispatch(asyncAction(activityLog))
-            console.log("saved event is ",this.state);
-            console.log("date clicked is -----------", dated);
 
             this.setState({
                 savedEvent:true,

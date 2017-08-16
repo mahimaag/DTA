@@ -91,7 +91,8 @@ export function destroy(req, res) {
             .then(doc => {
                 let response = {
                     message: "activity successfully deleted",
-                    id: doc._id
+                    id: doc._id,
+                    date :doc.date
                 };
                 res.send(response);
             });
