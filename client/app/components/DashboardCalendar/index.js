@@ -77,7 +77,6 @@ class DashboardCalendar extends Component{
     }
 
     render(){
-        console.log("inside dashboard ",this.props)
         return(
             <div className=" ibox-content wrapper-calendar">
                 <Calendar
