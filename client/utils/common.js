@@ -54,5 +54,10 @@ const smoothlyMenu = () => {
     }
 }
 
-module.exports = {correctHeight, detectBody, smoothlyMenu};
+const getDate = (newDate) => {
+   return(`${newDate.getMonth() + 1 }/${newDate.getDate()}/${newDate.getFullYear()}`);
+
+}
+
+module.exports = {correctHeight, detectBody, smoothlyMenu,getDate};
 

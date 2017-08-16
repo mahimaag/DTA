@@ -10,10 +10,8 @@ const initialState = {
 
 const ActivityReducer = (state = initialState, action) => {
     let duplicateState = _.cloneDeep(state);
-    console.log('11111111111111111')
     switch (action.type) {
         case ActivityActions.GetActivity.Success:
-            console.log('reducer--------', state)
             duplicateState.activities = action.data;
             break;
         case ActivityActions.GetActivity.Failure:
@@ -24,13 +22,24 @@ const ActivityReducer = (state = initialState, action) => {
             break;
 
         case ActivityActions.PostActivity.Success:
-            console.log("adding data in reducer *******",action.data)
-            /*return{
-                ...state,
-                activities:
-            };*/
-            duplicateState.activities && duplicateState.activities[0].activities.push(action.data);
-            break;
+             if(duplicateState && duplicateState.activities.length>0){
+                 let index = duplicateState.activities.findIndex((dates)=> dates._id === action.data.date);
+                 if(index>=0){
+                     console.log("index is:",index)
+                     duplicateState.activities[index].activities.push(action.data)
+                 } else{
+                     duplicateState.activities.push({
+                         _id:action.data.date,
+                         activities : [action.data]
+                     })
+                 }
+             } else{
+                    duplicateState.activities = [{
+                        _id:action.data.date,
+                        activities : [action.data]
+                    }]
+             }
+             break;
         case ActivityActions.PostActivity.Failure:
             console.log('error in reducer');
             break;
