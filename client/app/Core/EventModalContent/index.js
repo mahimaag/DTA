@@ -5,6 +5,7 @@ import BigCalendar from 'react-big-calendar';
 import moment from 'moment';
 
 import TtnButton from 'core/Button/btn';
+import Dropdown from './../Dropdown'
 
 BigCalendar.setLocalizer(
     BigCalendar.momentLocalizer(moment)
@@ -14,7 +15,8 @@ class ModalContent extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            edit: false
+            edit: false,
+            duration:'',
         }
     }
 
@@ -37,12 +39,25 @@ class ModalContent extends Component {
         console.log("Delete :",this.props.eventInfo)
     };
 
+    setSelectedValue = (item, property) => {
+        this.setState({
+            [property]: item
+        })
+    };
+
     render() {
+        let titles=[];
+        let durationTime = ['30 mins','1 hr','2 hrs','3 hrs','4 hrs','5 hrs','6 hrs','7 hrs','8 hrs'];
+        titles = this.props.eventInfo.title.split('-');
         return (
             <div>{
                 this.state.edit ?
                     <div>
-                        <input type="text" value={this.props.eventInfo.title}/>
+                        <Dropdown data={durationTime}
+                                  title={titles[0]}
+                                  onSelect={(item) => this.setSelectedValue(item,'duration')}
+                        />
+                        <input type="text" value={titles[1]}/>
                         <TtnButton iconButton
                                    level="secondary"
                                    rounded icon ="glyphicon glyphicon-ok"

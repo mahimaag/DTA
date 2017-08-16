@@ -27,14 +27,7 @@ export function show(req, res) {
         },
         {
             $project: {
-                "dateString": {
-                    $dateToString: {
-                        "format": "%m/%d/%Y",
-                        "date": {
-                            $add: [new Date(0), "$date"]
-                        }
-                    }
-                },
+                date: 1,
                 activity: 1,
                 activityType: 1,
                 description: 1,
@@ -47,16 +40,16 @@ export function show(req, res) {
         },
         {
             $group: {
-                _id: "$dateString",
+                _id: "$date",
                 "activities": {
                     $push: {
-                        "Id": "$_id",
-                        "Activity":"$activity",
-                        "Type": "$activityType",
-                        "Duration": "$duration",
-                        "Description": "$description",
-                        "Status": "$status",
-                        "Collaborators": "$collaborators"
+                        "_id": "$_id",
+                        "activity":"$activity",
+                        "activityType": "$activityType",
+                        "duration": "$duration",
+                        "description": "$description",
+                        "status": "$status",
+                        "collaborators": "$collaborators"
                     }
                 }
             }
@@ -89,7 +82,7 @@ export function save(req, res) {
                 });
 
             }
-            res.status(200).json({"msg": "Activity saved successfully"});
+            res.status(200).json({"msg":"Activity saved successfully"}).end();
         })
         .catch(genericRepo.handleError(res));
 }

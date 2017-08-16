@@ -10,6 +10,7 @@ import TtnButton from './../Button/btn';
 import TsmsForm from './../Form';
 import {TimeEntryStatus} from './../../../constants/Index'
 import {postActivities} from './../../actions/activity.actions'
+import MultiSelectDropdown from '../../Core/MultiSelectDropDown'
 
 BigCalendar.setLocalizer(
     BigCalendar.momentLocalizer(moment)
@@ -72,10 +73,10 @@ class ModalContent extends Component{
         }else{
             console.log(this.props.message,typeof (this.props.message));
             let dated = `${this.props.message.getMonth() + 1 }/${this.props.message.getDate()}/${this.props.message.getFullYear()}`;
-
+            console.log("event to be added on date :",dated)
             let activityLog = {
                 "employeeId":"2590",
-                "date":Date.now(),
+                "date":+ new Date(dated), //todo : send selected date timestamp
                 "activity":this.state.projectCategory,
                 "activityType":this.state.projectName,
                 "description":this.state.description,
@@ -111,7 +112,20 @@ class ModalContent extends Component{
         })
     };
 
+    onSelectedVal = (newCollab) => {
+        (this.state.collaborators.length && this.state.collaborators.indexOf(newCollab) > -1) ? null : this.state.collaborators.push(newCollab);
+        this.setState({collaborators: this.state.collaborators});
+    };
+
+    onDeleteCollab = (deletedVal) => {
+        this.state.collaborators.splice(this.state.collaborators.indexOf(deletedVal), 1);
+        this.setState({
+            collaborators: this.state.collaborators
+        })
+    }
+
     render(){
+        let newCollabArray = [2590,2591,2592,2593];
         let activityTitles = ['Westcon','Knowlegde Meet','Daily Time Analysis'];
         let activityCategory = ['Project','Non-Project'];
         let durationTime = ['30 mins','1 hr','2 hrs','3 hrs','4 hrs','5 hrs','6 hrs','7 hrs','8 hrs'];
@@ -126,7 +140,7 @@ class ModalContent extends Component{
                             toolbar={false}
                             onSelectSlot = { (slot) => this.selectSlot(slot)}
                         />
-                        <TtnButton title="Save" level="primary" onClick = {this.saveRepeat}/>
+                        <button onClick={(e) => this.saveRepeat(e)}>Save </button>
                     </div>:
                     <TsmsForm formClassName="add-activity">
                         <div>
@@ -154,8 +168,12 @@ class ModalContent extends Component{
                                 <FormControl type="text" label="Description" placeholder="Description" value={this.state.description} onChange={this.onInputChange} name="description"/>
                             </FormGroup>
                             <FormGroup controlId="collaborators">
-                                <ControlLabel>Collaborators:</ControlLabel>
-                                <FormControl type="text" label="Collaborators" placeholder="Collaborators"/>
+                                Collaborators: <MultiSelectDropdown collabArray = {newCollabArray}
+                                                                    newCollab = {this.state.collaborators}
+                                                                    title = 'Select'
+                                                                    onSelectedVal = {(newCollab) => {this.onSelectedVal(newCollab)}}
+                                                                    onDeleteCollab = {(deletedVal) => {this.onDeleteCollab(deletedVal)}}/>
+
                             </FormGroup>
                             {
                                 this.state.savedEvent ?
@@ -168,6 +186,7 @@ class ModalContent extends Component{
                                                onClick={(e) => this.saveEvent(e)}/>
                             }
                         </div>
+
                     </TsmsForm>
                  }
             </div>

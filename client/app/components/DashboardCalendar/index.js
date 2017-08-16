@@ -43,7 +43,7 @@ class CustomDateHeader extends Component{
                                 <TtnButton level="secondary" title="+" onClick = {this.showModal}/>
                                 <ModalComp modalShow={this.state.show}
                                            modalHide = {(e) => {this.close(e)}}
-                                           modalHeaderMsg="Add Activity Log"
+                                           modalHeaderMsg={this.props.date.toString()}
                                            modalBody = {<ModalContent message={this.props.date}/>}
                                            modalFooterClose = {(e) => {this.close(e)}}
                                            modalFooterText = 'Close'
@@ -77,6 +77,7 @@ class DashboardCalendar extends Component{
     }
 
     render(){
+        console.log("inside dashboard ",this.props)
         return(
             <div className=" ibox-content wrapper-calendar">
                 <Calendar

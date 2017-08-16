@@ -14,7 +14,6 @@ import aclMiddleware from './acl'
 import logger from './components/logger';
 import cors from 'cors'
 
-
 export default function (app) {
 
     const logMiddleware = (m) => (r1, r2, n) => {

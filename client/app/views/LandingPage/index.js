@@ -48,7 +48,7 @@ class Main extends React.Component {
                 console.log(dates);
                 dates.activities.map((tasks) => {
                     events.push({
-                        title : `${tasks.Duration} ${tasks.Type}`,
+                        title : `${tasks.duration} - ${tasks.activityType}`,
                         start: new Date(dates._id),
                         end:new Date(dates._id)
                     })
@@ -56,6 +56,7 @@ class Main extends React.Component {
             })
 
         }
+        console.log("events in landing page are ",events)
 
         return events;
     }
