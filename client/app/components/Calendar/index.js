@@ -4,6 +4,7 @@ import moment from 'moment';
 import 'react-big-calendar/lib/css/react-big-calendar.css'
 
 import EventModalContent from './../../Core/EventModalContent'
+import AddActivityModal from './../../Core/AddActivityModalContent'
 import ModalComp from './../../Core/ModalComp'
 
 BigCalendar.setLocalizer(
@@ -52,6 +53,7 @@ class CustomDateHeader extends Component{
 
     render(){
         return (
+
             <div className="fc-day-number fc-future date-header" >
                 <span>{ this.props.label }</span>
                 <span>
@@ -59,13 +61,13 @@ class CustomDateHeader extends Component{
                         this.props.date < new Date() ?
                             <div className="modal-container">
                                 <TtnButton level="secondary" title="+" onClick = {this.showModal}/>
-                                {/* <button onClick={(e) => this.showModal(e)}>
-                                 +
-                                 </button>*/}
-                                {
-                                    this.state.show ?
-                                        <ModalContent close={(e)=>this.close(e)} showModal={this.state.show} message={this.props.date}/>:null
-                                }
+                                <ModalComp modalShow={this.state.show}
+                                           modalHide = {(e) => {this.close(e)}}
+                                           modalHeaderMsg="Add Activity Log"
+                                           modalBody = {<AddActivityModal message={this.state.eventSelected.start} eventInfo={this.state.eventSelected}/>}
+                                           modalFooterClose = {(e) => {this.close(e)}}
+                                           modalFooterText = 'Close'
+                                />
                             </div>:null
                     }
                 </span>

@@ -1,7 +1,6 @@
 import { ActivityActions } from './../../constants/actions';
 
 export const postActivities = (activityLog) => {
-    console.log('55post activity', activityLog)
     return (dispatch) => {
         fetch("/api/activity/2590",{
             method: 'post',
@@ -25,7 +24,6 @@ export const postActivities = (activityLog) => {
 };
 
 export const getActivities = () => {
-    console.log("getting Activities");
     return (dispatch) => {
         fetch("/api/activity/2590",{
             method: 'get',
@@ -36,6 +34,7 @@ export const getActivities = () => {
         })
             .then(response => response.json())
             .then((data) => {
+                console.log("data in actions are :",data)
                 dispatch({type:ActivityActions.GetActivity.Success,data:data})
             })
             .catch((error)=>{
