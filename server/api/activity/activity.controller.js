@@ -26,24 +26,11 @@ export function show(req, res) {
             }
         },
         {
-            $project: {
-                date: 1,
-                activity: 1,
-                activityType: 1,
-                description: 1,
-                status: 1,
-                collaborators: 1,
-                duration: 1,
-                activityId: "$_id"
-
-            }
-        },
-        {
             $group: {
                 _id: "$date",
                 "activities": {
                     $push: {
-                        "activityId": "$activityId",
+                        "activityId": "$_id",
                         "activity":"$activity",
                         "activityType": "$activityType",
                         "duration": "$duration",
