@@ -7,6 +7,7 @@ import { Row, Col} from 'react-bootstrap'
 import TtnButton from 'core/Button/btn';
 import {monthArray} from '../../../constants/Index'
 import {getDate} from '../../../utils/common'
+import moment from 'moment'
 
 
 class ActivityLogHeader extends Component{
@@ -23,10 +24,12 @@ class ActivityLogHeader extends Component{
                 totalTime = totalTime + timeLog;
             }
         })
-        let month = '';
+
+        //let month = '';
         let date = new Date(this.props.logDate);
         let formattedDate = getDate(date);
-        let str = formattedDate.split('/');
+        let logDay = moment(formattedDate).format('ddd');
+        /*let str = formattedDate.split('/');
 
         monthArray.forEach((item) => {
             (item.num === str[0])?month = item.month:null
@@ -35,7 +38,7 @@ class ActivityLogHeader extends Component{
         let newDate = month + ' ' + str[1] + ',' + str[2];
         let days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
         let logDate = new Date(newDate);
-        let logDay = days[logDate.getDay()];
+        let logDay = days[logDate.getDay()];*/
 
         return(
             <Row className = "show-grid">

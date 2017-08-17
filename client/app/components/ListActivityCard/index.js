@@ -10,7 +10,7 @@ import { TimeEntryStatus, HeadingArray } from './../../../constants/Index'
 import './style.css'
 import ModalComp from '../../Core/ModalComp'
 import ModalBodyComp from '../../Core/ModalBodyComp'
-import {postActivities, updateActivities} from '../../actions/activity.actions'
+import {postActivities, updateActivities, deleteActivity} from '../../actions/activity.actions'
 import { connect } from 'react-redux';
 
 class ActivityLog extends Component{
@@ -24,6 +24,11 @@ class ActivityLog extends Component{
 
     componentWillMount () {
        this.setState({timeEnteries: this.props.activityTimeLog})
+    }
+
+    componentWillReceiveProps(){
+        console.log('CWRP called----',this.props.activityTimeLog);
+        this.setState({timeEnteries: this.props.activityTimeLog},() => {console.log('state in list card-----',this.state.timeEnteries)})
     }
 
     newEntry = (newTimeLog, date) => {
@@ -75,7 +80,8 @@ class ActivityLog extends Component{
     }
 
     deleteEntry = (deletedEntry,logDate) => {
-        this.state.timeEnteries.map((entry) => entry.date === logDate ? entry.activities.splice(entry.activities.indexOf(deletedEntry),1) : null);
+        console.log('activity to be deleted----',deletedEntry);
+        this.state.timeEnteries.map((entry) => entry._id === logDate ? this.props.deleteActivity(deletedEntry.activityId) : null);
         this.setState({
             timeEnteries:this.state.timeEnteries,
             displayModal: true
@@ -98,7 +104,7 @@ class ActivityLog extends Component{
     }
 
     render(){
-        //console.log('222222222222', this.props.activityTimeLog);
+        console.log('222222222222', this.props.activityTimeLog);
         return(
                 <div className="col-md-12 activity-list-comp">
                     <Row className="show-grid log-header">
@@ -134,17 +140,12 @@ class ActivityLog extends Component{
 const mapDispatchToProps = (dispatch) => ({
     getActivities : () => {dispatch(getActivities())},
     postActivities : (childItem) => {dispatch(postActivities(childItem))},
-    updateActivities : (childItem) => {dispatch(updateActivities(childItem))}
+    updateActivities : (childItem) => {dispatch(updateActivities(childItem))},
+    deleteActivity : (activityId) => {dispatch(deleteActivity(activityId))}
 
 });
 
-const mapStateToProps = (state) => {
-    return {
-        activity: state.activity
-    }
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(ActivityLog);
+export default connect(mapDispatchToProps)(ActivityLog);
 
 
 //Modal component ---------------------------
@@ -157,3 +158,5 @@ export default connect(mapStateToProps, mapDispatchToProps)(ActivityLog);
  modalFooterClose = {() => {this.onCloseModalClick()}}
  modalFooterText = 'Close'
  />*/
+
+//entry.activities.splice(entry.activities.indexOf(deletedEntry),1)

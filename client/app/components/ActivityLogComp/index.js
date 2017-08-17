@@ -197,7 +197,7 @@ class ActivityLogComp extends Component{
                                 <TtnButton iconButton
                                            level = "primary"
                                            rounded icon = "glyphicon glyphicon-trash"
-                                           onClick = {() => this.onDeleteClick(activity)}/>
+                                           onClick = {() => this.onDeleteClick(activityLog)}/>
 
                                 {/*<TSMS_IconButton bClassName="btn btn-default btn-sm edit-clear-button"
                                                  onClickFunc={() => this.onEditClick()}
