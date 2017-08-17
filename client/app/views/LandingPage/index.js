@@ -20,7 +20,6 @@ class Main extends React.Component {
     }
 
     componentWillMount () {
-        console.log("component will mount");
         // get events/activities from db
         this.props.getActivities();
     }
@@ -41,25 +40,21 @@ class Main extends React.Component {
 
     mapDataToEvents = () => {
         let events = [];
-        console.log("inside landing page**",this.props.activity);
         if(this.props.activity && this.props.activity.activities.length >0){
             const timeLogs = this.props.activity.activities;
             timeLogs.map((dates) => {
-                console.log(dates);
                 dates.activities.map((tasks) => {
                     events.push({
                         title : `${tasks.duration} - ${tasks.activityType}`,
                         start: new Date(dates._id),
-                        end:new Date(dates._id)
+                        end:new Date(dates._id),
+                        moreInfo :tasks
                     })
                 })
             })
-
         }
-        console.log("events in landing page are ",events)
-
         return events;
-    }
+    };
 
     render() {
         let events = this.mapDataToEvents();
@@ -107,10 +102,9 @@ class Main extends React.Component {
                 </div>
             </div>
         )
-    }   // todo : get events from mongodb
+    }
 
     componentDidMount() {
-        console.log('component did mount')
         // Run correctHeight function on load and resize window event
         $(window).bind("load resize", function() {
             correctHeight();

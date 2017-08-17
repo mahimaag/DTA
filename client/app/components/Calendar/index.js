@@ -108,7 +108,6 @@ class Calendar extends Component {
         console.log("selected slot",slot)
     } //called when tile is clicked
     onselectEvent(slotId) {
-        console.log("event selected",slotId);
         this.setState({
             showEventModal : true,
             eventSelected : slotId

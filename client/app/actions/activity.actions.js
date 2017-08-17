@@ -12,11 +12,9 @@ export const postActivities = (activityLog) => {
         })
             .then(response => response.json())
             .then((data) => {
-            console.log('post success', data)
                 dispatch({type:ActivityActions.PostActivity.Success, data:activityLog})
             })
             .catch((error)=>{
-            console.log('errorrrrrrrr',error)
                 dispatch({type:ActivityActions.PostActivity.Failure})
 
             })
@@ -34,11 +32,9 @@ export const getActivities = () => {
         })
             .then(response => response.json())
             .then((data) => {
-                console.log("data in actions are :",data)
                 dispatch({type:ActivityActions.GetActivity.Success,data:data})
             })
             .catch((error)=>{
-                console.log('error', error)
                 dispatch({type:ActivityActions.GetActivity.Failure})
 
             })
@@ -64,6 +60,25 @@ export const updateActivities = (activityLog) => {
                 console.log('errorrrrrrrr',error)
                 dispatch({type:ActivityActions.UpdateActivity.Failure})
 
+            })
+    }
+}
+
+export const deleteActivity = (activityId) => {
+    return (dispatch) => {
+        fetch(`/api/activity/${activityId}`,{
+            method:'delete',
+            headers:{
+                "Content-Type":"application/json",
+                "Accept":"application/json",
+            }
+        })
+            .then(response => response.json())
+            .then((data) => {
+                dispatch ({type:ActivityActions.DeleteActivity.Success,data:data})
+            })
+            .catch((error) => {
+                dispatch({type:ActivityActions.DeleteActivity.Failure})
             })
     }
 }

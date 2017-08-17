@@ -22,13 +22,10 @@ const ActivityReducer = (state = initialState, action) => {
             break;
 
         case ActivityActions.PostActivity.Success:
-            console.log('action.data in reducer----',action.data);
              if(duplicateState && duplicateState.activities.length>0){
                  let index = duplicateState.activities.findIndex((dates)=> dates._id === action.data.date);
                  if(index>=0){
-                     console.log("index is:",index)
                      duplicateState.activities[index].activities.push(action.data)
-                     console.log('duplicateState----',duplicateState);
                  } else{
                      duplicateState.activities.push({
                          _id:action.data.date,
@@ -58,6 +55,23 @@ const ActivityReducer = (state = initialState, action) => {
         case ActivityActions.UpdateActivity.Failure:
             console.log('error in reducer');
             break;
+
+        case ActivityActions.DeleteActivity.Success:
+            console.log("Deleteing activity with id :",action.data,duplicateState);
+            if(duplicateState && duplicateState.activities.length>0) {
+                let index = duplicateState.activities.findIndex((dates) => dates._id === action.data.date);
+                if (index >= 0) {
+                    let index2 = duplicateState.activities[index].activities.findIndex((activity) => activity.activityId === action.data.id)
+                    if(index2>=0)
+                        duplicateState.activities[index].activities.splice(index2,1)
+                    }
+                }
+            break;
+
+        case ActivityActions.DeleteActivity.Failure:
+            console.log('error in reducer');
+            break;
+
         default:
             break;
     }
