@@ -9,6 +9,11 @@ export const ActivityActions = {
         Failure: 'Activity.PostActivities.Failure',
         Start: 'Activity.PostActivities.Start'
     },
+    UpdateActivity : {
+        Success: 'Activity.UpdateActivities.Success',
+        Failure: 'Activity.UpdateActivities.Failure',
+        Start: 'Activity.UpdateActivities.Start'
+    },
     DeleteActivity : {
         Success: 'Activity.DeleteActivities.Success',
         Failure: 'Activity.DeleteActivities.Failure',

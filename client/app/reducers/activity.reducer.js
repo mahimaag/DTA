@@ -22,6 +22,7 @@ const ActivityReducer = (state = initialState, action) => {
             break;
 
         case ActivityActions.PostActivity.Success:
+            console.log('data in action',action.data);
              if(duplicateState && duplicateState.activities.length>0){
                  let index = duplicateState.activities.findIndex((dates)=> dates._id === action.data.date);
                  if(index>=0){
@@ -42,9 +43,22 @@ const ActivityReducer = (state = initialState, action) => {
         case ActivityActions.PostActivity.Failure:
             console.log('error in reducer');
             break;
+        case ActivityActions.UpdateActivity.Success:
+            console.log('action.data in reducer----',action.data);
+            if(duplicateState && duplicateState.activities.length>0){
+                duplicateState.activities.map((activity) => {
+                       if(activity.activityId === action.data.activityId){
+                           activity = action.data;
+                       }
+                })
+            }
+            break;
+        case ActivityActions.UpdateActivity.Failure:
+            console.log('error in reducer');
+            break;
 
         case ActivityActions.DeleteActivity.Success:
-            console.log("Deleteing activity with id :",action.data,duplicateState);
+            console.log("Deleteing activity with id :",action.data,duplicateState.activities);
             if(duplicateState && duplicateState.activities.length>0) {
                 let index = duplicateState.activities.findIndex((dates) => dates._id === action.data.date);
                 if (index >= 0) {
@@ -53,6 +67,7 @@ const ActivityReducer = (state = initialState, action) => {
                         duplicateState.activities[index].activities.splice(index2,1)
                     }
                 }
+                console.log('data after deletion',duplicateState.activities);
             break;
 
         case ActivityActions.DeleteActivity.Failure:
@@ -62,6 +77,7 @@ const ActivityReducer = (state = initialState, action) => {
         default:
             break;
     }
+
     return duplicateState;
 };
 

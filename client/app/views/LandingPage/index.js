@@ -73,7 +73,8 @@ class Main extends React.Component {
                                     />
                                     <DashboardCalendar
                                         events={events}/>
-                                    <ActivityLog/>
+
+                                    {this.props.activity.activities && this.props.activity.activities.length && <ActivityLog activityTimeLog={this.props.activity.activities}/>}
                                 </div>
                                 <div className="col-md-3 pull-right">
                                     <NotificationCards/>

@@ -37,13 +37,13 @@ class NewLogComp extends Component{
         }
         else{
             let newLogObj = {
-                Id: Date.now(),
-                Activity: this.state.newLogActivity,
-                Type: this.state.newLogType,
-                Duration: this.state.newLogDuration,
-                Description: this.state.newLogDesc,
-                Status: TimeEntryStatus.Pending,
-                Collaborators: this.state.newCollaborators
+                date: this.props.logDate,
+                activity: this.state.newLogActivity,
+                activityType: this.state.newLogType,
+                duration: this.state.newLogDuration,
+                description: this.state.newLogDesc,
+                status: TimeEntryStatus.Pending,
+                collaborators: this.state.newCollaborators
             };
             this.props.newLogCreated(newLogObj);
         }
@@ -117,7 +117,7 @@ class NewLogComp extends Component{
                     </Col>
                     <Col md = {2} lg = {2} lgOffset = {1} className = "log-col">
                         <TtnButton iconButton
-                                   level = "primary"
+                                   level = "secondary"
                                    rounded icon = "glyphicon glyphicon-ok"
                                    onClick = {() => this.onDoneClick()}/>
 

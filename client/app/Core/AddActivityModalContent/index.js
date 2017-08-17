@@ -72,7 +72,7 @@ class ModalContent extends Component{
         }else{
             let dated = getDate(this.props.message);
             let activityLog = {
-                "employeeId":"2590",
+                //"employeeId":"2590",
                 "date":+ new Date(dated), //todo : send selected date timestamp
                 "activity":this.state.projectCategory,
                 "activityType":this.state.projectName,

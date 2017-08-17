@@ -75,7 +75,7 @@ export function save(req, res) {
 }
 
 export function upsert(req, res) {
-    console.log("======actvity controller // upsert()=========");
+    console.log("======actvity controller // upsert()=========",req.params,req.body);
 
     return Activity.findOneAndUpdate({_id: req.params.id}, req.body,
         {new: true, upsert: true, setDefaultsOnInsert: true, runValidators: true}).exec()

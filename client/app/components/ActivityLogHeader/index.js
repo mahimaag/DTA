@@ -5,6 +5,9 @@ import React, { Component } from 'react'
 import { Row, Col} from 'react-bootstrap'
 //import { TSMS_TextButton } from './../../Core/Button'
 import TtnButton from 'core/Button/btn';
+import {monthArray} from '../../../constants/Index'
+import {getDate} from '../../../utils/common'
+import moment from 'moment'
 
 
 class ActivityLogHeader extends Component{
@@ -12,21 +15,36 @@ class ActivityLogHeader extends Component{
         let activityArray = this.props.activities;
         let totalTime = 0;
         activityArray.map((activity) => {
-            if(activity.Duration == '30 mins'){
+            if(activity.duration == '30 mins'){
                 totalTime = totalTime + 0.5;
             }
             else{
-                let duration = activity.Duration.split(' ');
+                let duration = activity.duration.split(' ');
                 let timeLog = parseInt(duration[0]);
                 totalTime = totalTime + timeLog;
             }
         })
-        //console.log('total time is =',totalTime);
+
+        //let month = '';
+        let date = new Date(this.props.logDate);
+        let formattedDate = getDate(date);
+        let logDay = moment(formattedDate).format('ddd');
+        /*let str = formattedDate.split('/');
+
+        monthArray.forEach((item) => {
+            (item.num === str[0])?month = item.month:null
+        });
+
+        let newDate = month + ' ' + str[1] + ',' + str[2];
+        let days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+        let logDate = new Date(newDate);
+        let logDay = days[logDate.getDay()];*/
+
         return(
             <Row className = "show-grid">
                 <Col md = {2} lg = {2} className = "log-col">
-                    <span className = "log-date-day">{this.props.logDate}</span>
-                    <span className = "log-date-day">thu</span>
+                    <span className = "log-date-day">{formattedDate}</span>
+                    <span className = "log-date-day">{logDay}</span>
                 </Col>
                 <Col md = {1} lg = {1} lgOffset = {1} className = "log-col">
                     <span>{totalTime} Hrs</span>
