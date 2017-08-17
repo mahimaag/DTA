@@ -15,15 +15,6 @@ import deleteIcon from '../assets/images/deleteIcon.jpg'*/
 class ActivityLogRow extends Component{
     constructor(props){
         super(props);
-
-        /*this.state = {
-            activity:'',
-            type:'',
-            duration:'',
-            description:'',
-            status: TimeEntryStatus.Pending,
-            collaborators: []
-        }*/
     }
 
     render(){
@@ -33,21 +24,21 @@ class ActivityLogRow extends Component{
                     this.props.timeLog.map((item, index) => {
                         return (
                             <div key={index} className = "activity-timelog">
-                                <ActivityLogHeader logDate = {item.date}
+                                <ActivityLogHeader logDate = {item._id}
                                                    activities = {item.activities}
-                                                   onLogTimeClick = {() => this.props.logItem(item.date)}
-                                                   onClearClick = {() => this.props.onClearClick(item.date)}/>
+                                                   onLogTimeClick = {() => this.props.logItem(item._id)}
+                                                   onClearClick = {() => this.props.onClearClick(item._id)}/>
                                 <Row className = "show-grid">
                                     {/*{(this.state.newEntry === true)?
                                         <NewLogComp sampleData={item.activities} newLogCreated={(newLog) => this.newLogData(newLog,item.date)}/>:null
                                     }*/}
                                     {item.activities.map((activity, index) => {
-                                        return ((activity.Status == TimeEntryStatus.New) ? <NewLogComp
-                                                                                         newLogCreated = {(newLog) => this.props.newEntry(newLog, item.date)}
-                                                                                         closedWithoutCreate = {() => {this.props.closedWithoutCreate(item.date)}} key={index}/> :
+                                        return ((activity.status == TimeEntryStatus.New) ? <NewLogComp logDate = {item._id}
+                                                                                         newLogCreated = {(newLog) => this.props.newEntry(newLog, item._id)}
+                                                                                         closedWithoutCreate = {() => {this.props.closedWithoutCreate(item._id)}} key={index}/> :
                                             <ActivityLogComp activity = {activity}
-                                                             deleteEntry = {(deletedEntry) => this.props.deleteEntry(deletedEntry, item.date)}
-                                                             edittedLog = {(editLog) => {this.props.edittedLog(editLog, item.date)}}
+                                                             deleteEntry = {(deletedEntry) => this.props.deleteEntry(deletedEntry, item._id)}
+                                                             edittedLog = {(editLog) => {this.props.edittedLog(editLog, item._id)}}
                                                              key = {index}
                                             />
                                         )

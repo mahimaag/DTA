@@ -10,22 +10,26 @@ import { TimeEntryStatus, HeadingArray } from './../../../constants/Index'
 import './style.css'
 import ModalComp from '../../Core/ModalComp'
 import ModalBodyComp from '../../Core/ModalBodyComp'
+import {postActivities, updateActivities} from '../../actions/activity.actions'
 import { connect } from 'react-redux';
 
 class ActivityLog extends Component{
     constructor(props){
         super(props);
         this.state = {
-            timeEnteries: SampleData,
+            timeEnteries: [],
             displayModal: false
         }
     }
 
+    componentWillMount () {
+       this.setState({timeEnteries: this.props.activityTimeLog})
+    }
+
     newEntry = (newTimeLog, date) => {
         this.state.timeEnteries.map((item) => {
-            if(item.date === date){
-                item.status = TimeEntryStatus.Committed;
-                item.activities.map((childItem) => childItem.Status === TimeEntryStatus.New ? Object.assign(childItem, newTimeLog) : null);
+            if(item._id === date){
+                item.activities.map((childItem) => childItem.status === TimeEntryStatus.New ? (Object.assign(childItem, newTimeLog), this.props.postActivities(childItem)) : null);
             }
         });
 
@@ -43,16 +47,15 @@ class ActivityLog extends Component{
     };
 
     addNewLog = (logDate) => {
-        this.state.timeEnteries.map((entry) => (entry.date == logDate && entry.status === TimeEntryStatus.Committed) ?
-            (entry.status = TimeEntryStatus.Uncommitted,
-                entry.activities.unshift({
-                    "Id":"",
-                    "Activity":"",
-                    "Type": "",
-                    "Duration": "",
-                    "Description": "",
-                    "Status": TimeEntryStatus.New,
-                    "Collaborators": []
+        this.state.timeEnteries.map((entry) => (entry._id == logDate) ?
+            (entry.activities.unshift({
+                    "date":"",
+                    "activity":"",
+                    "activityType": "",
+                    "duration": "",
+                    "description": "",
+                    "status": TimeEntryStatus.New,
+                    "collaborators": []
                 }) ): null
         );
         this.setState({
@@ -62,10 +65,10 @@ class ActivityLog extends Component{
 
     edittedLog = (editItem,date) => {
         this.state.timeEnteries.map((entry) => {
-            if(entry.date === date){
-                entry.activities.map((childItem) => childItem.Id === editItem.Id ? Object.assign(childItem, editItem) : null);
+            if (entry._id === date) {
+                entry.activities.map((childItem) => childItem.activityId === editItem.activityId ? (Object.assign(childItem, editItem), this.props.updateActivities(childItem)) : null);
             }
-        });
+        })
         this.setState({
             timeEnteries: this.state.timeEnteries
         })
@@ -80,8 +83,8 @@ class ActivityLog extends Component{
     };
 
     closedWithoutCreate = (logDate) => {
-        this.state.timeEnteries.map((entry) => entry.date === logDate ? (entry.status = TimeEntryStatus.Committed,
-            entry.activities.splice(entry.activities.findIndex((activity) => activity.Status === TimeEntryStatus.New), 1)) : null);
+        this.state.timeEnteries.map((entry) => entry._id === logDate ? (
+            entry.activities.splice(entry.activities.findIndex((activity) => activity.status === TimeEntryStatus.New), 1)) : null);
         this.setState({
             timeEnteries:this.state.timeEnteries
         })
@@ -91,10 +94,11 @@ class ActivityLog extends Component{
         this.setState({
             displayModal: false
         })
+
     }
 
     render(){
-        console.log('222222222222', this.props);
+        //console.log('222222222222', this.props.activityTimeLog);
         return(
                 <div className="col-md-12 activity-list-comp">
                     <Row className="show-grid log-header">
@@ -127,13 +131,21 @@ class ActivityLog extends Component{
     }
 }
 
+const mapDispatchToProps = (dispatch) => ({
+    getActivities : () => {dispatch(getActivities())},
+    postActivities : (childItem) => {dispatch(postActivities(childItem))},
+    updateActivities : (childItem) => {dispatch(updateActivities(childItem))}
+
+});
+
 const mapStateToProps = (state) => {
     return {
         activity: state.activity
     }
 };
 
-export default connect(mapStateToProps)(ActivityLog);
+export default connect(mapStateToProps, mapDispatchToProps)(ActivityLog);
+
 
 //Modal component ---------------------------
 // Can also be used as below when we need to pass another component inside it's body..

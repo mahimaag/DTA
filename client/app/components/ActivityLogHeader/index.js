@@ -6,6 +6,7 @@ import { Row, Col} from 'react-bootstrap'
 //import { TSMS_TextButton } from './../../Core/Button'
 import TtnButton from 'core/Button/btn';
 import {monthArray} from '../../../constants/Index'
+import {getDate} from '../../../utils/common'
 
 
 class ActivityLogHeader extends Component{
@@ -13,30 +14,25 @@ class ActivityLogHeader extends Component{
         let activityArray = this.props.activities;
         let totalTime = 0;
         activityArray.map((activity) => {
-            if(activity.Duration == '30 mins'){
+            if(activity.duration == '30 mins'){
                 totalTime = totalTime + 0.5;
             }
             else{
-                let duration = activity.Duration.split(' ');
+                let duration = activity.duration.split(' ');
                 let timeLog = parseInt(duration[0]);
                 totalTime = totalTime + timeLog;
             }
         })
         let month = '';
-        let str = this.props.logDate.split('/');
-
-        /*const monthArray = [{num:"01",month:"January"},{num:"02",month:"February"},
-            {num:"03",month:"March"},{num:"04",month:"April"},
-            {num:"05",month:"May"},{num:"06",month:"June"},
-            {num:"07",month:"July"},{num:"08",month:"August"},
-            {num:"09",month:"September"},{num:"10",month:"October"},
-            {num:"11",month:"November"},{num:"12",month:"December"}];*/
+        let date = new Date(this.props.logDate);
+        let formattedDate = getDate(date);
+        let str = formattedDate.split('/');
 
         monthArray.forEach((item) => {
-            (item.num === str[1])?month = item.month:null
+            (item.num === str[0])?month = item.month:null
         });
 
-        let newDate = month + ' ' + str[0] + ',' + str[2];
+        let newDate = month + ' ' + str[1] + ',' + str[2];
         let days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
         let logDate = new Date(newDate);
         let logDay = days[logDate.getDay()];
@@ -44,7 +40,7 @@ class ActivityLogHeader extends Component{
         return(
             <Row className = "show-grid">
                 <Col md = {2} lg = {2} className = "log-col">
-                    <span className = "log-date-day">{this.props.logDate}</span>
+                    <span className = "log-date-day">{formattedDate}</span>
                     <span className = "log-date-day">{logDay}</span>
                 </Col>
                 <Col md = {1} lg = {1} lgOffset = {1} className = "log-col">

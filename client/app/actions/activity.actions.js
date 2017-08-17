@@ -2,7 +2,7 @@ import { ActivityActions } from './../../constants/actions';
 
 export const postActivities = (activityLog) => {
     return (dispatch) => {
-        fetch("/api/activity/2590",{
+        fetch("/api/activity/2592",{
             method: 'post',
             headers:{
                 "Content-Type":"application/json",
@@ -25,7 +25,7 @@ export const postActivities = (activityLog) => {
 
 export const getActivities = () => {
     return (dispatch) => {
-        fetch("/api/activity/2590",{
+        fetch("/api/activity/2592",{
             method: 'get',
             headers:{
                 "Content-Type":"application/json",
@@ -44,3 +44,26 @@ export const getActivities = () => {
             })
     }
 };
+
+export const updateActivities = (activityLog) => {
+    return (dispatch) => {
+        fetch(`/api/activity/${activityLog.activityId}`,{
+            method: 'put',
+            headers:{
+                "Content-Type":"application/json",
+                "Accept":"application/json",
+            },
+            body:JSON.stringify(activityLog)
+        })
+            .then(response => response.json())
+            .then((data) => {
+                console.log('put success', data)
+                dispatch({type:ActivityActions.UpdateActivity.Success, data:activityLog})
+            })
+            .catch((error)=>{
+                console.log('errorrrrrrrr',error)
+                dispatch({type:ActivityActions.UpdateActivity.Failure})
+
+            })
+    }
+}
