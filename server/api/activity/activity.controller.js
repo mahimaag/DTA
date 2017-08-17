@@ -69,7 +69,7 @@ export function save(req, res) {
                 });
 
             }
-            res.status(200).json({"msg":"Activity saved successfully"}).end();
+            res.status(200).json(output).end();
         })
         .catch(genericRepo.handleError(res));
 }
@@ -85,7 +85,7 @@ export function upsert(req, res) {
 }
 
 export function destroy(req, res) {
-    console.log("======actvity controller // destroy()=========");
+    console.log("======actvity controller // destroy() //Single Activity=========");
     if(mongoose.Types.ObjectId.isValid(req.params.id)) {
         Activity.findOneAndRemove({_id: req.params.id})
             .then(doc => {
@@ -96,8 +96,33 @@ export function destroy(req, res) {
                 };
                 res.send(response);
             });
+    } else if(req.body.hasOwnProperty("date")) {
+        console.log("======actvity controller // destroy() // Date wise=========", req.params.id,
+            req.body);
+        Activity.remove({employeeId: req.params.id, date: req.body.date})
+            .then(doc => {
+                res.send(deleteResponse(doc, false));
+            })
+            .catch(err => {
+                res.send(deleteResponse(err, true));
+            })
+
     } else {
-        res.send({err: "Invalid activity id"});
+        res.send(deleteResponse(null, true));
     }
+}
+
+function deleteResponse(doc, isErr) {
+    let response = {};
+
+    if (isErr) {
+        response.err = "Invalid activity id";
+    } else {
+        response.message = "activity successfully deleted",
+            response.id = doc._id,
+            response.date = doc.date
+
+    };
+    return response;
 }
 
