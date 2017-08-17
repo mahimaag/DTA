@@ -12,6 +12,7 @@ import ModalComp from '../../Core/ModalComp'
 import ModalBodyComp from '../../Core/ModalBodyComp'
 import {postActivities, updateActivities, deleteActivity} from '../../actions/activity.actions'
 import { connect } from 'react-redux';
+import _ from 'lodash';
 
 class ActivityLog extends Component{
     constructor(props){
@@ -23,21 +24,25 @@ class ActivityLog extends Component{
     }
 
     componentWillMount () {
-       this.setState({timeEnteries: this.props.activityTimeLog})
+        let timeLog = this.props.activityTimeLog.slice();
+        this.setState({timeEnteries: timeLog})
     }
 
-    componentWillReceiveProps(){
-        console.log('CWRP called----',this.props.activityTimeLog);
-        this.setState({timeEnteries: this.props.activityTimeLog},() => {console.log('state in list card-----',this.state.timeEnteries)})
+
+
+    componentWillReceiveProps(newProps) {
+        this.setState({
+            timeEnteries: newProps.activityTimeLog.slice()
+        },() => {console.log(`${tag}[cwrp]state in list card-----`,this.state.timeEnteries)})
     }
 
     newEntry = (newTimeLog, date) => {
         this.state.timeEnteries.map((item) => {
             if(item._id === date){
-                item.activities.map((childItem) => childItem.status === TimeEntryStatus.New ? (Object.assign(childItem, newTimeLog), this.props.postActivities(childItem)) : null);
+                item.activities.map((childItem) => childItem.status === TimeEntryStatus.New ? (Object.assign(childItem, newTimeLog)) : null);
             }
         });
-
+        this.props.postActivities(newTimeLog)
         this.setState({
             timeEnteries: this.state.timeEnteries
         })
@@ -52,8 +57,9 @@ class ActivityLog extends Component{
     };
 
     addNewLog = (logDate) => {
-        this.state.timeEnteries.map((entry) => (entry._id == logDate) ?
-            (entry.activities.unshift({
+        const _timeEntries = _.cloneDeep(this.state.timeEnteries);
+        let target = _timeEntries.find((entry) => (entry._id == logDate) );
+        target.activities.unshift({
                     "date":"",
                     "activity":"",
                     "activityType": "",
@@ -61,10 +67,9 @@ class ActivityLog extends Component{
                     "description": "",
                     "status": TimeEntryStatus.New,
                     "collaborators": []
-                }) ): null
-        );
+                }) ;
         this.setState({
-            timeEnteries: this.state.timeEnteries
+            timeEnteries: _timeEntries
         });
     };
 
@@ -104,7 +109,6 @@ class ActivityLog extends Component{
     }
 
     render(){
-        console.log('222222222222', this.props.activityTimeLog);
         return(
                 <div className="col-md-12 activity-list-comp">
                     <Row className="show-grid log-header">
@@ -138,14 +142,19 @@ class ActivityLog extends Component{
 }
 
 const mapDispatchToProps = (dispatch) => ({
-    getActivities : () => {dispatch(getActivities())},
     postActivities : (childItem) => {dispatch(postActivities(childItem))},
     updateActivities : (childItem) => {dispatch(updateActivities(childItem))},
     deleteActivity : (activityId) => {dispatch(deleteActivity(activityId))}
 
 });
 
-export default connect(mapDispatchToProps)(ActivityLog);
+// const mapStateToProps = (state) => {
+//     return {
+//         activity: state.activity
+//     }
+// };
+
+export default connect(null, mapDispatchToProps)(ActivityLog);
 
 
 //Modal component ---------------------------

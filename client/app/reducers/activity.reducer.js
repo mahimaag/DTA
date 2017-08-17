@@ -22,7 +22,7 @@ const ActivityReducer = (state = initialState, action) => {
             break;
 
         case ActivityActions.PostActivity.Success:
-            console.log('data in action',action.data);
+            console.log('data in action',duplicateState.activities);
              if(duplicateState && duplicateState.activities.length>0){
                  let index = duplicateState.activities.findIndex((dates)=> dates._id === action.data.date);
                  if(index>=0){

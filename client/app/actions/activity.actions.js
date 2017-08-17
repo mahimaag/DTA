@@ -2,7 +2,7 @@ import { ActivityActions } from './../../constants/actions';
 
 export const postActivities = (activityLog) => {
     return (dispatch) => {
-        fetch("/api/activity/2592",{
+        fetch("/api/activity/2590",{
             method: 'post',
             headers:{
                 "Content-Type":"application/json",
@@ -23,7 +23,7 @@ export const postActivities = (activityLog) => {
 
 export const getActivities = () => {
     return (dispatch) => {
-        fetch("/api/activity/2592",{
+        fetch("/api/activity/2590",{
             method: 'get',
             headers:{
                 "Content-Type":"application/json",
