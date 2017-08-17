@@ -25,6 +25,6 @@ NetworkConfig.NW.Api.Authorize = {
     qs: {
         clientId: NetworkConfig.NW.clientId
     }
-}
+};
 
 module.exports = Object.freeze(NetworkConfig);

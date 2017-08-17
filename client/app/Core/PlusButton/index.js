@@ -36,6 +36,11 @@ class AddButton extends Component {
     }
 }
 
+AddButton.defaultProps = {
+    addEvent: () => {},
+
+};
+
 export default AddButton
 
 

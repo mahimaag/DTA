@@ -4,7 +4,7 @@
 import React from "react"
 import {expect} from "chai"
 import {mount,shallow} from "enzyme"
-import CardFooter from "../../../app/Core/Card/CardFooter"
+import CardFooter from "../../../../app/Core/Card/CardFooter"
 
 
 describe("Component : CardFooter",()=>{
