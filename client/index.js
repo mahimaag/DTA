@@ -7,6 +7,7 @@ import { Provider } from 'react-redux';
 /**
  * Get and set application code...
  */
+
 import App from './app';
 
 // Create app component

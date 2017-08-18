@@ -11,7 +11,6 @@ import './style.css'
 import ModalComp from '../../Core/ModalComp'
 import ModalBodyComp from '../../Core/ModalBodyComp'
 import { connect } from 'react-redux';
-import {getActivities} from './action';
 
 class ActivityLog extends Component{
     constructor(props){
@@ -22,9 +21,6 @@ class ActivityLog extends Component{
         }
     }
 
-    componentWillMount() {
-        this.props.dispatch(getActivities());
-    };
     newEntry = (newTimeLog, date) => {
         this.state.timeEnteries.map((item) => {
             if(item.date === date){

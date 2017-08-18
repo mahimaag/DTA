@@ -33,15 +33,9 @@
     background-color: transparent;
 }
 
-.date-header {
-    text-align:left;
-}
-.date-header span:first-child {
-    float:right;
-}
 
-.date-header div{
-    float:right;
+.date-header span:last-child{
+    float:left;
 }
 
 .clearfix {
