@@ -19,21 +19,7 @@ export const postActivities = (activityLog) => {
                           console.log(error)
                        })
           };
-
-
-        // try {
-        //     const response = await fetch('/api/activity/2590', {data: activityLog});
-        //
-        //     const data = await response.json();
-        //     dispatch({type: ActivityActions.PostActivity.Success, data: activityLog})
-        // } catch (e) {
-        //     dispatch({type:ActivityActions.PostActivity.Failure})
-        //
-        // }
-
-
-    };
-
+};
 
 export const getActivities = () => {
     return (dispatch) => {
@@ -72,4 +58,4 @@ export const deleteActivity = (activityId) => {
                 dispatch({type:ActivityActions.DeleteActivity.Failure})
             })
     }
-};
+}

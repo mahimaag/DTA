@@ -30,7 +30,7 @@ export function show(req, res) {
                 _id: "$date",
                 "activities": {
                     $push: {
-                        "activityId": "$_id",
+                        "_id": "$_id",
                         "activity":"$activity",
                         "activityType": "$activityType",
                         "duration": "$duration",
@@ -69,13 +69,13 @@ export function save(req, res) {
                 });
 
             }
-            res.status(200).json({"msg":"Activity saved successfully"}).end();
+            res.status(200).json(output).end();
         })
         .catch(genericRepo.handleError(res));
 }
 
 export function upsert(req, res) {
-    console.log("======actvity controller // upsert()=========");
+    console.log("======actvity controller // upsert()=========",req.params,req.body);
 
     return Activity.findOneAndUpdate({_id: req.params.id}, req.body,
         {new: true, upsert: true, setDefaultsOnInsert: true, runValidators: true}).exec()
