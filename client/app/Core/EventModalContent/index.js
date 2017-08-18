@@ -52,7 +52,7 @@ class ModalContent extends Component {
     deleteEvent = (event) => {
         event.preventDefault();
         console.log("Delete :",this.props.eventInfo);
-        this.props.deleteActivity(this.props.eventInfo.moreInfo.activityId)
+        this.props.deleteActivity(this.props.eventInfo.moreInfo._id)
     };
 
     setSelectedValue = (item, property) => {

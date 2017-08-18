@@ -39,6 +39,7 @@ const ActivityReducer = (state = initialState, action) => {
                         activities : [action.data]
                     }]
              }
+             console.log("data added in reducer is :",action.data,duplicateState);
              break;
         case ActivityActions.PostActivity.Failure:
             console.log('error in reducer');
@@ -62,7 +63,7 @@ const ActivityReducer = (state = initialState, action) => {
             if(duplicateState && duplicateState.activities.length>0) {
                 let index = duplicateState.activities.findIndex((dates) => dates._id === action.data.date);
                 if (index >= 0) {
-                    let index2 = duplicateState.activities[index].activities.findIndex((activity) => activity.activityId === action.data.id)
+                    let index2 = duplicateState.activities[index].activities.findIndex((activity) => activity._id === action.data.id)
                     if(index2>=0)
                         duplicateState.activities[index].activities.splice(index2,1)
                     }

@@ -12,7 +12,7 @@ export const postActivities = (activityLog) => {
         })
             .then(response => response.json())
             .then((data) => {
-                dispatch({type:ActivityActions.PostActivity.Success, data:activityLog})
+                dispatch({type:ActivityActions.PostActivity.Success, data:data})
             })
             .catch((error)=>{
                 dispatch({type:ActivityActions.PostActivity.Failure})
