@@ -19,10 +19,10 @@ class Main extends React.Component {
         }
     }
 
-    componentWillMount () {
-        // get events/activities from db
-        this.props.getActivities();
-    }
+    // componentWillMount () {
+    //     // get events/activities from db
+    //     this.props.getActivities();
+    // }
 
     handleChange = (item) => {
         let itemList = [];

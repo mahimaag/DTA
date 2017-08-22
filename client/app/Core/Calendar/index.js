@@ -7,7 +7,7 @@ BigCalendar.momentLocalizer(moment); // or globalizeLocalizer
 let Popup = React.createClass({
   render(){
     return (
-        <div>
+        <div className="calendar">
             <BigCalendar
             popup
             views='month'
@@ -17,6 +17,10 @@ let Popup = React.createClass({
         </div>
     )
   }
-})
+});
+
+Popup.defaultProps = {
+  events:[],
+};
 
 export default Popup;

@@ -4,7 +4,7 @@
 import React from "react"
 import {expect} from "chai"
 import {mount,shallow} from "enzyme"
-import CardHeader from "../../../app/Core/Card/CardHeader"
+import CardHeader from "../../../../app/Core/Card/CardHeader"
 
 describe('Component : CardHeader',()=>{
 
