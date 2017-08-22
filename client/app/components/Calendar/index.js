@@ -114,7 +114,7 @@ class Calendar extends Component {
         })
     } //called when event is clicked
     close  = (event) => {
-        event.preventDefault();
+        //event.preventDefault();
         this.setState({showEventModal:false})
     };
 

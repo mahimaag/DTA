@@ -34,7 +34,7 @@ class ActivityLog extends Component{
         console.log("cwrp",newProps)
         this.setState({
             timeEnteries: newProps.activityTimeLog.slice()
-        })
+        },() => {console.log(`[cwrp]state in list card-----`,this.state.timeEnteries)})
     }
 
     newEntry = (newTimeLog, date) => {
@@ -43,7 +43,7 @@ class ActivityLog extends Component{
                 item.activities.map((childItem) => childItem.status === TimeEntryStatus.New ? (Object.assign(childItem, newTimeLog)) : null);
             }
         });
-        this.props.postActivities(newTimeLog)
+        this.props.postActivities(newTimeLog);
         this.setState({
             timeEnteries: this.state.timeEnteries
         })
@@ -77,7 +77,7 @@ class ActivityLog extends Component{
     edittedLog = (editItem,date) => {
         this.state.timeEnteries.map((entry) => {
             if (entry._id === date) {
-                entry.activities.map((childItem) => childItem.activityId === editItem.activityId ? (Object.assign(childItem, editItem), this.props.updateActivities(childItem)) : null);
+                entry.activities.map((childItem) => childItem._id === editItem._id ? (Object.assign(childItem, editItem), this.props.updateActivities(childItem)) : null);
             }
         })
         this.setState({
@@ -86,8 +86,8 @@ class ActivityLog extends Component{
     }
 
     deleteEntry = (deletedEntry,logDate) => {
-        console.log('activity to be deleted----',deletedEntry);
-        this.state.timeEnteries.map((entry) => entry._id === logDate ? this.props.deleteActivity(deletedEntry.activityId) : null);
+        //console.log('activity to be deleted----',deletedEntry);
+        this.state.timeEnteries.map((entry) => entry._id === logDate ? this.props.deleteActivity(deletedEntry._id) : null);
         this.setState({
             timeEnteries:this.state.timeEnteries,
             displayModal: true
@@ -106,38 +106,37 @@ class ActivityLog extends Component{
         this.setState({
             displayModal: false
         })
-
     }
 
     render(){
         return(
-                <div className="col-md-12 activity-list-comp">
-                    <Row className="show-grid log-header">
-                        {HeadingArray.map((item, index) =>{
-                            return (
-                                <Col md={item.md} lg={item.lg} className="log-col" key={index}>
-                                    <h5>{item.title}</h5>
-                                </Col>
-                            )})
-                        }
-                    </Row>
-                    <ActivityLogRow timeLog={this.state.timeEnteries}
-                                    logItem={(logDate) => this.addNewLog(logDate)}
-                                    newEntry={(newTimeLog,date) => {this.newEntry(newTimeLog,date)}}
-                                    onClearClick={(date) => {this.clearAllLogs(date)}}
-                                    edittedLog={(editItem,date) => {this.edittedLog(editItem,date)}}
-                                    deleteEntry={(deletedEntry,logDate) => {this.deleteEntry(deletedEntry,logDate)}}
-                                    closedWithoutCreate={(logDate) => {this.closedWithoutCreate(logDate)}}/>
+            <div className="col-md-12 activity-list-comp">
+                <Row className="show-grid log-header">
+                    {HeadingArray.map((item, index) =>{
+                        return (
+                            <Col md={item.md} lg={item.lg} className="log-col" key={index}>
+                                <h5>{item.title}</h5>
+                            </Col>
+                        )})
+                    }
+                </Row>
+                <ActivityLogRow timeLog={this.state.timeEnteries}
+                                logItem={(logDate) => this.addNewLog(logDate)}
+                                newEntry={(newTimeLog,date) => {this.newEntry(newTimeLog,date)}}
+                                onClearClick={(date) => {this.clearAllLogs(date)}}
+                                edittedLog={(editItem,date) => {this.edittedLog(editItem,date)}}
+                                deleteEntry={(deletedEntry,logDate) => {this.deleteEntry(deletedEntry,logDate)}}
+                                closedWithoutCreate={(logDate) => {this.closedWithoutCreate(logDate)}}/>
 
-                    <ModalComp modalClassName = 'inmodal'
-                               modalShow = {this.state.displayModal}
-                               modalHide = {() => {this.onCloseModalClick()}}
-                               modalHeaderMsg = "Activity Deleted successfully"
-                               modalBody = {'deletion completed!!!'}
-                               modalFooterClose = {() => {this.onCloseModalClick()}}
-                               modalFooterText = 'Close'
-                    />
-                </div>
+                <ModalComp modalClassName = 'inmodal'
+                           modalShow = {this.state.displayModal}
+                           modalHide = {() => {this.onCloseModalClick()}}
+                           modalHeaderMsg = "Activity Deleted successfully"
+                           modalBody = {'deletion completed!!!'}
+                           modalFooterClose = {() => {this.onCloseModalClick()}}
+                           modalFooterText = 'Close'
+                />
+            </div>
         );
     }
 }
@@ -170,3 +169,9 @@ export default connect(null, mapDispatchToProps)(ActivityLog);
  />*/
 
 //entry.activities.splice(entry.activities.indexOf(deletedEntry),1)
+
+/*componentWillReceiveProps(newProps) {
+ this.setState({
+ timeEnteries: newProps.activityTimeLog.slice()
+ },() => {console.log(`${tag}[cwrp]state in list card-----`,this.state.timeEnteries)})
+ }*/

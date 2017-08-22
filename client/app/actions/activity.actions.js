@@ -2,7 +2,7 @@ import { ActivityActions } from './../../constants/actions';
 
 export const postActivities = (activityLog) => {
     return (dispatch) => {
-        fetch("/api/activity/2590",{
+        fetch("/api/activity/2592",{
             method: 'post',
             headers:{
                 "Content-Type":"application/json",
@@ -23,7 +23,7 @@ export const postActivities = (activityLog) => {
 
 export const getActivities = () => {
     return (dispatch) => {
-        fetch("/api/activity/2590",{
+        fetch("/api/activity/2592",{
             method: 'get',
             headers:{
                 "Content-Type":"application/json",
@@ -42,8 +42,10 @@ export const getActivities = () => {
 };
 
 export const updateActivities = (activityLog) => {
+    console.log("************id in update*********",activityLog._id);
+
     return (dispatch) => {
-        fetch(`/api/activity/${activityLog.activityId}`,{
+        fetch(`/api/activity/${activityLog._id}`,{
             method: 'put',
             headers:{
                 "Content-Type":"application/json",
@@ -81,4 +83,5 @@ export const deleteActivity = (activityId) => {
                 dispatch({type:ActivityActions.DeleteActivity.Failure})
             })
     }
+
 }

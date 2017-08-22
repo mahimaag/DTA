@@ -10,7 +10,7 @@ import TtnButton from 'core/Button/btn';
 import Dropdown from './../Dropdown'
 import TsmsForm from './../Form';
 import MultiSelectDropdown from './../MultiSelectDropDown'
-import {deleteActivity} from './../../actions/activity.actions'
+import {deleteActivity, updateActivities} from './../../actions/activity.actions'
 
 BigCalendar.setLocalizer(
     BigCalendar.momentLocalizer(moment)
@@ -21,12 +21,13 @@ class ModalContent extends Component {
         super(props);
         this.state = {
             edit: false,
-            duration:'',
-            activity:'',
-            activityType:'',
-            description:'',
-            collaborators:[]
+            duration: this.props.eventInfo.moreInfo.duration,
+            activity: this.props.eventInfo.moreInfo.activity,
+            activityType: this.props.eventInfo.moreInfo.activityType,
+            description: this.props.eventInfo.moreInfo.description,
+            collaborators: this.props.eventInfo.moreInfo.collaborators,
         }
+
     }
 
     onEdit = (event) => {
@@ -48,6 +49,21 @@ class ModalContent extends Component {
             [event.target.name] : event.target.value
         })
     };
+
+    updateEvent = (event) => {
+        console.log('id----------------------:P--------',this.props.eventInfo.moreInfo._id);
+        let updatedActivity = {
+            _id: this.props.eventInfo.moreInfo._id,
+            activity: this.state.activity,
+            activityType: this.state.activityType,
+            collaborators: this.state.collaborators,
+            description: this.state.description,
+            duration: this.state.duration,
+            status: this.props.eventInfo.moreInfo.status
+        }
+
+        this.props.updateActivities(updatedActivity);
+    }
 
     deleteEvent = (event) => {
         event.preventDefault();
@@ -74,6 +90,7 @@ class ModalContent extends Component {
     }
 
     render() {
+        console.log('this.props in modal for edit----------',this.props.eventInfo);
         let durationTime = ['30 mins','1 hr','2 hrs','3 hrs','4 hrs','5 hrs','6 hrs','7 hrs','8 hrs'];
         let newCollabArray = [2590,2591,2592,2593];
         let activityTitles = ['Westcon','Knowlegde Meet','Daily Time Analysis'];
@@ -119,6 +136,7 @@ class ModalContent extends Component {
                                 <TtnButton iconButton
                                            level="secondary"
                                            rounded icon ="glyphicon glyphicon-ok"
+                                           onClick = {this.updateEvent}
                                 />
                                 <TtnButton iconButton
                                            level="secondary"
@@ -149,7 +167,8 @@ class ModalContent extends Component {
     }
 }
 const mapDispatchToProps = (dispatch) => ({
-    deleteActivity : (activityId) => {dispatch(deleteActivity(activityId))}
+    deleteActivity : (activityId) => {dispatch(deleteActivity(activityId))},
+    updateActivities : (updatedActivity) => {dispatch(updateActivities(updatedActivity))}
 });
 
 export default connect(null,mapDispatchToProps)(ModalContent);

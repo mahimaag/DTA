@@ -97,7 +97,7 @@ class ActivityLogComp extends Component{
     }*/
 
     render(){
-        //console.log('props in cativity log comp',this.props);
+        //console.log('props in activity log comp',this.props);
         const activityLog = this.props.activity;
         let activityTitles = ['Westcon','Knowlegde Meet','Daily Time Analysis'];
         let activityCategory = ['Project','Non-Project'];

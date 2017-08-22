@@ -45,14 +45,19 @@ const ActivityReducer = (state = initialState, action) => {
             console.log('error in reducer');
             break;
         case ActivityActions.UpdateActivity.Success:
-            console.log('action.data in reducer----',action.data);
+            console.log('action.data in reducer----',action.data,duplicateState.activities);
             if(duplicateState && duplicateState.activities.length>0){
-                duplicateState.activities.map((activity) => {
-                       if(activity.activityId === action.data.activityId){
-                           activity = action.data;
-                       }
+                duplicateState.activities.map((activityLogs) => {
+                    activityLogs.activities.map((activity) => {
+                        console.log('activity found-----------',activity._id,action.data._id);
+                        if(activity._id === action.data._id){
+                            activity = action.data;
+                            console.log('activity',activity);
+                        }
+                    })
                 })
             }
+            console.log('data in reducer after updation-----------',duplicateState.activities);
             break;
         case ActivityActions.UpdateActivity.Failure:
             console.log('error in reducer');
