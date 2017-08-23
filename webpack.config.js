@@ -29,7 +29,8 @@ var config = {
         new webpack.optimize.CommonsChunkPlugin({ name: 'vendor', filename: 'vendor.js'}),
         new webpack.DefinePlugin({
             "require.specified": "require.resolve"
-        })
+        }),
+
     ],
     module: {
         loaders: [

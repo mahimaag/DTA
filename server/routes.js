@@ -19,7 +19,7 @@ export default function (app) {
     const logMiddleware = (m) => (r1, r2, n) => {
         console.log(m);
         n();
-    }
+    };
     //middlewares
     const indexFile = path.join(app.get('appPath'), 'client', 'assests', 'index.html');
     const distFolder = path.join(app.get('appPath'), 'dist');

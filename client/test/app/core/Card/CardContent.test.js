@@ -4,7 +4,7 @@
 import React from 'react';
 import { expect } from 'chai';
 import { mount, shallow } from 'enzyme';
-import  CardContent from "../../../app/Core/Card/CardContent"
+import  CardContent from "../../../../app/Core/Card/CardContent"
 
 describe('Component :CardContent',()=>{
     const Wrapper=mount(<CardContent style={{color:'red'}}>hello world</CardContent>);
