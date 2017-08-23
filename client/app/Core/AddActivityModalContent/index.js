@@ -11,6 +11,7 @@ import TsmsForm from './../Form';
 import {TimeEntryStatus} from './../../../constants/Index'
 import {postActivities} from './../../actions/activity.actions'
 import MultiSelectDropdown from '../../Core/MultiSelectDropDown'
+import Tags from '../../Core/ReactTags'
 import {getDate} from './../../../utils/common'
 
 BigCalendar.setLocalizer(
@@ -82,6 +83,8 @@ class ModalContent extends Component{
                 "collaborators":this.state.collaborators
             };
 
+            console.log("====activity posted===", activityLog);
+
             this.props.postActivities(activityLog); // todo : dispatch(asyncAction(activityLog))
 
             this.setState({
@@ -107,16 +110,27 @@ class ModalContent extends Component{
         })
     };
 
-    onSelectedVal = (newCollab) => {
-        (this.state.collaborators.length && this.state.collaborators.indexOf(newCollab) > -1) ? null : this.state.collaborators.push(newCollab);
-        this.setState({collaborators: this.state.collaborators});
-    };
+    // onSelectedVal = (newCollab) => {
+    //     (this.state.collaborators.length && this.state.collaborators.indexOf(newCollab) > -1) ? null : this.state.collaborators.push(newCollab);
+    //     this.setState({collaborators: this.state.collaborators});
+    // };
+    //
+    // onDeleteCollab = (deletedVal) => {
+    //     this.state.collaborators.splice(this.state.collaborators.indexOf(deletedVal), 1);
+    //     this.setState({
+    //         collaborators: this.state.collaborators
+    //     })
+    // }
 
-    onDeleteCollab = (deletedVal) => {
-        this.state.collaborators.splice(this.state.collaborators.indexOf(deletedVal), 1);
+    getTags = (tags) => {
+        let empSet = new Set();
+        tags.forEach(obj => {
+            empSet.add(obj.id);
+        });
         this.setState({
-            collaborators: this.state.collaborators
-        })
+            collaborators: [...empSet]
+        });
+
     }
 
     render(){
@@ -163,11 +177,8 @@ class ModalContent extends Component{
                                 <FormControl type="text" label="Description" placeholder="Description" value={this.state.description} onChange={this.onInputChange} name="description"/>
                             </FormGroup>
                             <FormGroup controlId="collaborators">
-                                Collaborators: <MultiSelectDropdown collabArray = {newCollabArray}
-                                                                    newCollab = {this.state.collaborators}
-                                                                    title = 'Select'
-                                                                    onSelectedVal = {(newCollab) => {this.onSelectedVal(newCollab)}}
-                                                                    onDeleteCollab = {(deletedVal) => {this.onDeleteCollab(deletedVal)}}/>
+                                Collaborators: <Tags updateTag = {(tags) => {this.getTags(tags)}}
+                            />
 
                             </FormGroup>
                             {
