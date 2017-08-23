@@ -2,23 +2,32 @@
 
 import Activity from './activity.model';
 var genericRepo = require("../generic/genericRepo");
-import mongoose from "mongoose";
+import Q from "q";
 
-// Gets a single Employee from the DB
-export function show(req, res) {
-    console.log("======actvity controller // show()=========");
+export function getActivities(req, res) {
+    console.log("======actvity controller // getActivities()=========", req.query);
+
     let date = new Date(),
         y = date.getFullYear(),
-        m = date.getMonth(),
-        firstDate = new Date(y, m ,1).getTime(),
-        lastDate = new Date(y, m + 1, 0).getTime();
+        m = date.getMonth(), firstDate, lastDate, employeeId;
+
+    if(req.query.hasOwnProperty("month") &&
+        typeof req.query.month === "string" &&
+        !isNaN(parseInt(req.query.month))) {
+
+        m = parseInt(req.query.month)
+    }
+    firstDate = new Date(y, m ,1).getTime();
+    lastDate = new Date(y, m + 1, 0).getTime();
+    employeeId =  parseInt(req.params.id) ;
 
     console.log("=======first Date===>>>", firstDate);
     console.log("=======last Date===>>>", lastDate);
+
     return Activity.aggregate([
         {
             $match: {
-                employeeId: req.params.id,
+                employeeId: employeeId,
                 date: {
                     $lte: lastDate, // last date of current month
                     $gte: firstDate // first date of current month
@@ -31,9 +40,9 @@ export function show(req, res) {
                 "activities": {
                     $push: {
                         "_id": "$_id",
-                        "activity":"$activity",
                         "activityType": "$activityType",
-                        "duration": "$duration",
+                        "hh": "$hh",
+                        "mm": "$mm",
                         "description": "$description",
                         "status": "$status",
                         "collaborators": "$collaborators"
@@ -42,40 +51,107 @@ export function show(req, res) {
             }
         }
     ])
-        .then(genericRepo.handleEntityNotFound(res))
         .then(genericRepo.respondWithResult(res))
         .catch(genericRepo.handleError(res));
 }
 
-export function save(req, res) {
-    console.log("======actvity controller // save()=========");
+export function saveActivities(req, res) {
+    console.log("======actvity controller // saveActivities()=========");
 
     Activity.create(req.body)
         .then(output => {
-            console.log("output=========>>>", output);
-            if(req.body.hasOwnProperty("collaborators") && req.body.collaborators.length > 0) {
-                req.body.collaborators.forEach(item => {
-                    req.body.employeeId = item;
-                    req.body.status = "Draft";
-                    req.body.collaborators = [];
 
-                    console.log("=======req.body=====", req.body);
-
-                    Activity.create(req.body)
-                        .then(r1 => {
-                            console.log("activity cloned..", r1);
-                        });
-
-                });
-
+            if(iscollaborators(req)) {
+                addCollaborators(req)
+                    .then(result => {
+                        if(result) {
+                            console.log("collaborators added successfully..");
+                        }
+                    });
             }
+
+            if(isRepeatActivity(req)) {
+                repeatActivity(req)
+                    .then(result => {
+                        if(result) {
+                            console.log("activity repeated successfully..");
+                        }
+                    });
+            }
+
             res.status(200).json(output).end();
         })
         .catch(genericRepo.handleError(res));
 }
 
-export function upsert(req, res) {
-    console.log("======actvity controller // upsert()=========",req.params,req.body);
+function addCollaborators(req) {
+    let defered = Q.defer(),
+        collaborators = req.body.collaborators;
+
+    collaborators.forEach((item, index)=> {
+        req.body.employeeId = item;
+        req.body.status = "Draft";
+        req.body.collaborators = [];
+
+        console.log("=======req.body=====", req.body);
+
+        Activity.create(req.body)
+            .then(result => {
+                console.log("activity cloned..", result);
+            })
+            .catch(err => {
+                defered.reject(err);
+            });
+
+        if(index === collaborators.length - 1) {
+            defered.resolve(true);
+        }
+
+    });
+
+    return defered.promise;
+}
+
+function repeatActivity(req) {
+    let defered = Q.defer(),
+        dates = req.body.repeatActivity;
+
+    dates.forEach((date, index)=> {
+        req.body.date = date
+
+        console.log("=======req.body=====", req.body);
+
+        Activity.create(req.body)
+            .then(result => {
+                console.log("repeated activity cloned..", result);
+            })
+            .catch(err => {
+                defered.reject(err);
+            });
+
+        if(index === dates.length - 1) {
+            defered.resolve(true);
+        }
+
+    });
+
+    return defered.promise;
+}
+
+function iscollaborators(req) {
+    return req.body.hasOwnProperty("collaborators") &&
+        Array.isArray(req.body.collaborators) &&
+        req.body.collaborators.length > 0;
+}
+
+function isRepeatActivity(req) {
+    return req.body.hasOwnProperty("repeatActivity") &&
+        Array.isArray(req.body.repeatActivity) &&
+        req.body.repeatActivity.length > 0;
+}
+
+export function updateActivity(req, res) {
+    console.log("======actvity controller // updateActivity()=========",req.params,req.body);
 
     return Activity.findOneAndUpdate({_id: req.params.id}, req.body,
         {new: true, upsert: true, setDefaultsOnInsert: true, runValidators: true}).exec()
@@ -84,20 +160,27 @@ export function upsert(req, res) {
 
 }
 
-export function destroy(req, res) {
-    console.log("======actvity controller // destroy()=========");
-    if(mongoose.Types.ObjectId.isValid(req.params.id)) {
-        Activity.findOneAndRemove({_id: req.params.id})
-            .then(doc => {
-                let response = {
-                    message: "activity successfully deleted",
-                    id: doc._id,
-                    date :doc.date
-                };
-                res.send(response);
-            });
+export function deleteActivity(req, res) {
+    console.log("======actvity controller // deleteActivity()=========");
+
+    Activity.findByIdAndRemove(req.params.id)
+        .then(genericRepo.respondWithResult(res))
+        .catch(genericRepo.handleError(res));
+}
+
+export function deleteActivityByEmp(req, res) {
+    console.log("======actvity controller // deleteActivityByEmp()=========", req.query.date, req.params.id);
+
+    if(req.query.hasOwnProperty("date") &&
+        typeof req.query.date === "string" &&
+        !isNaN(parseInt(req.query.date))) {
+
+        Activity.remove({employeeId: parseInt(req.params.id), date: parseInt(req.query.date)})
+            .then(genericRepo.respondWithResult(res))
+            .catch(genericRepo.handleError(res));
     } else {
-        res.send({err: "Invalid activity id"});
+        genericRepo.badInput(res, 500);
     }
 }
+
 

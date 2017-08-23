@@ -21,7 +21,6 @@ export function respondWithResult(res, statusCode) {
     statusCode = statusCode || 200;
     return function(entity) {
         if(entity) {
-            console.log('22222222222', entity)
             return res.status(statusCode).json(entity);
         }
         return null;

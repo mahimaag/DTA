@@ -6,7 +6,7 @@ import mongoose from 'mongoose';
 
 const ActivitySchema = new mongoose.Schema({
     employeeId:{
-        type:String,
+        type:Number,
         required: true
     },
     date:{
@@ -14,13 +14,15 @@ const ActivitySchema = new mongoose.Schema({
         required: true,
         default: new Date().getTime()
     },
-    duration: {
-        type: String,
-        required: true
+    hh: {
+        type: Number,
+        required: true,
+        default: 0
     },
-    activity: {
-        type: String,
-        required: true
+    mm: {
+        type: Number,
+        required: true,
+        default: 0
     },
     activityType: {
         type: String,
@@ -37,7 +39,16 @@ const ActivitySchema = new mongoose.Schema({
         type: Array
     },
     updatedDate: {
-        type: Number
+        type: Number,
+        default: new Date().getTime()
+    },
+    createdDate: {
+        type: Number,
+        default: new Date().getTime()
+    },
+    isProject: {
+        type: Number,
+        default: 1
     }
 }, {versionKey: false});
 
