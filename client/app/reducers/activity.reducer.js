@@ -109,15 +109,16 @@ const ActivityReducer = (state = initialState, action) => {
             console.log('error in reducer');
             break;
 
+
         case ActivityActions.DeleteAllActivity.Success:
             console.log('deleting all activities...***************',action.data.date,duplicateState.activities[1]._id);
             let date = parseInt(action.data.date);
-            //console.log('types--------->>>>>>>',typeof(date),typeof(duplicateState.activities[1]._id));
+            console.log('types--------->>>>>>>',typeof(date),typeof(duplicateState.activities[1]._id));
             if(duplicateState && duplicateState.activities.length>0) {
                 let index = duplicateState.activities.findIndex((dates) => dates._id === date);
                 console.log('&&&&&&&&&&&&&&&&',index);
                 if (index >= 0) {
-                    duplicateState.activities[index].activities.splice(index, 1);
+                    duplicateState.activities.splice(index, 1);
                     console.log('date deleted!!!!!!!!!!!!');
                 }
             }

@@ -31,7 +31,7 @@ router.delete(
 );
 
 router.delete(
-    "/employee/:id",
+    "/employee/date/:date",
     service.validateEmpId,
     controller.deleteActivityByEmp
 );
