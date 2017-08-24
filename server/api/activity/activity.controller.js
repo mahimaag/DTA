@@ -74,10 +74,16 @@ export function saveActivities(req, res) {
                 repeatActivity(req)
                     .then(result => {
                         if(result) {
+                            console.log("output before ======", output);
+                            console.log("output before ======", req.body.repeatActivity);
+
+                            output.repeatActivity = req.body.repeatActivity;
+                            console.log("output after ======", output);
                             console.log("activity repeated successfully..");
                         }
                     });
             }
+            console.log("====final output========");
 
             res.status(200).json(output).end();
         })
@@ -124,15 +130,14 @@ function repeatActivity(req) {
         Activity.create(req.body)
             .then(result => {
                 console.log("repeated activity cloned..", result);
+                if(index === dates.length - 1) {
+                    console.log("========promise resolve=====>>>", index, dates.length);
+                    defered.resolve(true);
+                }
             })
             .catch(err => {
                 defered.reject(err);
             });
-
-        if(index === dates.length - 1) {
-            defered.resolve(true);
-        }
-
     });
 
     return defered.promise;

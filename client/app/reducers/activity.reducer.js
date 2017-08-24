@@ -24,9 +24,10 @@ const ActivityReducer = (state = initialState, action) => {
         case ActivityActions.PostActivity.Success:
             console.log('data in action',duplicateState.activities,action.data);
              if(duplicateState && duplicateState.activities.length>0){
+
                  let index = duplicateState.activities.findIndex((dates)=> dates._id === action.data.date);
                  if(index>=0){
-                     duplicateState.activities[index].activities.push(action.data)
+                     duplicateState.activities[index].activities.push(action.data);
                  } else{
                      duplicateState.activities.push({
                          _id:action.data.date,

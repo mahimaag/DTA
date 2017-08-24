@@ -28,29 +28,28 @@ class ModalContent extends Component{
         super(props);
         this.state = {
             showCalendar:false,
-            // projectCategory:'Select',
             activityType:'Select',
             hh:'Select',
-            mm:'Select',
+            mm:0,
             collaborators:[],
             description:'',
             repeatActivity : [],
-            savedEvent:false,
-
-
         }
     }
 
     selectSlot(slot) {
-        let newRepeatedDates = this.state.repeatedDates;
-        if(newRepeatedDates.indexOf(getDate(slot.start))>=0){
-            newRepeatedDates.splice((newRepeatedDates.indexOf(getDate(slot.start))),1)
+        console.log("selected date is ",slot.start)
+        let newRepeatedDates = this.state.repeatActivity;
+        if(newRepeatedDates.indexOf(+new Date(getDate(slot.start)))>=0){
+            newRepeatedDates.splice((newRepeatedDates.indexOf(+new Date(getDate(slot.start)))),1)
         }else{
-            newRepeatedDates.push(getDate(slot.start));
+            newRepeatedDates.push(+new Date(getDate(slot.start)));
         }
 
         this.setState({
             repeatActivity:newRepeatedDates
+        },()=>{
+            console.log(this.state.repeatActivity)
         });
 
     } // todo : change color of selected slot
@@ -62,19 +61,24 @@ class ModalContent extends Component{
     };
 
     repeatEvent = () => {
-        this.setState({
-            showCalendar:true,
-
-        })
+        if(this.state.hh === 'Select' || this.state.activityType === 'Select')
+            alert("First fill all the fields!!!")
+        else{
+            this.setState({
+                showCalendar:true,
+            })
+        }
     };
 
     saveEvent = (event) => {
         event.preventDefault();
-        console.log("type is ",typeof (this.state.hh),typeof (this.state.mm))
-        if(this.state.hh === 'Select' || this.state.mm === 'Select' || this.state.activityType === 'Select'){
+        console.log("type is ",typeof (this.state.hh),typeof (this.state.mm));
+        console.log("this.state.repeatActivity",this.state.repeatActivity)
+        if(this.state.hh === 'Select' || this.state.activityType === 'Select'){
             alert("Fields cannot be empty")
         }else{
             let dated = getDate(this.props.message);
+            console.log("**********",dated)
             let activityLog = {
                 "employeeId":2590,
                 "activityType":this.state.activityType,
@@ -89,22 +93,9 @@ class ModalContent extends Component{
 
             this.props.postActivities(activityLog);
 
-            this.setState({
-                savedEvent:true,
-
-            })
         }
     };
 
-    saveRepeat = (event) => {
-        this.state.repeatedDates.map((item) => {
-            events.push({
-                'title': this.state.hh+" " +this.state.activityType,
-                'start': item,
-                'end': item,
-            })
-        })
-    };
 
     onInputChange = (event) => {
         this.setState({
@@ -140,25 +131,25 @@ class ModalContent extends Component{
                             toolbar={false}
                             onSelectSlot = { (slot) => this.selectSlot(slot)}
                         />
-                        <button onClick={(e) => this.saveRepeat(e)}>Save </button>
+                        <button onClick={(e) => this.saveEvent(e)}>Save </button>
                     </div>:
                     <TsmsForm formClassName="add-activity">
                         <div>
                             <FormGroup controlId="activityType">
-                                <ControlLabel>Activity:</ControlLabel>
+                                <ControlLabel>Activity Type:*</ControlLabel>
                                 <Dropdown data={activityTitles}
                                                  title={this.state.activityType}
                                                  onSelect={(item) => this.setSelectedValue(item,'activityType')}
                                 />
                             </FormGroup>
                             <FormGroup controlId="hh">
-                                <ControlLabel>hh:</ControlLabel>
+                                <ControlLabel>hh:*</ControlLabel>
                                 <Dropdown data={hour}
                                                  title={this.state.hh}
                                                  onSelect={(item) => this.setSelectedValue(item,'hh')}/>
                             </FormGroup>
                             <FormGroup controlId="mm">
-                                <ControlLabel>mm:</ControlLabel>
+                                <ControlLabel>mm:*</ControlLabel>
                                 <Dropdown data={minutes}
                                           title={this.state.mm}
                                           onSelect={(item) => this.setSelectedValue(item,'mm')}/>
@@ -175,16 +166,15 @@ class ModalContent extends Component{
                                                                     onDeleteCollab = {(deletedVal) => {this.onDeleteCollab(deletedVal)}}/>
 
                             </FormGroup>
-                            {
-                                this.state.savedEvent ?
-                                    <TtnButton level = "primary"
+
+                            <TtnButton level = "primary"
                                                title = "Repeat"
                                                onClick={(e) => this.repeatEvent(e)}/>
-                                    :
-                                    <TtnButton level = "primary"
+                            :
+                            <TtnButton level = "primary"
                                                title = "Save"
                                                onClick={(e) => this.saveEvent(e)}/>
-                            }
+
                         </div>
 
                     </TsmsForm>
