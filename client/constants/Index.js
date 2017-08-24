@@ -5,23 +5,24 @@ export const TimeEntryStatus = {
     Committed: 'Committed',
     Uncommitted: 'Uncommitted',
     Pending: 'Pending',
-    New: 'New'
+    New: 'New',
+    Submitted: 'Submitted'
 }
 
 export const HeadingArray = [
-    {
+    /*{
         md:1,
         lg: 1,
         title: 'Activity'
-    },
+    },*/
     {
         md:2,
         lg: 2,
         title: 'Type'
     },
     {
-        md: 1,
-        lg: 1,
+        md: 2,
+        lg: 2,
         title: 'Duration'
     },
     {

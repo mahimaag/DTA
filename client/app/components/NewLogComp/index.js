@@ -9,15 +9,16 @@ import LogDropdown from '../../Core/Dropdown/index'
 import {TimeEntryStatus} from '../../../constants/Index'
 import MultiSelectDropdown from '../../Core/MultiSelectDropDown'
 import TtnButton from 'core/Button/btn';
+import Tags from '../../Core/ReactTags'
 
 class NewLogComp extends Component{
     constructor(){
         super();
 
         this.state = {
-            newLogActivity: 'Select',
             newLogType: 'Select',
-            newLogDuration: 'Select',
+            newLogHH: 'Select',
+            newLogMM:'Select',
             newLogDesc: '',
             newLogStatus: TimeEntryStatus.New,
             newCollaborators: []
@@ -32,29 +33,31 @@ class NewLogComp extends Component{
     }
 
     onDoneClick = () => {
-        if(this.state.newLogActivity === 'Select' || this.state.newLogType === 'Select' || this.state.newLogDuration === 'Select' ){
+        if(this.state.newLogType === 'Select' || this.state.newLogHH === 'Select' || this.state.newLogMM === 'Select'){
             alert('All fields except description is mandatory to fill.');
         }
         else{
             let newLogObj = {
                 date: this.props.logDate,
-                activity: this.state.newLogActivity,
+                // activity: this.state.newLogActivity,
                 activityType: this.state.newLogType,
-                duration: this.state.newLogDuration,
+                hh: this.state.newLogHH,
+                mm:this.state.newLogMM,
                 description: this.state.newLogDesc,
-                status: TimeEntryStatus.Pending,
-                collaborators: this.state.newCollaborators
+                status: TimeEntryStatus.Submitted,
+                collaborators: this.state.newCollaborators,
+                isProject:1
             };
             this.props.newLogCreated(newLogObj);
         }
-
     }
 
     onCloseClick = () => {
             this.setState({
-                newLogActivity: 'Select',
+                // newLogActivity: 'Select',
                 newLogType: 'Select',
-                newLogDuration: 'Select',
+                newLogHH: 'Select',
+                newLogMM: 'Select',
                 newLogDesc: '',
                 newLogStatus: TimeEntryStatus.New,
                 newCollaborators: []
@@ -68,7 +71,7 @@ class NewLogComp extends Component{
         })
     }
 
-    onSelectedVal = (newCollab) => {
+    /*onSelectedVal = (newCollab) => {
         (this.state.newCollaborators.length && this.state.newCollaborators.indexOf(newCollab) > -1) ? null : this.state.newCollaborators.push(newCollab);
         this.setState({newCollaborators: this.state.newCollaborators});
     };
@@ -78,33 +81,41 @@ class NewLogComp extends Component{
         this.setState({
             newCollaborators: this.state.newCollaborators
         })
+    }*/
+
+    getTags = (tags) => {
+        let empSet = new Set();
+        tags.forEach(obj => {
+            empSet.add(obj.id);
+        });
+        this.setState({
+            newCollaborators: [...empSet]
+        });
     }
 
     render(){
         let activityTitles = ['Westcon','Knowlegde Meet','Daily Time Analysis'];
-        let activityCategory = ['Project','Non-Project'];
-        let durationTime = ['30 mins','1 hr','2 hrs','3 hrs','4 hrs','5 hrs','6 hrs','7 hrs','8 hrs'];
-        let newCollabArray = ['Gaurav','Rubi','Mahima','Nitin'];
+        let durationTimeHH = [1,2,3,4,5,6,7,8];
+        let durationTimeMM = [10,20,30,40,50];
+        //let newCollabArray = ['Gaurav','Rubi','Mahima','Nitin'];
         return(
             <div className = "data-div">
                 <Row>
-                    <Col md = {1} lg = {1} className = "log-col">
-                        <LogDropdown className = 'activity'
-                                     data = {activityCategory}
-                                     title = {this.state.newLogActivity}
-                                     onSelect = {(item) => this.setSelectedValue(item, 'newLogActivity')}/>
-                    </Col>
                     <Col md = {2} lg = {2} className = "log-col">
                         <LogDropdown className = 'type'
                                      data = {activityTitles}
                                      title = {this.state.newLogType}
                                      onSelect = {(item) => this.setSelectedValue(item, 'newLogType')}/>
                     </Col>
-                    <Col md = {1} lg = {1} className = "log-col">
+                    <Col md = {2} lg = {2} className = "log-col">
                         <LogDropdown className = 'duration'
-                                     data = {durationTime}
-                                     title = {this.state.newLogDuration}
-                                     onSelect = {(item) => this.setSelectedValue(item, 'newLogDuration')}/>
+                                     data = {durationTimeHH}
+                                     title = {this.state.newLogHH}
+                                     onSelect = {(item) => this.setSelectedValue(item, 'newLogHH')}/>Hrs
+                        <LogDropdown className = 'duration'
+                                     data = {durationTimeMM}
+                                     title = {this.state.newLogMM}
+                                     onSelect = {(item) => this.setSelectedValue(item, 'newLogMM')}/>Mins
                     </Col>
                     <Col md = {4} lg = {4} className = "log-col">
                         <input type = "text"
@@ -135,11 +146,12 @@ class NewLogComp extends Component{
 
                     </Col>
                     <Col md = {12} lg = {12} className = "log-col">
-                        Collaborators: <MultiSelectDropdown collabArray = {newCollabArray}
+                        {/*Collaborators: <MultiSelectDropdown collabArray = {newCollabArray}
                                                             newCollab = {this.state.newCollaborators}
                                                             title = 'Select'
                                                             onSelectedVal = {(newCollab) => {this.onSelectedVal(newCollab)}}
-                                                            onDeleteCollab = {(deletedVal) => {this.onDeleteCollab(deletedVal)}}/>
+                                                            onDeleteCollab = {(deletedVal) => {this.onDeleteCollab(deletedVal)}}/>*/}
+                        Collaborators: <Tags updateTag = {(tags) => {this.getTags(tags)}}/>
                     </Col>
                 </Row>
             </div>

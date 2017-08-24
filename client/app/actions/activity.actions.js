@@ -84,3 +84,38 @@ export const updateActivities = (activityLog) => {
 }
 
 
+export const deleteAllActivity = (date) => {
+    return (dispatch) => {
+        decoratedFetch(`/api/activity/employee/date/${date}`,{method:'delete'})
+            .then(response => {
+                if (response.status == ApiResponseCode.OK) {
+                    return response.json();
+                } else if (response.status == ApiResponseCode.AUTH_FAIL) {
+                    console.log("hello------");
+                    // fetch(AUTHORIZE_URL)
+                }
+            }).then(data => {
+            dispatch({type:ActivityActions.DeleteActivity.Success, data:data})
+        })
+            .catch(error => {
+                dispatch({type:ActivityActions.DeleteActivity.Failure})
+            })
+        /*fetch(`/api/activity/employee/2592?date=${date}`,{
+            method:'delete',
+            headers:{
+                "Content-Type":"application/json",
+                "Accept":"application/json",
+            },
+            credentials: 'include'
+        })
+            .then(response => response.json())
+            .then((data) => {
+                dispatch ({type:ActivityActions.DeleteAllActivity.Success,data:data})
+            })
+            .catch((error) => {
+                dispatch({type:ActivityActions.DeleteAllActivity.Failure})
+            })*/
+    }
+}
+
+

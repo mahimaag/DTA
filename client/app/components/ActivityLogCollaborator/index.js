@@ -10,6 +10,7 @@ class ActivityLogCollaborator extends Component{
 
     render()
     {
+        console.log('collaborators----------',this.props.collaborators);
         return (
             <div className="collab-div">
                 <span

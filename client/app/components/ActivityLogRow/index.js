@@ -8,10 +8,6 @@ import NewLogComp from '../NewLogComp/index'
 import ActivityLogHeader from '../ActivityLogHeader/index'
 import {TimeEntryStatus} from '../../../constants/Index'
 
-/*import TSMS_TextButton from './TSMS_TextButton'
-import editIcon from '../assets/images/editIcon.png'
-import deleteIcon from '../assets/images/deleteIcon.jpg'*/
-
 class ActivityLogRow extends Component{
     constructor(props){
         super(props);
@@ -29,9 +25,6 @@ class ActivityLogRow extends Component{
                                                    onLogTimeClick = {() => this.props.logItem(item._id)}
                                                    onClearClick = {() => this.props.onClearClick(item._id)}/>
                                 <Row className = "show-grid">
-                                    {/*{(this.state.newEntry === true)?
-                                        <NewLogComp sampleData={item.activities} newLogCreated={(newLog) => this.newLogData(newLog,item.date)}/>:null
-                                    }*/}
                                     {item.activities.map((activity, index) => {
                                         return ((activity.status == TimeEntryStatus.New) ? <NewLogComp logDate = {item._id}
                                                                                          newLogCreated = {(newLog) => this.props.newEntry(newLog, item._id)}
