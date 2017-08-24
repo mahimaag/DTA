@@ -19,15 +19,13 @@ export function getActivities(req, res) {
     }
     firstDate = new Date(y, m ,1).getTime();
     lastDate = new Date(y, m + 1, 0).getTime();
-    employeeId =  parseInt(req.params.id) ;
 
     console.log("=======first Date===>>>", firstDate);
     console.log("=======last Date===>>>", lastDate);
-
     return Activity.aggregate([
         {
             $match: {
-                employeeId: employeeId,
+                employeeId: parseInt(req.employeeId) ,
                 date: {
                     $lte: lastDate, // last date of current month
                     $gte: firstDate // first date of current month
@@ -55,8 +53,9 @@ export function getActivities(req, res) {
         .catch(genericRepo.handleError(res));
 }
 
-export function saveActivities(req, res) {
-    console.log("======actvity controller // saveActivities()=========");
+export function save(req, res) {
+    console.log("======actvity controller // save()=========");
+    console.log("body---------",req.body)
 
     Activity.create(req.body)
         .then(output => {
@@ -182,5 +181,4 @@ export function deleteActivityByEmp(req, res) {
         genericRepo.badInput(res, 500);
     }
 }
-
 

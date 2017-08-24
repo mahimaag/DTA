@@ -19,10 +19,10 @@ class Main extends React.Component {
         }
     }
 
-    // componentWillMount () {
-    //     // get events/activities from db
-    //     this.props.getActivities();
-    // }
+    componentWillMount () {
+        // get events/activities from db
+        this.props.getActivities();
+    }
 
     handleChange = (item) => {
         let itemList = [];
@@ -37,7 +37,6 @@ class Main extends React.Component {
     displayText = (item) => {
         return item.name + ' : ' + item.id;
     };
-
     mapDataToEvents = () => {
         let events = [];
         if(this.props.activity && this.props.activity.activities.length >0){
@@ -56,7 +55,6 @@ class Main extends React.Component {
         console.log("events are :",events)
         return events;
     };
-
     render() {
         let events = this.mapDataToEvents();
         return (
@@ -120,16 +118,13 @@ class Main extends React.Component {
         });
     }
 }
-
 const mapDispatchToProps = (dispatch) => ({
     getActivities : () => {dispatch(getActivities())}
 });
-
 const mapStateToProps = (state) => {
     return {
         activity: state.activity
     }
 };
-
 export default connect(mapStateToProps,mapDispatchToProps)(Main);
 

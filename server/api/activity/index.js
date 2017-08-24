@@ -7,14 +7,15 @@ var service = require("./activity.service");
 const router = express.Router();
 
 router.get(
-    "/employee/:id",
+    "/employee",
     service.validateEmpId,
     controller.getActivities
 );
 
 router.post(
     "/employee",
-    controller.saveActivities
+    service.addEmployeeId,
+    controller.save
 );
 
 router.put(
