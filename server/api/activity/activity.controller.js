@@ -19,15 +19,13 @@ export function getActivities(req, res) {
     }
     firstDate = new Date(y, m ,1).getTime();
     lastDate = new Date(y, m + 1, 0).getTime();
-    employeeId =  parseInt(req.params.id) ;
 
     console.log("=======first Date===>>>", firstDate);
     console.log("=======last Date===>>>", lastDate);
-
     return Activity.aggregate([
         {
             $match: {
-                employeeId: employeeId,
+                employeeId: parseInt(req.employeeId) ,
                 date: {
                     $lte: lastDate, // last date of current month
                     $gte: firstDate // first date of current month
@@ -56,10 +54,11 @@ export function getActivities(req, res) {
 }
 
 export function saveActivities(req, res) {
-    console.log("======actvity controller // saveActivities()=========",req.body);
-
+    console.log("======actvity controller // saveActivities()=========");
+    let response = {};
     Activity.create(req.body)
         .then(output => {
+
 
             if(iscollaborators(req)) {
                 addCollaborators(req)
@@ -74,18 +73,13 @@ export function saveActivities(req, res) {
                 repeatActivity(req)
                     .then(result => {
                         if(result) {
-                            console.log("output before ======", output);
-                            console.log("output before ======", req.body.repeatActivity);
-
-                            output.repeatActivity = req.body.repeatActivity;
-                            console.log("output after ======", output);
                             console.log("activity repeated successfully..");
                         }
                     });
             }
-            console.log("====final output========");
-
-            res.status(200).json(output).end();
+            Object.assign(response, output);
+            response._doc.repeatActivity = req.body.repeatActivity;
+            res.status(200).json(response._doc).end();
         })
         .catch(genericRepo.handleError(res));
 }
@@ -187,5 +181,4 @@ export function deleteActivityByEmp(req, res) {
         genericRepo.badInput(res, 500);
     }
 }
-
 

@@ -53,6 +53,7 @@ class ModalContent extends Component {
 
         console.log(updatedEvent);
         this.props.updateActivities(updatedEvent);
+        this.props.closeCalendar();
     }
 
     onInputChange = (event) => {

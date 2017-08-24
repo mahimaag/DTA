@@ -36,7 +36,6 @@ class ModalContent extends Component{
             repeatActivity : [],
         }
     }
-
     selectSlot(slot) {
         console.log("selected date is ",slot.start)
         let newRepeatedDates = this.state.repeatActivity;
