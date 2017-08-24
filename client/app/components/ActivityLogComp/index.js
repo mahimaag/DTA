@@ -101,30 +101,35 @@ class ActivityLogComp extends Component{
         const activityLog = this.props.activity;
         let activityTitles = ['Westcon','Knowlegde Meet','Daily Time Analysis'];
         let activityCategory = ['Project','Non-Project'];
-        let durationTime = ['30 mins','1 hr','2 hrs','3 hrs','4 hrs','5 hrs','6 hrs','7 hrs','8 hrs'];
+        let durationTimeHH = [1,2,3,4,5,6,7,8];
+        let durationTimeMM = [10,20,30,40,50];
         let newCollabArray = ['Gaurav','Rubi','Mahima','Nitin'];
         return(
             <div>
                 {this.state.editBtn === true?
                     <div className="data-div">
                         <Row>
-                            <Col md={1} lg={1} className="log-col">
+                            {/*<Col md={1} lg={1} className="log-col">
                                 <LogDropdown className='activity'
                                              title={this.state.activity.activity}
                                              data={activityCategory}
                                              onSelect={(item) => {this.setSelectedValue(item, 'activity')}}/>
-                            </Col>
+                            </Col>*/}
                             <Col md={2} lg={2} className="log-col">
                                 <LogDropdown className='type'
                                              data={activityTitles}
                                              title={this.state.activity.activityType}
                                              onSelect={(item) => this.setSelectedValue(item, 'activityType')}/>
                             </Col>
-                            <Col md={1} lg={1} className="log-col">
+                            <Col md={2} lg={2} className="log-col">
                                 <LogDropdown className="duration"
-                                             title={this.state.activity.duration}
-                                             data={durationTime}
-                                             onSelect={(item) => {this.setSelectedValue(item, 'duration')}}/>
+                                             title={this.state.activity.hh}
+                                             data={durationTimeHH}
+                                             onSelect={(item) => {this.setSelectedValue(item, 'hh')}}/>Hrs
+                                <LogDropdown className="duration"
+                                             title={this.state.activity.mm}
+                                             data={durationTimeMM}
+                                             onSelect={(item) => {this.setSelectedValue(item, 'mm')}}/>Mins
                             </Col>
                             <Col md={4} lg={4} className="log-col">
                                 <input type="text"
@@ -155,15 +160,18 @@ class ActivityLogComp extends Component{
 
 
                             </Col>
-                            <Col md={12} lg={12} className = "log-col">
+                            {/*<Col md={12} lg={12} className = "log-col">
                                 <MultiSelectDropdown collabArray = {newCollabArray}
                                                      newCollab = {this.state.activity.collaborators}
                                                      title = 'Select'
                                                      onSelectedVal = {(newCollab) => {this.onSelectedVal(newCollab)}}
                                                      onDeleteCollab = {(deletedVal) => {this.onDeleteCollab(deletedVal)}}/>
-                                {/*<ActivityLogCollaborator collaborators={activity.Collaborators}
+                                /!*<ActivityLogCollaborator collaborators={activity.Collaborators}
                                                          onCollabChange={(collaborators) => {this.onCollabChange(collaborators)}}
-                                                         editable='true'/>*/}
+                                                         editable='true'/>*!/
+                            </Col>*/}
+                            <Col md={12} lg={12} className="log-col">
+                                {(activityLog.collaborators && activityLog.collaborators.length > 0) ? <ActivityLogCollaborator collaborators={activityLog.collaborators}/> : null }
                             </Col>
                         </Row>
 
@@ -177,7 +185,8 @@ class ActivityLogComp extends Component{
                                 <span>{activityLog.activityType}</span>
                             </Col>
                             <Col md={1} lg={1} className="log-col">
-                                <span>{activityLog.duration}</span>
+                                <span>{activityLog.hh}</span>hrs
+                                <span>{activityLog.mm}</span>mins
                             </Col>
                             <Col md={4} lg={4} className="log-col">
                                 <span>{activityLog.description}</span>
@@ -210,7 +219,7 @@ class ActivityLogComp extends Component{
 
                             </Col>
                             <Col md={12} lg={12} className="log-col">
-                                <ActivityLogCollaborator collaborators={activityLog.collaborators}/>
+                                {(activityLog.collaborators && activityLog.collaborators.length > 0) ? <ActivityLogCollaborator collaborators={activityLog.collaborators}/> : null }
                             </Col>
                         </Row>
 

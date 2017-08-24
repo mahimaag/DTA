@@ -9,8 +9,8 @@ import SampleData from './../../../assests/SampleData'
 import { TimeEntryStatus, HeadingArray } from './../../../constants/Index'
 import './style.css'
 import ModalComp from '../../Core/ModalComp'
-import ModalBodyComp from '../../Core/ModalBodyComp'
-import {postActivities, updateActivities, deleteActivity} from '../../actions/activity.actions'
+import DeleteModalContent from '../DeleteModalContent'
+import {postActivities, updateActivities, deleteActivity, deleteAllActivity} from '../../actions/activity.actions'
 import { connect } from 'react-redux';
 import _ from 'lodash';
 
@@ -49,25 +49,19 @@ class ActivityLog extends Component{
         })
     };
 
-    clearAllLogs = (date) => {
-        this.state.timeEnteries.map((entry) => entry.date === date ? entry.activities = [] : null);
-        this.setState({
-            timeEnteries:this.state.timeEnteries
-        })
-
-    };
-
     addNewLog = (logDate) => {
         const _timeEntries = _.cloneDeep(this.state.timeEnteries);
         let target = _timeEntries.find((entry) => (entry._id == logDate) );
-        target.activities.unshift({
-                    "date":"",
-                    "activity":"",
+        target.activities.push({
+                    "employeeId":2592,
+                    "date": 0,
                     "activityType": "",
-                    "duration": "",
+                    "hh": "",
+                    "mm":"",
                     "description": "",
                     "status": TimeEntryStatus.New,
-                    "collaborators": []
+                    "collaborators": [],
+                    "isProject":1
                 }) ;
         this.setState({
             timeEnteries: _timeEntries
@@ -87,11 +81,21 @@ class ActivityLog extends Component{
 
     deleteEntry = (deletedEntry,logDate) => {
         //console.log('activity to be deleted----',deletedEntry);
-        this.state.timeEnteries.map((entry) => entry._id === logDate ? this.props.deleteActivity(deletedEntry._id) : null);
+        this.props.deleteActivity(deletedEntry._id);
+        this.state.timeEnteries.map((entry) => entry._id === logDate ? this.state.timeEnteries.splice(this.state.timeEnteries.indexOf(deletedEntry),1) : null);
         this.setState({
             timeEnteries:this.state.timeEnteries,
             displayModal: true
         })
+    };
+
+    clearAllLogs = (date) => {
+        this.props.deleteAllActivity(date);
+        this.state.timeEnteries.map((entry) => entry.date === date ? this.state.timeEnteries.splice(this.state.timeEnteries.indexOf(date),1) : null);
+        this.setState({
+            timeEnteries:this.state.timeEnteries
+        })
+
     };
 
     closedWithoutCreate = (logDate) => {
@@ -109,6 +113,7 @@ class ActivityLog extends Component{
     }
 
     render(){
+        console.log('------------------props in list view--------------',this.props.activityTimeLog);
         return(
             <div className="col-md-12 activity-list-comp">
                 <Row className="show-grid log-header">
@@ -132,7 +137,7 @@ class ActivityLog extends Component{
                            modalShow = {this.state.displayModal}
                            modalHide = {() => {this.onCloseModalClick()}}
                            modalHeaderMsg = "Activity Deleted successfully"
-                           modalBody = {'deletion completed!!!'}
+                           modalBody = {<DeleteModalContent/>}
                            modalFooterClose = {() => {this.onCloseModalClick()}}
                            modalFooterText = 'Close'
                 />
@@ -144,7 +149,8 @@ class ActivityLog extends Component{
 const mapDispatchToProps = (dispatch) => ({
     postActivities : (childItem) => {dispatch(postActivities(childItem))},
     updateActivities : (childItem) => {dispatch(updateActivities(childItem))},
-    deleteActivity : (activityId) => {dispatch(deleteActivity(activityId))}
+    deleteActivity : (activityId) => {dispatch(deleteActivity(activityId))},
+    deleteAllActivity : (date) => {dispatch(deleteAllActivity(date))}
 
 });
 
@@ -175,3 +181,5 @@ export default connect(null, mapDispatchToProps)(ActivityLog);
  timeEnteries: newProps.activityTimeLog.slice()
  },() => {console.log(`${tag}[cwrp]state in list card-----`,this.state.timeEnteries)})
  }*/
+
+//entry.activities = []

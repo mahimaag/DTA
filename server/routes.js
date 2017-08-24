@@ -25,21 +25,21 @@ export default function (app) {
     const distFolder = path.join(app.get('appPath'), 'dist');
     console.log('Dist folder - ', distFolder);
     console.log('Index file - ', indexFile);
-    // app.use(authMiddlewares);
+    app.use(authMiddlewares);
     const checkAccess = (req,res,next) => {
         logger.silly("checked acl middleware");
     };
     app.use(cors());
   app.use(express.static(indexFile), logMiddleware('After index file'));
   app.use(express.static(distFolder), logMiddleware('After dist folder'));
-  // app.use('/api', authMiddlewares);
+  app.use('/api', authMiddlewares);
   app.use('/api/employees', require('./api/employee'));
     app.use('/api/oauthServerCallback',redirectUrlFunction, (req, res) => {
         res.redirect('/');
     });
     app.use(express.static(indexFile), logMiddleware('After index file'));
     app.use(express.static(distFolder), logMiddleware('After dist folder'));
-    // app.use('/api', authMiddlewares);
+    app.use('/api', authMiddlewares);
     app.use('/api/employees', require('./api/employee'));
     app.use('/api/activity', require('./api/activity'));
     app.use('/api/oauthServerCallback',redirectUrlFunction, (req, res) => {

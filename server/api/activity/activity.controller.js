@@ -16,11 +16,14 @@ export function getActivities(req, res) {
         !isNaN(parseInt(req.query.month))) {
 
         m = parseInt(req.query.month)
+        console.log('month got-----------',m);
+
     }
     firstDate = new Date(y, m ,1).getTime();
     lastDate = new Date(y, m + 1, 0).getTime();
     employeeId =  parseInt(req.params.id) ;
 
+    console.log('employee id------------------>>>',employeeId);
     console.log("=======first Date===>>>", firstDate);
     console.log("=======last Date===>>>", lastDate);
 
@@ -56,7 +59,7 @@ export function getActivities(req, res) {
 }
 
 export function saveActivities(req, res) {
-    console.log("======actvity controller // saveActivities()=========");
+    console.log("======actvity controller // saveActivities()=====3333====",req.body);
 
     Activity.create(req.body)
         .then(output => {
@@ -66,6 +69,9 @@ export function saveActivities(req, res) {
                     .then(result => {
                         if(result) {
                             console.log("collaborators added successfully..");
+                        }
+                        else{
+                            console.log('error occured!!!!!Do something...');
                         }
                     });
             }
@@ -176,7 +182,15 @@ export function deleteActivityByEmp(req, res) {
         !isNaN(parseInt(req.query.date))) {
 
         Activity.remove({employeeId: parseInt(req.params.id), date: parseInt(req.query.date)})
-            .then(genericRepo.respondWithResult(res))
+            .then(result => {
+                //console.log('rresult-----',result);
+                    let response = {
+                        date: req.query.date
+                    }
+                    //console.log("res====>>>>", res);
+                    res.status(200).send(response).end();
+
+            })
             .catch(genericRepo.handleError(res));
     } else {
         genericRepo.badInput(res, 500);

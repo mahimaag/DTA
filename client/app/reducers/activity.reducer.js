@@ -68,7 +68,7 @@ const ActivityReducer = (state = initialState, action) => {
             if(duplicateState && duplicateState.activities.length>0) {
                 let index = duplicateState.activities.findIndex((dates) => dates._id === action.data.date);
                 if (index >= 0) {
-                    let index2 = duplicateState.activities[index].activities.findIndex((activity) => activity._id === action.data.id)
+                    let index2 = duplicateState.activities[index].activities.findIndex((activity) => activity._id === action.data._id)
                     if(index2>=0)
                         duplicateState.activities[index].activities.splice(index2,1)
                     }
@@ -78,6 +78,21 @@ const ActivityReducer = (state = initialState, action) => {
 
         case ActivityActions.DeleteActivity.Failure:
             console.log('error in reducer');
+            break;
+
+        case ActivityActions.DeleteAllActivity.Success:
+            console.log('deleting all activities...***************',action.data.date,duplicateState.activities[1]._id);
+            let date = parseInt(action.data.date);
+            //console.log('types--------->>>>>>>',typeof(date),typeof(duplicateState.activities[1]._id));
+            if(duplicateState && duplicateState.activities.length>0) {
+                let index = duplicateState.activities.findIndex((dates) => dates._id === date);
+                console.log('&&&&&&&&&&&&&&&&',index);
+                if (index >= 0) {
+                    duplicateState.activities[index].activities.splice(index, 1);
+                    console.log('date deleted!!!!!!!!!!!!');
+                }
+            }
+            console.log('data after deletion',duplicateState.activities);
             break;
 
         default:

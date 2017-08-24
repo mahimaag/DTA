@@ -28,9 +28,10 @@ class ModalContent extends Component{
         super(props);
         this.state = {
             showCalendar:false,
-            projectCategory:'Select',
+            // projectCategory:'Select',
             projectName:'Select',
-            duration:'Select',
+            hh:'Select',
+            mm:'Select',
             repeatedDates : [],
             savedEvent:false,
             description:'',
@@ -67,19 +68,21 @@ class ModalContent extends Component{
 
     saveEvent = (event) => {
         event.preventDefault();
-        if(this.state.duration === 'Select' || this.state.projectCategory === 'Select' || this.state.projectName==='Select'){
+        if(this.state.hh === 'Select' || this.state.mm === 'Select' /*|| this.state.projectCategory === 'Select'*/ || this.state.projectName==='Select'){
             alert("Fields cannot be empty")
         }else{
             let dated = getDate(this.props.message);
             let activityLog = {
-                //"employeeId":"2590",
+                "employeeId":2592,
                 "date":+ new Date(dated), //todo : send selected date timestamp
-                "activity":this.state.projectCategory,
+                //"activity":this.state.projectCategory,
                 "activityType":this.state.projectName,
                 "description":this.state.description,
                 "status":TimeEntryStatus.Pending,
-                "duration":this.state.duration,
-                "collaborators":this.state.collaborators
+                "hh":this.state.hh,
+                "mm":this.state.mm,
+                "collaborators":this.state.collaborators,
+                "isProject":1
             };
 
             this.props.postActivities(activityLog); // todo : dispatch(asyncAction(activityLog))
@@ -123,7 +126,9 @@ class ModalContent extends Component{
         let newCollabArray = [2590,2591,2592,2593];
         let activityTitles = ['Westcon','Knowlegde Meet','Daily Time Analysis'];
         let activityCategory = ['Project','Non-Project'];
-        let durationTime = ['30 mins','1 hr','2 hrs','3 hrs','4 hrs','5 hrs','6 hrs','7 hrs','8 hrs'];
+        //let durationTime = ['30 mins','1 hr','2 hrs','3 hrs','4 hrs','5 hrs','6 hrs','7 hrs','8 hrs'];
+        let durationTimeHH = [1,2,3,4,5,6,7,8];
+        let durationTimeMM = [10,20,30,40,50];
         return(
             <div>{
                 this.state.showCalendar ?
@@ -140,11 +145,11 @@ class ModalContent extends Component{
                     <TsmsForm formClassName="add-activity">
                         <div>
                             <FormGroup controlId="projectCategory">
-                                <ControlLabel>Activity:</ControlLabel>
+                                {/*<ControlLabel>Activity:</ControlLabel>
                                 <Dropdown data={activityCategory}
                                                  title={this.state.projectCategory}
                                                  onSelect={(item) => this.setSelectedValue(item,'projectCategory')}
-                                />
+                                />*/}
                             </FormGroup>
                             <FormGroup controlId="projectName">
                                 <ControlLabel>Type:</ControlLabel>
@@ -154,9 +159,12 @@ class ModalContent extends Component{
                             </FormGroup>
                             <FormGroup controlId="duration">
                                 <ControlLabel>Duration:</ControlLabel>
-                                <Dropdown data={durationTime}
-                                                 title={this.state.duration}
-                                                 onSelect={(item) => this.setSelectedValue(item,'duration')}/>
+                                <Dropdown data={durationTimeHH}
+                                                 title={this.state.hh}
+                                                 onSelect={(item) => this.setSelectedValue(item,'hh')}/>hrs
+                                <Dropdown data={durationTimeMM}
+                                          title={this.state.mm}
+                                          onSelect={(item) => this.setSelectedValue(item,'mm')}/>mins
                             </FormGroup>
                             <FormGroup controlId="description">
                                 <ControlLabel>Description:</ControlLabel>

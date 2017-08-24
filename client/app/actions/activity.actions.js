@@ -20,12 +20,13 @@ export const postActivities = (activityLog) => {
                        })
           };*/
     return (dispatch) => {
-        fetch("/api/activity/2592",{
+        fetch("/api/activity/employee",{
             method: 'post',
             headers:{
                 "Content-Type":"application/json",
                 "Accept":"application/json",
             },
+            credentials: 'include',
             body:JSON.stringify(activityLog)
         })
             .then(response => response.json())
@@ -39,14 +40,17 @@ export const postActivities = (activityLog) => {
     }
 };
 
+
 export const getActivities = () => {
+    console.log('get in actions');
     return (dispatch) => {
-        fetch("/api/activity/2592",{
+        fetch("/api/activity/employee/2592",{
             method: 'get',
             headers:{
                 "Content-Type":"application/json",
                 "Accept":"application/json",
-            }
+            },
+            credentials: 'include',
         })
             .then(response => response.json())
             .then((data) => {
@@ -69,7 +73,8 @@ export const updateActivities = (activityLog) => {
                 "Content-Type":"application/json",
                 "Accept":"application/json",
             },
-            body:JSON.stringify(activityLog)
+            body:JSON.stringify(activityLog),
+            credentials: 'include',
         })
             .then(response => response.json())
             .then((data) => {
@@ -84,6 +89,7 @@ export const updateActivities = (activityLog) => {
     }
 }
 
+
 export const deleteActivity = (activityId) => {
     return (dispatch) => {
         fetch(`/api/activity/${activityId}`,{
@@ -91,14 +97,35 @@ export const deleteActivity = (activityId) => {
             headers:{
                 "Content-Type":"application/json",
                 "Accept":"application/json",
-            }
+            },
+            credentials: 'include',
         })
             .then(response => response.json())
             .then((data) => {
-                dispatch ({type:ActivityActions.DeleteActivity.Success,data:data})
+                dispatch ({type:ActivityActions.DeleteAllActivity.Success,data:data})
             })
             .catch((error) => {
-                dispatch({type:ActivityActions.DeleteActivity.Failure})
+                dispatch({type:ActivityActions.DeleteAllActivity.Failure})
+            })
+    }
+}
+
+export const deleteAllActivity = (date) => {
+    return (dispatch) => {
+        fetch(`/api/activity/employee/2592?date=${date}`,{
+            method:'delete',
+            headers:{
+                "Content-Type":"application/json",
+                "Accept":"application/json",
+            },
+            credentials: 'include'
+        })
+            .then(response => response.json())
+            .then((data) => {
+                dispatch ({type:ActivityActions.DeleteAllActivity.Success,data:data})
+            })
+            .catch((error) => {
+                dispatch({type:ActivityActions.DeleteAllActivity.Failure})
             })
     }
 }
