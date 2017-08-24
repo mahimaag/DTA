@@ -17,15 +17,15 @@ const AUTH_HRMS_TOKEN_COOKIE = 'nw_dev_oauthToken';
 const verifyTsmsToken = (req, res, next) => {
   //to verify token
   const token = req.headers.authorization;
-  if (token){
-    jwt_token.verify(token, config.token.SecretKey, (err, decode) => {
+    if (token){
+    jwt_token.verify(token, config.token.SecretKey,(err, decode) => {
       if (err) {
         res.status(500).send("invalid token");
       }
       else {
         const decodeData = jwt_token.decode(token);
-        req.ememployeeId = decodeData.employeeId;
-        next();
+        req.employeeId = decodeData.employeeId;
+          next();
       }
     })
   } else {
@@ -48,7 +48,7 @@ const authChecker = (req, res, next) => {
     return next();
   }
   if (req.cookies[AUTH_HRMS_TOKEN_COOKIE]) {
-    next();
+      next();
   } else {
       res.redirect(AUTHORIZE_URL)
   }

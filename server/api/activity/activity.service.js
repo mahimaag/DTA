@@ -5,11 +5,11 @@ var genericRepo = require("../generic/genericRepo");
 import mongoose from "mongoose";
 
 export function validateEmpId(req, res, next) {
-    console.log("======actvity service // validateEmpId()=========");
-    if(req.params.hasOwnProperty("id") && !isNaN(req.params.id)) {
+    console.log("employeeid------",req.employeeId);
+    if(req.employeeId){
         next();
-    } else {
-        genericRepo.badInput(res, 500);
+    }else{
+        genericRepo.badInput(res,500);
     }
 }
 
@@ -26,5 +26,15 @@ export function buildActivity(req, res, next) {
     console.log("======actvity service // buildActivity()=========");
     req.body.employeeId = req.params.id;
     next();
+
+}
+
+export function addEmployeeId(req,res,next) {
+     if(req.employeeId){
+        req.body.employeeId=req.employeeId;
+        next();
+    }else{
+         genericRepo.badInput(res,500);
+     }
 
 }

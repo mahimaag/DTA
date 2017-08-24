@@ -16,21 +16,16 @@ export function getActivities(req, res) {
         !isNaN(parseInt(req.query.month))) {
 
         m = parseInt(req.query.month)
-        console.log('month got-----------',m);
-
     }
     firstDate = new Date(y, m ,1).getTime();
     lastDate = new Date(y, m + 1, 0).getTime();
-    employeeId =  parseInt(req.params.id) ;
 
-    console.log('employee id------------------>>>',employeeId);
     console.log("=======first Date===>>>", firstDate);
     console.log("=======last Date===>>>", lastDate);
-
     return Activity.aggregate([
         {
             $match: {
-                employeeId: employeeId,
+                employeeId: parseInt(req.employeeId) ,
                 date: {
                     $lte: lastDate, // last date of current month
                     $gte: firstDate // first date of current month
@@ -59,19 +54,17 @@ export function getActivities(req, res) {
 }
 
 export function saveActivities(req, res) {
-    console.log("======actvity controller // saveActivities()=====3333====",req.body);
-
+    console.log("======actvity controller // saveActivities()=========");
+    let response = {};
     Activity.create(req.body)
         .then(output => {
+
 
             if(iscollaborators(req)) {
                 addCollaborators(req)
                     .then(result => {
                         if(result) {
                             console.log("collaborators added successfully..");
-                        }
-                        else{
-                            console.log('error occured!!!!!Do something...');
                         }
                     });
             }
@@ -84,8 +77,9 @@ export function saveActivities(req, res) {
                         }
                     });
             }
-
-            res.status(200).json(output).end();
+            Object.assign(response, output);
+            response._doc.repeatActivity = req.body.repeatActivity;
+            res.status(200).json(response._doc).end();
         })
         .catch(genericRepo.handleError(res));
 }
@@ -130,15 +124,14 @@ function repeatActivity(req) {
         Activity.create(req.body)
             .then(result => {
                 console.log("repeated activity cloned..", result);
+                if(index === dates.length - 1) {
+                    console.log("========promise resolve=====>>>", index, dates.length);
+                    defered.resolve(true);
+                }
             })
             .catch(err => {
                 defered.reject(err);
             });
-
-        if(index === dates.length - 1) {
-            defered.resolve(true);
-        }
-
     });
 
     return defered.promise;
@@ -196,5 +189,4 @@ export function deleteActivityByEmp(req, res) {
         genericRepo.badInput(res, 500);
     }
 }
-
 

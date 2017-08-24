@@ -22,11 +22,12 @@ const ActivityReducer = (state = initialState, action) => {
             break;
 
         case ActivityActions.PostActivity.Success:
-            console.log('data in action',duplicateState.activities);
+            console.log('data in action',duplicateState.activities,action.data);
              if(duplicateState && duplicateState.activities.length>0){
+
                  let index = duplicateState.activities.findIndex((dates)=> dates._id === action.data.date);
                  if(index>=0){
-                     duplicateState.activities[index].activities.push(action.data)
+                     duplicateState.activities[index].activities.push(action.data);
                  } else{
                      duplicateState.activities.push({
                          _id:action.data.date,
@@ -45,7 +46,7 @@ const ActivityReducer = (state = initialState, action) => {
             console.log('error in reducer');
             break;
         case ActivityActions.UpdateActivity.Success:
-            console.log('action.data in reducer----',action.data,duplicateState.activities);
+            console.log('action.data in reducer----',action.data);
             if(duplicateState && duplicateState.activities.length>0){
                 duplicateState.activities.map((activityLogs) => {
                     activityLogs.activities.map((activity) => {
@@ -57,7 +58,6 @@ const ActivityReducer = (state = initialState, action) => {
                     })
                 })
             }
-            console.log('data in reducer after updation-----------',duplicateState.activities);
             break;
         case ActivityActions.UpdateActivity.Failure:
             console.log('error in reducer');
@@ -67,6 +67,7 @@ const ActivityReducer = (state = initialState, action) => {
             console.log("Deleteing activity with id :",action.data,duplicateState.activities);
             if(duplicateState && duplicateState.activities.length>0) {
                 let index = duplicateState.activities.findIndex((dates) => dates._id === action.data.date);
+                console.log("delete index 1:",index);
                 if (index >= 0) {
                     let index2 = duplicateState.activities[index].activities.findIndex((activity) => activity._id === action.data._id)
                     if(index2>=0)

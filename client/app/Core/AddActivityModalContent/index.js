@@ -28,27 +28,27 @@ class ModalContent extends Component{
         super(props);
         this.state = {
             showCalendar:false,
-            // projectCategory:'Select',
-            projectName:'Select',
+            activityType:'Select',
             hh:'Select',
-            mm:'Select',
-            repeatedDates : [],
-            savedEvent:false,
+            mm:0,
+            collaborators:[],
             description:'',
-            collaborators:[]
+            repeatActivity : [],
         }
     }
-
     selectSlot(slot) {
-        let newRepeatedDates = this.state.repeatedDates;
-        if(newRepeatedDates.indexOf(getDate(slot.start))>=0){
-            newRepeatedDates.splice((newRepeatedDates.indexOf(getDate(slot.start))),1)
+        console.log("selected date is ",slot.start)
+        let newRepeatedDates = this.state.repeatActivity;
+        if(newRepeatedDates.indexOf(+new Date(getDate(slot.start)))>=0){
+            newRepeatedDates.splice((newRepeatedDates.indexOf(+new Date(getDate(slot.start)))),1)
         }else{
-            newRepeatedDates.push(getDate(slot.start));
+            newRepeatedDates.push(+new Date(getDate(slot.start)));
         }
 
         this.setState({
-            repeatedDates:newRepeatedDates
+            repeatActivity:newRepeatedDates
+        },()=>{
+            console.log(this.state.repeatActivity)
         });
 
     } // todo : change color of selected slot
@@ -60,49 +60,42 @@ class ModalContent extends Component{
     };
 
     repeatEvent = () => {
-        this.setState({
-            showCalendar:true,
-
-        })
+        if(this.state.hh === 'Select' || this.state.activityType === 'Select')
+            alert("First fill all the fields!!!")
+        else{
+            this.setState({
+                showCalendar:true,
+            })
+        }
     };
 
     saveEvent = (event) => {
         event.preventDefault();
-        if(this.state.hh === 'Select' || this.state.mm === 'Select' /*|| this.state.projectCategory === 'Select'*/ || this.state.projectName==='Select'){
+        console.log("type is ",typeof (this.state.hh),typeof (this.state.mm));
+        console.log("this.state.repeatActivity",this.state.repeatActivity)
+        if(this.state.hh === 'Select' || this.state.activityType === 'Select'){
             alert("Fields cannot be empty")
         }else{
             let dated = getDate(this.props.message);
+            console.log("**********",dated)
             let activityLog = {
-                "employeeId":2592,
-                "date":+ new Date(dated), //todo : send selected date timestamp
-                //"activity":this.state.projectCategory,
-                "activityType":this.state.projectName,
-                "description":this.state.description,
+                "employeeId":2590,
+                "activityType":this.state.activityType,
                 "status":TimeEntryStatus.Pending,
                 "hh":this.state.hh,
                 "mm":this.state.mm,
                 "collaborators":this.state.collaborators,
-                "isProject":1
+                "description":this.state.description,
+                "date":+ new Date(dated),
+                "repeatActivity":this.state.repeatActivity
             };
 
-            this.props.postActivities(activityLog); // todo : dispatch(asyncAction(activityLog))
+            this.props.postActivities(activityLog);
+            this.props.close(event);
 
-            this.setState({
-                savedEvent:true,
-
-            })
         }
-    }; // todo: save this new event in mongodb
+    };
 
-    saveRepeat = (event) => {
-        this.state.repeatedDates.map((item) => {
-            events.push({
-                'title': this.state.duration +" " +this.state.projectName,
-                'start': item,
-                'end': item,
-            })
-        })
-    }; // todo : save the repeated event in mongodb
 
     onInputChange = (event) => {
         this.setState({
@@ -125,10 +118,8 @@ class ModalContent extends Component{
     render(){
         let newCollabArray = [2590,2591,2592,2593];
         let activityTitles = ['Westcon','Knowlegde Meet','Daily Time Analysis'];
-        let activityCategory = ['Project','Non-Project'];
-        //let durationTime = ['30 mins','1 hr','2 hrs','3 hrs','4 hrs','5 hrs','6 hrs','7 hrs','8 hrs'];
-        let durationTimeHH = [1,2,3,4,5,6,7,8];
-        let durationTimeMM = [10,20,30,40,50];
+        let hour = [1,2,3,4,5,6,7,8];
+        let minutes = [10,20,30,40,50];
         return(
             <div>{
                 this.state.showCalendar ?
@@ -140,31 +131,28 @@ class ModalContent extends Component{
                             toolbar={false}
                             onSelectSlot = { (slot) => this.selectSlot(slot)}
                         />
-                        <button onClick={(e) => this.saveRepeat(e)}>Save </button>
+                        <button onClick={(e) => this.saveEvent(e)}>Save </button>
                     </div>:
                     <TsmsForm formClassName="add-activity">
                         <div>
-                            <FormGroup controlId="projectCategory">
-                                {/*<ControlLabel>Activity:</ControlLabel>
-                                <Dropdown data={activityCategory}
-                                                 title={this.state.projectCategory}
-                                                 onSelect={(item) => this.setSelectedValue(item,'projectCategory')}
-                                />*/}
-                            </FormGroup>
-                            <FormGroup controlId="projectName">
-                                <ControlLabel>Type:</ControlLabel>
+                            <FormGroup controlId="activityType">
+                                <ControlLabel>Activity Type:*</ControlLabel>
                                 <Dropdown data={activityTitles}
-                                             title={this.state.projectName}
-                                             onSelect={(item) => this.setSelectedValue(item,'projectName')}/>
+                                                 title={this.state.activityType}
+                                                 onSelect={(item) => this.setSelectedValue(item,'activityType')}
+                                />
                             </FormGroup>
-                            <FormGroup controlId="duration">
-                                <ControlLabel>Duration:</ControlLabel>
-                                <Dropdown data={durationTimeHH}
+                            <FormGroup controlId="hh">
+                                <ControlLabel>hh:*</ControlLabel>
+                                <Dropdown data={hour}
                                                  title={this.state.hh}
-                                                 onSelect={(item) => this.setSelectedValue(item,'hh')}/>hrs
-                                <Dropdown data={durationTimeMM}
+                                                 onSelect={(item) => this.setSelectedValue(item,'hh')}/>
+                            </FormGroup>
+                            <FormGroup controlId="mm">
+                                <ControlLabel>mm:*</ControlLabel>
+                                <Dropdown data={minutes}
                                           title={this.state.mm}
-                                          onSelect={(item) => this.setSelectedValue(item,'mm')}/>mins
+                                          onSelect={(item) => this.setSelectedValue(item,'mm')}/>
                             </FormGroup>
                             <FormGroup controlId="description">
                                 <ControlLabel>Description:</ControlLabel>
@@ -178,16 +166,15 @@ class ModalContent extends Component{
                                                                     onDeleteCollab = {(deletedVal) => {this.onDeleteCollab(deletedVal)}}/>
 
                             </FormGroup>
-                            {
-                                this.state.savedEvent ?
-                                    <TtnButton level = "primary"
+
+                            <TtnButton level = "primary"
                                                title = "Repeat"
                                                onClick={(e) => this.repeatEvent(e)}/>
-                                    :
-                                    <TtnButton level = "primary"
+                            :
+                            <TtnButton level = "primary"
                                                title = "Save"
                                                onClick={(e) => this.saveEvent(e)}/>
-                            }
+
                         </div>
 
                     </TsmsForm>
