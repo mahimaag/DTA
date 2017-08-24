@@ -24,7 +24,20 @@ const ActivityReducer = (state = initialState, action) => {
         case ActivityActions.PostActivity.Success:
             console.log('data in action',duplicateState.activities,action.data);
              if(duplicateState && duplicateState.activities.length>0){
-
+                 if(action.data.repeatActivity.length >0){
+                     console.log("repeated dates in reducer are :",action.data.repeatActivity);
+                     action.data.repeatActivity.map((repeatedDate) => {
+                         let index3 = duplicateState.activities.findIndex((dates)=> dates._id === repeatedDate);
+                         if(index3>=0){
+                             duplicateState.activities[index3].activities.push(action.data);
+                         }else{
+                             duplicateState.activities.push({
+                                 _id:repeatedDate,
+                                 activities : [action.data]
+                             })
+                         }
+                     } )
+                 }
                  let index = duplicateState.activities.findIndex((dates)=> dates._id === action.data.date);
                  if(index>=0){
                      duplicateState.activities[index].activities.push(action.data);

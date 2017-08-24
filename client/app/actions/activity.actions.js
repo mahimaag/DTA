@@ -15,7 +15,7 @@ export const postActivities = (activityLog) => {
                     // fetch(AUTHORIZE_URL)
                 }
             }).then(data => {
-            dispatch({type:ActivityActions.PostActivity.Success, data:activityLog})
+            dispatch({type:ActivityActions.PostActivity.Success, data:data})
         })
             .catch(error => {
                 console.log(error)
