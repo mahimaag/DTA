@@ -55,10 +55,9 @@ export function getActivities(req, res) {
 
 export function saveActivities(req, res) {
     console.log("======actvity controller // saveActivities()=========");
-    let response = {};
+    let response = [];
     Activity.create(req.body)
         .then(output => {
-
 
             if(iscollaborators(req)) {
                 addCollaborators(req)
@@ -73,13 +72,18 @@ export function saveActivities(req, res) {
                 repeatActivity(req)
                     .then(result => {
                         if(result) {
+                            response = result.concat(output);
                             console.log("activity repeated successfully..");
+                            console.log("final response==>>>", response);
+                            res.status(200).json(response).end();
                         }
                     });
+            } else {
+                response.push(output);
+                console.log("final else response==>>>", response);
+                res.status(200).json(response).end();
             }
-            Object.assign(response, output);
-            response._doc.repeatActivity = req.body.repeatActivity;
-            res.status(200).json(response._doc).end();
+
         })
         .catch(genericRepo.handleError(res));
 }
@@ -114,7 +118,8 @@ function addCollaborators(req) {
 
 function repeatActivity(req) {
     let defered = Q.defer(),
-        dates = req.body.repeatActivity;
+        dates = req.body.repeatActivity,
+        output = [];
 
     dates.forEach((date, index)=> {
         req.body.date = date
@@ -124,9 +129,10 @@ function repeatActivity(req) {
         Activity.create(req.body)
             .then(result => {
                 console.log("repeated activity cloned..", result);
+                output.push(result);
                 if(index === dates.length - 1) {
                     console.log("========promise resolve=====>>>", index, dates.length);
-                    defered.resolve(true);
+                    defered.resolve(output);
                 }
             })
             .catch(err => {
