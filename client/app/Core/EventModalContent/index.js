@@ -24,8 +24,7 @@ class ModalContent extends Component {
             hh:'',
             mm:'',
             activityType:'',
-            description:'',
-            collaborators:[]
+            description:''
         }
     }
 
@@ -121,14 +120,8 @@ class ModalContent extends Component {
                                     <ControlLabel>Description:</ControlLabel>
                                     <FormControl type="text" label="Description" placeholder="Description" value={this.state.description || this.props.eventInfo.moreInfo.description} onChange={this.onInputChange} name="description"/>
                                 </FormGroup>
-                                <FormGroup controlId="collaborators">
-                                    Collaborators: <MultiSelectDropdown collabArray = {newCollabArray}
-                                                                        newCollab = {this.props.eventInfo.moreInfo.collaborators}
-                                                                        title = {this.state.collaborators || this.props.eventInfo.moreInfo.collaborators}
-                                                                        onSelectedVal = {(newCollab) => {this.onSelectedVal(newCollab)}}
-                                                                        onDeleteCollab = {(deletedVal) => {this.onDeleteCollab(deletedVal)}}/>
+                                <div>Collaborators : {this.props.eventInfo.moreInfo.collaborators}</div>
 
-                                </FormGroup>
                                 <TtnButton iconButton
                                            level="secondary"
                                            rounded icon ="glyphicon glyphicon-ok"

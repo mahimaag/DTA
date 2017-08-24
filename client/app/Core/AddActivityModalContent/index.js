@@ -5,12 +5,11 @@ import {connect} from 'react-redux'
 import Dropdown from './../Dropdown'
 import {FormGroup, ControlLabel, FormControl} from 'react-bootstrap';
 
-import events from '../../config/events'
+import Tags from './../ReactTags'
 import TtnButton from './../Button/btn';
 import TsmsForm from './../Form';
 import {TimeEntryStatus} from './../../../constants/Index'
 import {postActivities} from './../../actions/activity.actions'
-import MultiSelectDropdown from '../../Core/MultiSelectDropDown'
 import {getDate} from './../../../utils/common'
 
 BigCalendar.setLocalizer(
@@ -103,17 +102,16 @@ class ModalContent extends Component{
         })
     };
 
-    onSelectedVal = (newCollab) => {
-        (this.state.collaborators.length && this.state.collaborators.indexOf(newCollab) > -1) ? null : this.state.collaborators.push(newCollab);
-        this.setState({collaborators: this.state.collaborators});
-    };
-
-    onDeleteCollab = (deletedVal) => {
-        this.state.collaborators.splice(this.state.collaborators.indexOf(deletedVal), 1);
+    getTags = (tags) => {
+        let empSet = new Set();
+        tags.forEach(obj => {
+            empSet.add(obj.id);
+        });
         this.setState({
-            collaborators: this.state.collaborators
-        })
+            collaborators: [...empSet]
+        });
     }
+
 
     render(){
         let newCollabArray = [2590,2591,2592,2593];
@@ -159,12 +157,7 @@ class ModalContent extends Component{
                                 <FormControl type="text" label="Description" placeholder="Description" value={this.state.description} onChange={this.onInputChange} name="description"/>
                             </FormGroup>
                             <FormGroup controlId="collaborators">
-                                Collaborators: <MultiSelectDropdown collabArray = {newCollabArray}
-                                                                    newCollab = {this.state.collaborators}
-                                                                    title = 'Select'
-                                                                    onSelectedVal = {(newCollab) => {this.onSelectedVal(newCollab)}}
-                                                                    onDeleteCollab = {(deletedVal) => {this.onDeleteCollab(deletedVal)}}/>
-
+                                Collaborators: <Tags updateTag = {(tags) => {this.getTags(tags)}}/>
                             </FormGroup>
 
                             <TtnButton level = "primary"
