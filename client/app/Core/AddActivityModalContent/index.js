@@ -92,6 +92,7 @@ class ModalContent extends Component{
             };
 
             this.props.postActivities(activityLog);
+            this.props.close(event);
 
         }
     };
