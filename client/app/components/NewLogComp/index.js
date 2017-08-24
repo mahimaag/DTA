@@ -16,7 +16,6 @@ class NewLogComp extends Component{
         super();
 
         this.state = {
-            // newLogActivity: 'Select',
             newLogType: 'Select',
             newLogHH: 'Select',
             newLogMM:'Select',
@@ -34,13 +33,11 @@ class NewLogComp extends Component{
     }
 
     onDoneClick = () => {
-        // if(this.state.newLogActivity === 'Select' || this.state.newLogType === 'Select' || this.state.newLogHH === 'Select' || this.state.newLogMM === 'Select'){
         if(this.state.newLogType === 'Select' || this.state.newLogHH === 'Select' || this.state.newLogMM === 'Select'){
             alert('All fields except description is mandatory to fill.');
         }
         else{
             let newLogObj = {
-                employeeId:2592,
                 date: this.props.logDate,
                 // activity: this.state.newLogActivity,
                 activityType: this.state.newLogType,
@@ -98,19 +95,12 @@ class NewLogComp extends Component{
 
     render(){
         let activityTitles = ['Westcon','Knowlegde Meet','Daily Time Analysis'];
-        let activityCategory = ['Project','Non-Project'];
         let durationTimeHH = [1,2,3,4,5,6,7,8];
         let durationTimeMM = [10,20,30,40,50];
-        let newCollabArray = ['Gaurav','Rubi','Mahima','Nitin'];
+        //let newCollabArray = ['Gaurav','Rubi','Mahima','Nitin'];
         return(
             <div className = "data-div">
                 <Row>
-                    {/* <Col md = {1} lg = {1} className = "log-col">
-                        <LogDropdown className = 'activity'
-                                     data = {activityCategory}
-                                     title = {this.state.newLogActivity}
-                                     onSelect = {(item) => this.setSelectedValue(item, 'newLogActivity')}/>
-                    </Col>*/}
                     <Col md = {2} lg = {2} className = "log-col">
                         <LogDropdown className = 'type'
                                      data = {activityTitles}

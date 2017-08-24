@@ -53,7 +53,6 @@ class ActivityLog extends Component{
         const _timeEntries = _.cloneDeep(this.state.timeEnteries);
         let target = _timeEntries.find((entry) => (entry._id == logDate) );
         target.activities.push({
-                    "employeeId":2592,
                     "date": 0,
                     "activityType": "",
                     "hh": "",
@@ -113,7 +112,7 @@ class ActivityLog extends Component{
     }
 
     render(){
-        console.log('------------------props in list view--------------',this.props.activityTimeLog);
+        // console.log('------------------props in list view--------------',this.props.activityTimeLog);
         return(
             <div className="col-md-12 activity-list-comp">
                 <Row className="show-grid log-header">
@@ -153,12 +152,6 @@ const mapDispatchToProps = (dispatch) => ({
     deleteAllActivity : (date) => {dispatch(deleteAllActivity(date))}
 
 });
-
-// const mapStateToProps = (state) => {
-//     return {
-//         activity: state.activity
-//     }
-// };
 
 export default connect(null, mapDispatchToProps)(ActivityLog);
 

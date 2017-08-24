@@ -20,7 +20,6 @@ class ActivityLogComp extends Component{
             editBtn: false,
             activity: logActivity,
             newDesc: logActivity.Description,
-            //displayModal: false
         }
     }
 
@@ -47,12 +46,6 @@ class ActivityLogComp extends Component{
     }
 
     onDeleteClick = (activity) => {
-        //console.log('displayModal**********------',this.state.displayModal);
-        /*this.setState({
-            displayModal: true,
-        })*/
-
-        //setTimeout(function() { this.setState({displayModal: false}); }.bind(this), 3000);
         this.props.deleteEntry(activity);
     }
 
@@ -90,20 +83,12 @@ class ActivityLogComp extends Component{
         })
     };
 
-    /*onCloseModalClick = () => {
-        this.setState({
-            displayModal: false
-        })
-    }*/
-
     render(){
         //console.log('props in activity log comp',this.props);
         const activityLog = this.props.activity;
         let activityTitles = ['Westcon','Knowlegde Meet','Daily Time Analysis'];
-        let activityCategory = ['Project','Non-Project'];
         let durationTimeHH = [1,2,3,4,5,6,7,8];
         let durationTimeMM = [10,20,30,40,50];
-        let newCollabArray = ['Gaurav','Rubi','Mahima','Nitin'];
         return(
             <div>
                 {this.state.editBtn === true?
@@ -150,15 +135,6 @@ class ActivityLogComp extends Component{
                                            rounded icon = "glyphicon glyphicon-remove"
                                            onClick = {() => this.onEditDeleteClick()}/>
 
-                                {/*<TSMS_IconButton bClassName="btn btn-default btn-sm edit-clear-button"
-                                                 onClickFunc={() => this.onOkClick()}
-                                                 spanClass="glyphicon glyphicon-ok"/>
-
-                                <TSMS_IconButton bClassName="btn btn-default btn-sm edit-clear-button"
-                                                 onClickFunc={() => this.onEditDeleteClick()}
-                                                 spanClass="glyphicon glyphicon-remove"/>*/}
-
-
                             </Col>
                             {/*<Col md={12} lg={12} className = "log-col">
                                 <MultiSelectDropdown collabArray = {newCollabArray}
@@ -195,8 +171,6 @@ class ActivityLogComp extends Component{
                                 <span>{activityLog.status}</span>
                             </Col>
                             <Col md={2} lg={2} lgOffset={1} className="log-col">
-                                {/* <button className="edit-clear-button"><img src={editIcon}/></button>
-                                 <button className="edit-clear-button"><img src={deleteIcon}/></button>*/}
 
                                 <TtnButton iconButton
                                            level = "primary"
@@ -207,14 +181,6 @@ class ActivityLogComp extends Component{
                                            level = "primary"
                                            rounded icon = "glyphicon glyphicon-trash"
                                            onClick = {() => this.onDeleteClick(activityLog)}/>
-
-                                {/*<TSMS_IconButton bClassName="btn btn-default btn-sm edit-clear-button"
-                                                 onClickFunc={() => this.onEditClick()}
-                                                 spanClass="glyphicon glyphicon-pencil"/>
-
-                                <TSMS_IconButton bClassName="btn btn-default btn-sm edit-clear-button"
-                                                 onClickFunc={() => this.onDeleteClick(activity)}
-                                                 spanClass="glyphicon glyphicon-trash"/>*/}
 
 
                             </Col>

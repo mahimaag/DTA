@@ -22,32 +22,9 @@ class ActivityLogHeader extends Component{
                 totalMins = totalMins-60
             }
         })
-        /*activityArray.map((activity) => {
-            if(activity.duration == '30 mins'){
-                totalTime = totalTime + 0.5;
-            }
-            else{
-                let duration = activity.duration.split(' ');
-                let timeLog = parseInt(duration[0]);
-                totalTime = totalTime + timeLog;
-            }
-        })*/
-
-        //let month = '';
         let date = new Date(this.props.logDate);
         let formattedDate = getDate(date);
         let logDay = moment(formattedDate).format('ddd');
-        /*let str = formattedDate.split('/');
-
-        monthArray.forEach((item) => {
-            (item.num === str[0])?month = item.month:null
-        });
-
-        let newDate = month + ' ' + str[1] + ',' + str[2];
-        let days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-        let logDate = new Date(newDate);
-        let logDay = days[logDate.getDay()];*/
-
         return(
             <Row className = "show-grid">
                 <Col md = {2} lg = {2} className = "log-col">
@@ -67,13 +44,6 @@ class ActivityLogHeader extends Component{
                                level = "primary"
                                title = "Clear"
                                onClick = {this.props.onClearClick}/>
-                    {/*<TSMS_TextButton bClassName="log-clear-button"
-                                     onClickFunc={this.props.onLogTimeClick}
-                                     dispName="Log Time"/>
-
-                    <TSMS_TextButton bClassName="log-clear-button"
-                                     onClickFunc={this.props.onClearClick}
-                                     dispName="Clear"/>*/}
 
 
                 </Col>
