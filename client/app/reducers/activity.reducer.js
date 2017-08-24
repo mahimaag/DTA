@@ -22,11 +22,12 @@ const ActivityReducer = (state = initialState, action) => {
             break;
 
         case ActivityActions.PostActivity.Success:
-            console.log('data in action',duplicateState.activities);
+            console.log('data in action',duplicateState.activities,action.data);
              if(duplicateState && duplicateState.activities.length>0){
+
                  let index = duplicateState.activities.findIndex((dates)=> dates._id === action.data.date);
                  if(index>=0){
-                     duplicateState.activities[index].activities.push(action.data)
+                     duplicateState.activities[index].activities.push(action.data);
                  } else{
                      duplicateState.activities.push({
                          _id:action.data.date,
@@ -62,8 +63,10 @@ const ActivityReducer = (state = initialState, action) => {
             console.log("Deleteing activity with id :",action.data,duplicateState.activities);
             if(duplicateState && duplicateState.activities.length>0) {
                 let index = duplicateState.activities.findIndex((dates) => dates._id === action.data.date);
+                console.log("delete index 1:",index);
                 if (index >= 0) {
-                    let index2 = duplicateState.activities[index].activities.findIndex((activity) => activity._id === action.data.id)
+                    let index2 = duplicateState.activities[index].activities.findIndex((activity) => activity._id === action.data._id)
+                    console.log("delete index 2",index2);
                     if(index2>=0)
                         duplicateState.activities[index].activities.splice(index2,1)
                     }

@@ -113,8 +113,9 @@ class Calendar extends Component {
             eventSelected : slotId
         })
     } //called when event is clicked
-    close  = (event) => {
-        event.preventDefault();
+    closeCalendar  = () => {
+        console.log("close of calendar called++++++++++")
+        // event.preventDefault();
         this.setState({showEventModal:false})
     };
 
@@ -133,10 +134,10 @@ class Calendar extends Component {
                     eventPropGetter={(this.eventStyleGetter)}
                 />
                 <ModalComp modalShow={this.state.showEventModal}
-                           modalHide = {(e) => {this.close(e)}}
+                           modalHide = {this.closeCalendar}
                            modalHeaderMsg="Edit Event"
-                           modalBody = {<EventModalContent message={this.state.eventSelected.start} eventInfo={this.state.eventSelected}/>}
-                           modalFooterClose = {(e) => {this.close(e)}}
+                           modalBody = {<EventModalContent message={this.state.eventSelected.start} eventInfo={this.state.eventSelected} closeCalendar={this.closeCalendar}/>}
+                           modalFooterClose = {this.closeCalendar}
                            modalFooterText = 'Close'
                 />
             </div>

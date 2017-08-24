@@ -24,6 +24,7 @@ class Main extends React.Component {
         this.props.getActivities();
     }
 
+
     handleChange = (item) => {
         let itemList = [];
         item ? itemList = [{id: 1, name: "item 1"}, {id: 2, name: "item 2"},{id: 3, name: "item 3"}, {id: 4, name: "item 4"}] : itemList = [];
@@ -44,7 +45,7 @@ class Main extends React.Component {
             timeLogs.map((dates) => {
                 dates.activities.map((tasks) => {
                     events.push({
-                        title : `${tasks.duration} - ${tasks.activityType}`,
+                        title : `${tasks.hh} - ${tasks.activityType}`,
                         start: new Date(dates._id),
                         end:new Date(dates._id),
                         moreInfo :tasks

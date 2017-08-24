@@ -15,7 +15,7 @@ router.get(
 router.post(
     "/employee",
     service.addEmployeeId,
-    controller.save
+    controller.saveActivities
 );
 
 router.put(

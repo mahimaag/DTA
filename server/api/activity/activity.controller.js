@@ -53,12 +53,12 @@ export function getActivities(req, res) {
         .catch(genericRepo.handleError(res));
 }
 
-export function save(req, res) {
-    console.log("======actvity controller // save()=========");
-    console.log("body---------",req.body)
-
+export function saveActivities(req, res) {
+    console.log("======actvity controller // saveActivities()=========");
+    let response = {};
     Activity.create(req.body)
         .then(output => {
+
 
             if(iscollaborators(req)) {
                 addCollaborators(req)
@@ -77,8 +77,9 @@ export function save(req, res) {
                         }
                     });
             }
-
-            res.status(200).json(output).end();
+            Object.assign(response, output);
+            response._doc.repeatActivity = req.body.repeatActivity;
+            res.status(200).json(response._doc).end();
         })
         .catch(genericRepo.handleError(res));
 }
@@ -123,15 +124,14 @@ function repeatActivity(req) {
         Activity.create(req.body)
             .then(result => {
                 console.log("repeated activity cloned..", result);
+                if(index === dates.length - 1) {
+                    console.log("========promise resolve=====>>>", index, dates.length);
+                    defered.resolve(true);
+                }
             })
             .catch(err => {
                 defered.reject(err);
             });
-
-        if(index === dates.length - 1) {
-            defered.resolve(true);
-        }
-
     });
 
     return defered.promise;

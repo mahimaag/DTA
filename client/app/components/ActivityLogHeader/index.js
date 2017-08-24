@@ -15,7 +15,7 @@ class ActivityLogHeader extends Component{
         let activityArray = this.props.activities;
         let totalTime = 0;
         activityArray.map((activity) => {
-            if(activity.duration == '30 mins'){
+            if(true){
                 totalTime = totalTime + 0.5;
             }
             else{
