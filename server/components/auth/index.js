@@ -24,7 +24,7 @@ const verifyTsmsToken = (req, res, next) => {
       }
       else {
         const decodeData = jwt_token.decode(token);
-        req.ememployeeId = decodeData.employeeId;
+        req.employeeId = decodeData.employeeId;
           next();
       }
     })

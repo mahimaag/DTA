@@ -70,6 +70,7 @@ export  function decoratedFetch (url, customOptions) {
             // todo: log error...
         }
     }
+    console.log("apiconfig---------",apiConfig);
     return fetch(url, apiConfig);
 
 }

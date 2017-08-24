@@ -49,13 +49,11 @@ class ModalContent extends Component{
             repeatedDates:newRepeatedDates
         });
     } // todo : change color of selected slot
-
     setSelectedValue = (item, property) => {
         this.setState({
             [property]: item
         })
     };
-
     repeatEvent = () => {
         this.setState({
             showCalendar:true,

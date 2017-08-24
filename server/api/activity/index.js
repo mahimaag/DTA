@@ -4,25 +4,36 @@ var express = require('express');
 var controller = require('./activity.controller');
 var service = require("./activity.service");
 
-let router = express.Router(),
-    activityRouter = router.route('/:id');
+const router = express.Router();
 
+router.get(
+    "/employee",
+    service.validateEmpId,
+    controller.getActivities
+);
 
-activityRouter
-    .get(service.validateInput)
-    .get(controller.show);
+router.post(
+    "/employee",
+    service.addEmployeeId,
+    controller.save
+);
 
-activityRouter
-    .post(service.validateInput)
-    .post(service.buildActivity)
-    .post(controller.save);
+router.put(
+    "/:id",
+    service.validateActivityId,
+    controller.updateActivity
+);
 
-activityRouter
-    .put(service.validateInput)
-    .put(controller.upsert);
+router.delete(
+    "/:id",
+    service.validateActivityId,
+    controller.deleteActivity
+);
 
-activityRouter
-    .delete(service.validateInput)
-    .delete(controller.destroy);
+router.delete(
+    "/employee/:id",
+    service.validateEmpId,
+    controller.deleteActivityByEmp
+);
 
 module.exports = router;
