@@ -1,9 +1,8 @@
 import fetch from "isomorphic-fetch"
 import { getPreset,ApiConfig } from "../network/constants"
-import _ from "lodash"
 
 const defaultMethod = 'post';
-const defaultOption = { method: defaultMethod, headers: ApiConfig.headers };
+const defaultOption = { method: defaultMethod, headers: ApiConfig.headers , credentials:'include'};
 const AUTHORIZE_URL = "http://newers-world-oauth.qa2.tothenew.net/oauth/authorize?client_id=e6d6a83e-6c7a-11e7-9394-406186be844b";
 const TokenNotExistError = {
     message: '',
@@ -17,7 +16,7 @@ const TokenNotExistError = {
  * @param options
  * @returns {{method: string, headers: (ApiConfig.headers|{Content-Type, Accept})}}
  */
-const fetchHttpRequest = (options = defaultOption) => {
+const getFetchOptions = (options = defaultOption) => {
     //_.merge(defaultOption,options);
     let token;
     const tokenString = document.cookie.split(';').find( (cookie) => cookie.includes('Tsms') );
@@ -28,12 +27,21 @@ const fetchHttpRequest = (options = defaultOption) => {
         token = tokenString.split("=")[1];
     }
     if(!options.headers){
-        options.headers = {};
+        options.headers = {
+            authorization : token,
+            'Content-Type' : 'application/json',
+            'Accept' : 'application/json',
+        };
     }
-    options.headers.authToken = token;
-
-    if(options.data){
-        options.data = JSON.stringify(options.data);
+    if(!options.method){
+        options.method=defaultMethod;
+    }
+    options.headers.authorization = token;
+    if(options.body){
+        options.body = JSON.stringify(options.body);
+    }
+    if(!options.credentials){
+        options.credentials='include';
     }
     return options;
 };
@@ -54,15 +62,15 @@ export  function decoratedFetch (url, customOptions) {
 
     let apiConfig = null;
     try{
-        apiConfig = fetchHttpRequest(customOptions);
+        apiConfig = getFetchOptions(customOptions);
     }catch(e){
         if(e && e.code == TokenNotExistError.code){
-            fetch(AUTHORIZE_URL)
+            // fetch(AUTHORIZE_URL)
         }else{
             // todo: log error...
         }
     }
-        return fetch(url,apiConfig);
+    return fetch(url, apiConfig);
 
 }
 

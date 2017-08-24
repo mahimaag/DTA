@@ -3,24 +3,29 @@ import {decoratedFetch } from "../config/network.config"
 import fetch from "isomorphic-fetch"
 import { ApiResponseCode } from "../network/constants"
 const AUTHORIZE_URL = "http://newers-world-oauth.qa2.tothenew.net/oauth/authorize?client_id=e6d6a83e-6c7a-11e7-9394-406186be844b";
+let token;
+const tokenString = document.cookie.split(';').find( (cookie) => cookie.includes('Tsms') );
+if(tokenString) {
+    token = tokenString.split("=")[1];
+}
 export const postActivities = (activityLog) => {
     return  (dispatch) => {
-                     decoratedFetch('http://rest.learncode.academy/api/manoj/users',{method:'get'})
-                       .then(response=>{
-                           if(response.status == ApiResponseCode.OK){
-                                return response.json();
-                           }else if(response.status == ApiResponseCode.AUTH_FAIL){
-                               fetch(AUTHORIZE_URL)
-                           }
-                       }).then(data=>{
-                           console.log("data----------",data)
-                         })
-                       .catch(error=>{
-                          console.log(error)
-                       })
-          };
+        decoratedFetch('/api/activity/2590',{body:activityLog})
+            .then(response => {
+                if (response.status == ApiResponseCode.OK) {
+                    return response.json();
+                } else if (response.status == ApiResponseCode.AUTH_FAIL) {
+                    console.log("hello------");
+                    // fetch(AUTHORIZE_URL)
+                }
+            }).then(data => {
+            console.log("data----------", data)
+        })
+            .catch(error => {
+                console.log(error)
+            })
+    };
 };
-
 export const getActivities = () => {
     return (dispatch) => {
         fetch("/api/activity/2590",{
@@ -36,7 +41,6 @@ export const getActivities = () => {
             })
             .catch((error)=>{
                 dispatch({type:ActivityActions.GetActivity.Failure})
-
             })
     }
 };

@@ -37,7 +37,6 @@ class ModalContent extends Component{
             collaborators:[]
         }
     }
-
     selectSlot(slot) {
         let newRepeatedDates = this.state.repeatedDates;
         if(newRepeatedDates.indexOf(getDate(slot.start))>=0){
@@ -49,7 +48,6 @@ class ModalContent extends Component{
         this.setState({
             repeatedDates:newRepeatedDates
         });
-
     } // todo : change color of selected slot
 
     setSelectedValue = (item, property) => {
@@ -64,7 +62,6 @@ class ModalContent extends Component{
 
         })
     };
-
     saveEvent = (event) => {
         event.preventDefault();
         if(this.state.duration === 'Select' || this.state.projectCategory === 'Select' || this.state.projectName==='Select'){
@@ -90,7 +87,6 @@ class ModalContent extends Component{
             })
         }
     }; // todo: save this new event in mongodb
-
     saveRepeat = (event) => {
         this.state.repeatedDates.map((item) => {
             events.push({
@@ -178,19 +174,16 @@ class ModalContent extends Component{
                                     :
                                     <TtnButton level = "primary"
                                                title = "Save"
-                                               onClick={(e) => this.saveEvent(e)}/>
+                                               onClick={this.saveEvent}/>
                             }
                         </div>
-
                     </TsmsForm>
                  }
             </div>
         )
     }
 }
-
 const mapDispatchToProps = (dispatch) => ({
-    postActivities : (activityLog) => {dispatch(postActivities(activityLog))}
+    postActivities : (activityLog) => dispatch(postActivities(activityLog))
 });
-
 export default connect(null,mapDispatchToProps)(ModalContent);

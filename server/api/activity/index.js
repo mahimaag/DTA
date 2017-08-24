@@ -7,6 +7,7 @@ var service = require("./activity.service");
 let router = express.Router(),
     activityRouter = router.route('/:id');
 
+
 activityRouter
     .get(service.validateInput)
     .get(controller.show);

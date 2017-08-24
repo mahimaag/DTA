@@ -15,6 +15,7 @@ export function show(req, res) {
 
     console.log("=======first Date===>>>", firstDate);
     console.log("=======last Date===>>>", lastDate);
+    console.log("id---------",req.params.id);
     return Activity.aggregate([
         {
             $match: {
@@ -49,7 +50,7 @@ export function show(req, res) {
 
 export function save(req, res) {
     console.log("======actvity controller // save()=========");
-
+   console.log("body---------",req.body);
     Activity.create(req.body)
         .then(output => {
             console.log("output=========>>>", output);
