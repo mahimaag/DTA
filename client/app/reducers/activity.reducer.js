@@ -24,34 +24,49 @@ const ActivityReducer = (state = initialState, action) => {
         case ActivityActions.PostActivity.Success:
             console.log('data in action',duplicateState.activities,action.data);
              if(duplicateState && duplicateState.activities.length>0){
-                 if(action.data.repeatActivity.length >0){
-                     console.log("repeated dates in reducer are :",action.data.repeatActivity);
-                     action.data.repeatActivity.map((repeatedDate) => {
-                         let index3 = duplicateState.activities.findIndex((dates)=> dates._id === repeatedDate);
+                 //if state exists
+                 if(action.data.length >1){
+                     // if repeated activity is to be added;
+                     action.data.map((repeatedDateActivity) => {
+                         let index3 = duplicateState.activities.findIndex((dates)=> dates._id === repeatedDateActivity.date);
                          if(index3>=0){
-                             duplicateState.activities[index3].activities.push(action.data);
+                             duplicateState.activities[index3].activities.push(repeatedDateActivity);
                          }else{
                              duplicateState.activities.push({
-                                 _id:repeatedDate,
-                                 activities : [action.data]
+                                 _id:repeatedDateActivity.date,
+                                 activities : [repeatedDateActivity]
                              })
                          }
                      } )
+                 }else{
+                     // if single data is to be added
+                     let index = duplicateState.activities.findIndex((dates)=> dates._id === action.data[0].date);
+                     if(index>=0){
+                         duplicateState.activities[index].activities.push(action.data[0]);
+                     } else{
+                         duplicateState.activities.push({
+                             _id:action.data[0].date,
+                             activities : [action.data[0]]
+                         })
+                     }
                  }
-                 let index = duplicateState.activities.findIndex((dates)=> dates._id === action.data.date);
-                 if(index>=0){
-                     duplicateState.activities[index].activities.push(action.data);
-                 } else{
-                     duplicateState.activities.push({
-                         _id:action.data.date,
-                         activities : [action.data]
+             } else{ // if state is empty
+                 if(action.data.length>1){
+                     //if repeated data is to be saved
+                     action.data.map((repeatedActivity) => {
+                         duplicateState.activities.push({
+                             _id : repeatedActivity.date,
+                             activities : [repeatedActivity]
+                         })
                      })
+                 }else{
+                     // if single data to be added
+                     duplicateState.activities = [{
+                         _id:action.data[0].date,
+                         activities : [action.data[0]]
+                     }]
                  }
-             } else{
-                    duplicateState.activities = [{
-                        _id:action.data.date,
-                        activities : [action.data]
-                    }]
+
              }
              console.log("data added in reducer is :",action.data,duplicateState);
              break;

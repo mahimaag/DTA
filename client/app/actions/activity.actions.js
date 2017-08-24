@@ -61,8 +61,6 @@ export const deleteActivity = (activityId) => {
             })
     }
 }
-
-
 export const updateActivities = (activityLog) => {
     console.log("************id in update*********",activityLog._id);
 
