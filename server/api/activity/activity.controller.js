@@ -56,7 +56,7 @@ export function getActivities(req, res) {
 }
 
 export function saveActivities(req, res) {
-    console.log("======actvity controller // saveActivities()=========");
+    console.log("======actvity controller // saveActivities()=========",req.body);
 
     Activity.create(req.body)
         .then(output => {

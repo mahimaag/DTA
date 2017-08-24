@@ -19,10 +19,11 @@ class Main extends React.Component {
         }
     }
 
-    // componentWillMount () {
-    //     // get events/activities from db
-    //     this.props.getActivities();
-    // }
+    componentWillMount () {
+        // get events/activities from db
+        this.props.getActivities();
+    }
+
 
     handleChange = (item) => {
         let itemList = [];
@@ -45,7 +46,7 @@ class Main extends React.Component {
             timeLogs.map((dates) => {
                 dates.activities.map((tasks) => {
                     events.push({
-                        title : `${tasks.duration} - ${tasks.activityType}`,
+                        title : `${tasks.hh} - ${tasks.activityType}`,
                         start: new Date(dates._id),
                         end:new Date(dates._id),
                         moreInfo :tasks

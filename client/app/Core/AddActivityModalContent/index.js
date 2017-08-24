@@ -28,13 +28,16 @@ class ModalContent extends Component{
         super(props);
         this.state = {
             showCalendar:false,
-            projectCategory:'Select',
-            projectName:'Select',
-            duration:'Select',
-            repeatedDates : [],
-            savedEvent:false,
+            // projectCategory:'Select',
+            activityType:'Select',
+            hh:'Select',
+            mm:'Select',
+            collaborators:[],
             description:'',
-            collaborators:[]
+            repeatActivity : [],
+            savedEvent:false,
+
+
         }
     }
 
@@ -47,7 +50,7 @@ class ModalContent extends Component{
         }
 
         this.setState({
-            repeatedDates:newRepeatedDates
+            repeatActivity:newRepeatedDates
         });
 
     } // todo : change color of selected slot
@@ -67,39 +70,41 @@ class ModalContent extends Component{
 
     saveEvent = (event) => {
         event.preventDefault();
-        if(this.state.duration === 'Select' || this.state.projectCategory === 'Select' || this.state.projectName==='Select'){
+        console.log("type is ",typeof (this.state.hh),typeof (this.state.mm))
+        if(this.state.hh === 'Select' || this.state.mm === 'Select' || this.state.activityType === 'Select'){
             alert("Fields cannot be empty")
         }else{
             let dated = getDate(this.props.message);
             let activityLog = {
-                //"employeeId":"2590",
-                "date":+ new Date(dated), //todo : send selected date timestamp
-                "activity":this.state.projectCategory,
-                "activityType":this.state.projectName,
-                "description":this.state.description,
+                "employeeId":2590,
+                "activityType":this.state.activityType,
                 "status":TimeEntryStatus.Pending,
-                "duration":this.state.duration,
-                "collaborators":this.state.collaborators
+                "hh":this.state.hh,
+                "mm":this.state.mm,
+                "collaborators":this.state.collaborators,
+                "description":this.state.description,
+                "date":+ new Date(dated),
+                "repeatActivity":this.state.repeatActivity
             };
 
-            this.props.postActivities(activityLog); // todo : dispatch(asyncAction(activityLog))
+            this.props.postActivities(activityLog);
 
             this.setState({
                 savedEvent:true,
 
             })
         }
-    }; // todo: save this new event in mongodb
+    };
 
     saveRepeat = (event) => {
         this.state.repeatedDates.map((item) => {
             events.push({
-                'title': this.state.duration +" " +this.state.projectName,
+                'title': this.state.hh+" " +this.state.activityType,
                 'start': item,
                 'end': item,
             })
         })
-    }; // todo : save the repeated event in mongodb
+    };
 
     onInputChange = (event) => {
         this.setState({
@@ -122,8 +127,8 @@ class ModalContent extends Component{
     render(){
         let newCollabArray = [2590,2591,2592,2593];
         let activityTitles = ['Westcon','Knowlegde Meet','Daily Time Analysis'];
-        let activityCategory = ['Project','Non-Project'];
-        let durationTime = ['30 mins','1 hr','2 hrs','3 hrs','4 hrs','5 hrs','6 hrs','7 hrs','8 hrs'];
+        let hour = [1,2,3,4,5,6,7,8];
+        let minutes = [10,20,30,40,50];
         return(
             <div>{
                 this.state.showCalendar ?
@@ -139,24 +144,24 @@ class ModalContent extends Component{
                     </div>:
                     <TsmsForm formClassName="add-activity">
                         <div>
-                            <FormGroup controlId="projectCategory">
+                            <FormGroup controlId="activityType">
                                 <ControlLabel>Activity:</ControlLabel>
-                                <Dropdown data={activityCategory}
-                                                 title={this.state.projectCategory}
-                                                 onSelect={(item) => this.setSelectedValue(item,'projectCategory')}
+                                <Dropdown data={activityTitles}
+                                                 title={this.state.activityType}
+                                                 onSelect={(item) => this.setSelectedValue(item,'activityType')}
                                 />
                             </FormGroup>
-                            <FormGroup controlId="projectName">
-                                <ControlLabel>Type:</ControlLabel>
-                                <Dropdown data={activityTitles}
-                                             title={this.state.projectName}
-                                             onSelect={(item) => this.setSelectedValue(item,'projectName')}/>
+                            <FormGroup controlId="hh">
+                                <ControlLabel>hh:</ControlLabel>
+                                <Dropdown data={hour}
+                                                 title={this.state.hh}
+                                                 onSelect={(item) => this.setSelectedValue(item,'hh')}/>
                             </FormGroup>
-                            <FormGroup controlId="duration">
-                                <ControlLabel>Duration:</ControlLabel>
-                                <Dropdown data={durationTime}
-                                                 title={this.state.duration}
-                                                 onSelect={(item) => this.setSelectedValue(item,'duration')}/>
+                            <FormGroup controlId="mm">
+                                <ControlLabel>mm:</ControlLabel>
+                                <Dropdown data={minutes}
+                                          title={this.state.mm}
+                                          onSelect={(item) => this.setSelectedValue(item,'mm')}/>
                             </FormGroup>
                             <FormGroup controlId="description">
                                 <ControlLabel>Description:</ControlLabel>

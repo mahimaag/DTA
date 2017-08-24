@@ -10,7 +10,7 @@ import TtnButton from 'core/Button/btn';
 import Dropdown from './../Dropdown'
 import TsmsForm from './../Form';
 import MultiSelectDropdown from './../MultiSelectDropDown'
-import {deleteActivity} from './../../actions/activity.actions'
+import {deleteActivity,updateActivities} from './../../actions/activity.actions'
 
 BigCalendar.setLocalizer(
     BigCalendar.momentLocalizer(moment)
@@ -21,8 +21,8 @@ class ModalContent extends Component {
         super(props);
         this.state = {
             edit: false,
-            duration:'',
-            activity:'',
+            hh:'',
+            mm:'',
             activityType:'',
             description:'',
             collaborators:[]
@@ -42,6 +42,18 @@ class ModalContent extends Component {
             edit: false
         })
     };
+
+    saveEditedEvent = (event) => {
+        event.preventDefault();
+        let updatedEvent = this.props.eventInfo.moreInfo;
+        updatedEvent.activityType = this.state.activityType || updatedEvent.activityType;
+        updatedEvent.hh = this.state.hh || updatedEvent.hh;
+        updatedEvent.mm = this.state.mm || updatedEvent.mm;
+        updatedEvent.description = this.state.description || updatedEvent.description;
+
+        console.log(updatedEvent);
+        this.props.updateActivities(updatedEvent);
+    }
 
     onInputChange = (event) => {
         this.setState({
@@ -74,10 +86,10 @@ class ModalContent extends Component {
     }
 
     render() {
-        let durationTime = ['30 mins','1 hr','2 hrs','3 hrs','4 hrs','5 hrs','6 hrs','7 hrs','8 hrs'];
+        let hour = [1,2 ,3,4,5,6,7 ,8 ];
+        let minutes = [10,20,30,40,50];
         let newCollabArray = [2590,2591,2592,2593];
         let activityTitles = ['Westcon','Knowlegde Meet','Daily Time Analysis'];
-        let activityCategory = ['Project','Non-Project'];
 
         return (
             <div>{
@@ -87,22 +99,22 @@ class ModalContent extends Component {
                             <div>
                                 <FormGroup controlId="projectCategory">
                                     <ControlLabel>Activity:</ControlLabel>
-                                    <Dropdown data={activityCategory}
-                                              title={this.state.activity || this.props.eventInfo.moreInfo.activity}
-                                              onSelect={(item) => this.setSelectedValue(item,'activity')}
-                                    />
-                                </FormGroup>
-                                <FormGroup controlId="projectName">
-                                    <ControlLabel>Type:</ControlLabel>
                                     <Dropdown data={activityTitles}
                                               title={this.state.activityType || this.props.eventInfo.moreInfo.activityType}
-                                              onSelect={(item) => this.setSelectedValue(item,'activityType')}/>
+                                              onSelect={(item) => this.setSelectedValue(item,'activityType')}
+                                    />
                                 </FormGroup>
-                                <FormGroup controlId="duration">
-                                    <ControlLabel>Duration:</ControlLabel>
-                                    <Dropdown data={durationTime}
-                                              title={this.state.duration || this.props.eventInfo.moreInfo.duration}
-                                              onSelect={(item) => this.setSelectedValue(item,'duration')}/>
+                                <FormGroup controlId="hh">
+                                    <ControlLabel>hh:</ControlLabel>
+                                    <Dropdown data={hour}
+                                              title={this.state.hh || this.props.eventInfo.moreInfo.hh}
+                                              onSelect={(item) => this.setSelectedValue(item,'hh')}/>
+                                </FormGroup>
+                                <FormGroup controlId="mm">
+                                    <ControlLabel>mm:</ControlLabel>
+                                    <Dropdown data={minutes}
+                                              title={this.state.mm || this.props.eventInfo.moreInfo.mm}
+                                              onSelect={(item) => this.setSelectedValue(item,'mm')}/>
                                 </FormGroup>
                                 <FormGroup controlId="description">
                                     <ControlLabel>Description:</ControlLabel>
@@ -119,7 +131,7 @@ class ModalContent extends Component {
                                 <TtnButton iconButton
                                            level="secondary"
                                            rounded icon ="glyphicon glyphicon-ok"
-                                />
+                                           onClick={this.saveEditedEvent}/>
                                 <TtnButton iconButton
                                            level="secondary"
                                            rounded icon ="glyphicon glyphicon-remove"
@@ -129,9 +141,9 @@ class ModalContent extends Component {
                         </TsmsForm>
                     </div> :
                     <div>
-                        <div>Activity : {this.props.eventInfo.moreInfo.activity}</div>
-                        <div>Type : {this.props.eventInfo.moreInfo.activityType}</div>
-                        <div>Duration : {this.props.eventInfo.moreInfo.duration}</div>
+                        <div>Activity : {this.props.eventInfo.moreInfo.activityType}</div>
+                        <div>hh : {this.props.eventInfo.moreInfo.hh}</div>
+                        <div>mm : {this.props.eventInfo.moreInfo.mm}</div>
                         <div>Description : {this.props.eventInfo.moreInfo.description}</div>
                         <div>Collaborators : {this.props.eventInfo.moreInfo.collaborators}</div>
                         <TtnButton iconButton
@@ -149,7 +161,8 @@ class ModalContent extends Component {
     }
 }
 const mapDispatchToProps = (dispatch) => ({
-    deleteActivity : (activityId) => {dispatch(deleteActivity(activityId))}
+    deleteActivity : (activityId) => {dispatch(deleteActivity(activityId))},
+    updateActivities : (activityLog) => {dispatch(updateActivities(activityLog))}
 });
 
 export default connect(null,mapDispatchToProps)(ModalContent);
