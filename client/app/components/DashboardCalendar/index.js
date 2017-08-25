@@ -5,6 +5,7 @@ import ModalComp from './../../Core/ModalComp'
 import ModalContent from './../../Core/AddActivityModalContent'
 import 'components/Calendar/style.css'
 import TtnButton from 'core/Button/btn';
+import {getDate} from './../../../utils/common'
 
 let customHeader = (props) => {
     return (
@@ -43,12 +44,11 @@ class CustomDateHeader extends Component{
                                 <TtnButton level="secondary" title="+" onClick = {this.showModal}/>
                                 <ModalComp modalShow={this.state.show}
                                            modalHide = {(e) => {this.close(e)}}
-                                           modalHeaderMsg={this.props.date.toString()}
+                                           modalHeaderMsg={"Add log on "+getDate(this.props.date).toString()}
                                            modalBody = {<ModalContent message={this.props.date} close={this.close}/>}
                                            modalFooterClose = {this.close}
                                            modalFooterText = 'Close'
                                 />
-
                             </div>:null
                     }
                 </span>

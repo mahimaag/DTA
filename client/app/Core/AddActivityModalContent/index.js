@@ -94,7 +94,7 @@ class ModalContent extends Component{
             let dated = getDate(this.props.message);
             let activityLog = {
                 "activityType":this.state.activityType,
-                "status":TimeEntryStatus.Pending,
+                "status":TimeEntryStatus.Submitted,
                 "hh":this.state.hh,
                 "mm":this.state.mm,
                 "collaborators":this.state.collaborators,
