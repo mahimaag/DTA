@@ -69,8 +69,10 @@ class Main extends React.Component {
                                            handleChange={(item) => this.handleChange(item)} searchedList={this.state.searchedList}
                                            valueGenerator={this.displayText} searchItem={(item) => this.searchItem(item)}
                                 />
+
                                 <DashboardCalendar
                                     events={events}/>
+
                                 <ActivityLog activityTimeLog={this.props.activity.activities}/>
                             </div>
                             <div className="col-md-3 pull-right">
