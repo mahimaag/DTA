@@ -78,12 +78,11 @@ class DashboardCalendar extends Component{
 
     render(){
         return(
-            <div className=" ibox-content wrapper-calendar">
-                <Calendar
-                    events={this.props.events}
-                    getComponents = {(props) => getComponents(props)}
-                />
-            </div>
+            <Calendar
+                events={this.props.events}
+                getComponents = {(props) => getComponents(props)}
+            />
+
         )
     }
 }

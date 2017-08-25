@@ -5,12 +5,11 @@ import {connect} from 'react-redux'
 import Dropdown from './../Dropdown'
 import {FormGroup, ControlLabel, FormControl} from 'react-bootstrap';
 
-import events from '../../config/events'
+import Tags from './../ReactTags'
 import TtnButton from './../Button/btn';
 import TsmsForm from './../Form';
 import {TimeEntryStatus} from './../../../constants/Index'
 import {postActivities} from './../../actions/activity.actions'
-import MultiSelectDropdown from '../../Core/MultiSelectDropDown'
 import {getDate} from './../../../utils/common'
 
 BigCalendar.setLocalizer(
@@ -77,9 +76,7 @@ class ModalContent extends Component{
             alert("Fields cannot be empty")
         }else{
             let dated = getDate(this.props.message);
-            console.log("**********",dated)
             let activityLog = {
-                "employeeId":2590,
                 "activityType":this.state.activityType,
                 "status":TimeEntryStatus.Pending,
                 "hh":this.state.hh,
@@ -103,23 +100,21 @@ class ModalContent extends Component{
         })
     };
 
-    onSelectedVal = (newCollab) => {
-        (this.state.collaborators.length && this.state.collaborators.indexOf(newCollab) > -1) ? null : this.state.collaborators.push(newCollab);
-        this.setState({collaborators: this.state.collaborators});
-    };
-
-    onDeleteCollab = (deletedVal) => {
-        this.state.collaborators.splice(this.state.collaborators.indexOf(deletedVal), 1);
+    getTags = (tags) => {
+        let empSet = new Set();
+        tags.forEach(obj => {
+            empSet.add(obj.id);
+        });
         this.setState({
-            collaborators: this.state.collaborators
-        })
+            collaborators: [...empSet]
+        });
     }
 
+
     render(){
-        let newCollabArray = [2590,2591,2592,2593];
         let activityTitles = ['Westcon','Knowlegde Meet','Daily Time Analysis'];
         let hour = [1,2,3,4,5,6,7,8];
-        let minutes = [10,20,30,40,50];
+        let minutes = [0,10,20,30,40,50];
         return(
             <div>{
                 this.state.showCalendar ?
@@ -159,12 +154,7 @@ class ModalContent extends Component{
                                 <FormControl type="text" label="Description" placeholder="Description" value={this.state.description} onChange={this.onInputChange} name="description"/>
                             </FormGroup>
                             <FormGroup controlId="collaborators">
-                                Collaborators: <MultiSelectDropdown collabArray = {newCollabArray}
-                                                                    newCollab = {this.state.collaborators}
-                                                                    title = 'Select'
-                                                                    onSelectedVal = {(newCollab) => {this.onSelectedVal(newCollab)}}
-                                                                    onDeleteCollab = {(deletedVal) => {this.onDeleteCollab(deletedVal)}}/>
-
+                                Collaborators: <Tags updateTag = {(tags) => {this.getTags(tags)}}/>
                             </FormGroup>
 
                             <TtnButton level = "primary"
