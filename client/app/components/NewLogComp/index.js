@@ -7,7 +7,7 @@ import { Row, Col } from 'react-bootstrap'
 import LogDropdown from '../../Core/Dropdown/index'
 //import { TSMS_IconButton } from './../../Core/Button'
 import {TimeEntryStatus} from '../../../constants/Index'
-import MultiSelectDropdown from '../../Core/MultiSelectDropDown'
+//import MultiSelectDropdown from '../../Core/MultiSelectDropDown'
 import TtnButton from 'core/Button/btn';
 import Tags from '../../Core/ReactTags'
 
@@ -39,7 +39,6 @@ class NewLogComp extends Component{
         else{
             let newLogObj = {
                 date: this.props.logDate,
-                // activity: this.state.newLogActivity,
                 activityType: this.state.newLogType,
                 hh: this.state.newLogHH,
                 mm:this.state.newLogMM,
@@ -54,7 +53,6 @@ class NewLogComp extends Component{
 
     onCloseClick = () => {
             this.setState({
-                // newLogActivity: 'Select',
                 newLogType: 'Select',
                 newLogHH: 'Select',
                 newLogMM: 'Select',

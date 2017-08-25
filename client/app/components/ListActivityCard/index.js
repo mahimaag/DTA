@@ -89,10 +89,12 @@ class ActivityLog extends Component{
     };
 
     clearAllLogs = (date) => {
-        this.props.deleteAllActivity(date);
         this.state.timeEnteries.map((entry) => entry.date === date ? this.state.timeEnteries.splice(this.state.timeEnteries.indexOf(date),1) : null);
+        this.props.deleteAllActivity(date);
         this.setState({
             timeEnteries:this.state.timeEnteries
+        },() => {
+            console.log('---------entries---------',this.state.timeEnteries);
         })
 
     };

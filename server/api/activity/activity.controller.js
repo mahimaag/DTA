@@ -174,16 +174,22 @@ export function deleteActivity(req, res) {
 }
 
 export function deleteActivityByEmp(req, res) {
-    console.log("======actvity controller // deleteActivityByEmp()=========", req.params.date);
+    console.log("======actvity controller // deleteActivityByEmp()=========", req.params.date,req.employeeId, typeof req.params.date,
+        typeof req.employeeId, parseInt(req.employeeId), parseInt(req.params.date));
 
-    if(req.params.hasOwnProperty("date") &&
-        typeof req.params.date === "string" &&
-        !isNaN(parseInt(req.params.date))) {
-
-        Activity.remove({employeeId: parseInt(req.params.id), date: parseInt(req.params.date)})
-            .then(genericRepo.respondWithResult(res))
+    if(req.params.hasOwnProperty("date")) {
+        console.log("------if-------------");
+        Activity.remove({employeeId: parseInt(req.employeeId), date: parseInt(req.params.date)})
+            .then(ressult => {
+                let response = {
+                    date: req.params.date
+                }
+                res.status(200).send(response);
+            })
             .catch(genericRepo.handleError(res));
+
     } else {
+        console.log("------else-------------");
         genericRepo.badInput(res, 500);
     }
 }

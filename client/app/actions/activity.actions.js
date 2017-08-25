@@ -95,26 +95,12 @@ export const deleteAllActivity = (date) => {
                     // fetch(AUTHORIZE_URL)
                 }
             }).then(data => {
-            dispatch({type:ActivityActions.DeleteActivity.Success, data:data})
+            dispatch({type:ActivityActions.DeleteAllActivity.Success, data:data})
         })
             .catch(error => {
-                dispatch({type:ActivityActions.DeleteActivity.Failure})
-            })
-        /*fetch(`/api/activity/employee/2592?date=${date}`,{
-            method:'delete',
-            headers:{
-                "Content-Type":"application/json",
-                "Accept":"application/json",
-            },
-            credentials: 'include'
-        })
-            .then(response => response.json())
-            .then((data) => {
-                dispatch ({type:ActivityActions.DeleteAllActivity.Success,data:data})
-            })
-            .catch((error) => {
                 dispatch({type:ActivityActions.DeleteAllActivity.Failure})
-            })*/
+            })
+
     }
 }
 
