@@ -63,22 +63,18 @@ class Main extends React.Component {
                 <div className="row">
                     <div className="col-lg-12">
                         <div className="text-center m-t-lg">
-                            <div className="col-lg-9 pull-left">
-
-                                <div className="col-lg-9 pull-left ">
-                                    <TypeAhead wrappedComponenent={ActivityAutoComplete} apiPath="apiPath"
-                                               icon={{name: "glyphicon glyphicon-search", position: 'place-right'}}
-                                               handleChange={(item) => this.handleChange(item)} searchedList={this.state.searchedList}
-                                               valueGenerator={this.displayText} searchItem={(item) => this.searchItem(item)}
-                                    />
-                                    <DashboardCalendar
-                                        events={events}/>
-
-                                    <ActivityLog activityTimeLog={this.props.activity.activities}/>
-                                </div>
-                                <div className="col-md-3 pull-right">
-                                    <NotificationCards/>
-                                </div>
+                            <div className="col-lg-9 pull-left ">
+                                <TypeAhead wrappedComponenent={ActivityAutoComplete} apiPath="apiPath"
+                                           icon={{name: "glyphicon glyphicon-search", position: 'place-right'}}
+                                           handleChange={(item) => this.handleChange(item)} searchedList={this.state.searchedList}
+                                           valueGenerator={this.displayText} searchItem={(item) => this.searchItem(item)}
+                                />
+                                <DashboardCalendar
+                                    events={events}/>
+                                <ActivityLog activityTimeLog={this.props.activity.activities}/>
+                            </div>
+                            <div className="col-md-3 pull-right">
+                                <NotificationCards/>
                             </div>
                         </div>
                     </div>

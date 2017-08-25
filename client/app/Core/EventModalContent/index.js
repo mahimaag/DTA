@@ -22,7 +22,7 @@ class ModalContent extends Component {
         this.state = {
             edit: false,
             hh:'',
-            mm:'',
+            mm:0,
             activityType:'',
             description:''
         }
@@ -88,7 +88,6 @@ class ModalContent extends Component {
     render() {
         let hour = [1,2 ,3,4,5,6,7 ,8 ];
         let minutes = [10,20,30,40,50];
-        let newCollabArray = [2590,2591,2592,2593];
         let activityTitles = ['Westcon','Knowlegde Meet','Daily Time Analysis'];
 
         return (

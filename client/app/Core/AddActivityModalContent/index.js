@@ -76,9 +76,7 @@ class ModalContent extends Component{
             alert("Fields cannot be empty")
         }else{
             let dated = getDate(this.props.message);
-            console.log("**********",dated)
             let activityLog = {
-                "employeeId":2590,
                 "activityType":this.state.activityType,
                 "status":TimeEntryStatus.Pending,
                 "hh":this.state.hh,
@@ -117,7 +115,7 @@ class ModalContent extends Component{
         let newCollabArray = [2590,2591,2592,2593];
         let activityTitles = ['Westcon','Knowlegde Meet','Daily Time Analysis'];
         let hour = [1,2,3,4,5,6,7,8];
-        let minutes = [10,20,30,40,50];
+        let minutes = [0,10,20,30,40,50];
         return(
             <div>{
                 this.state.showCalendar ?
