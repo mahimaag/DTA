@@ -29,11 +29,11 @@ const ActivitySchema = new mongoose.Schema({
         required: true
     },
     description: {
-        type: String,
-        default: "Submitted"
+        type: String
     },
     status: {
-        type: String
+        type: String,
+        default: "Submitted"
     },
     collaborators: {
         type: Array
@@ -49,6 +49,9 @@ const ActivitySchema = new mongoose.Schema({
     isProject: {
         type: Number,
         default: 1
+    },
+    taggedBy: {
+        type: String
     }
 }, {versionKey: false});
 
