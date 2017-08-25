@@ -9,7 +9,10 @@ import LogDropdown from '../../Core/Dropdown/index'
 import ActivityLogCollaborator from '../ActivityLogCollaborator'
 import MultiSelectDropdown from '../../Core/MultiSelectDropDown'
 import TtnButton from 'core/Button/btn';
-
+import DeleteModalContent from '../DeleteModalContent'
+import { deleteActivity } from '../../actions/activity.actions'
+import { connect } from 'react-redux';
+import ModalComp from '../../Core/ModalComp'
 
 
 class ActivityLogComp extends Component{
@@ -19,7 +22,8 @@ class ActivityLogComp extends Component{
         this.state = {
             editBtn: false,
             activity: logActivity,
-            newDesc: logActivity.Description,
+            newDesc: logActivity.description,
+            displayModal: false
         }
     }
 
@@ -38,15 +42,18 @@ class ActivityLogComp extends Component{
     };
 
     onEditDeleteClick = () => {
-        const activity = Object.assign({}, this.props.activity);
+        let activityLog = Object.assign({}, this.props.activity);
         this.setState({
             editBtn: false,
-            activity: activity
+            activity: activityLog
         });
     }
 
     onDeleteClick = (activity) => {
-        this.props.deleteEntry(activity);
+        this.setState({
+            displayModal: true
+        })
+        //this.props.deleteEntry(activity);
     }
 
 
@@ -60,6 +67,11 @@ class ActivityLogComp extends Component{
     onDescChange = (event) => {
         this.setState({
             newDesc: event.target.value
+        },() => {
+            this.state.activity.description = this.state.newDesc;
+            this.setState({
+                activity: this.state.activity
+            })
         });
     }
 
@@ -83,8 +95,23 @@ class ActivityLogComp extends Component{
         })
     };
 
+    onCloseModalClick = () => {
+        this.setState({
+            displayModal: false
+        })
+    }
+
+    deleteEntry = () => {
+        //console.log('activity to be deleted----',deletedEntry);
+        this.props.deleteActivity(this.state.activity._id);
+        this.setState({
+            displayModal: false
+        })
+    };
+
     render(){
-        //console.log('props in activity log comp',this.props);
+        console.log('props in activity log comp',this.props);
+        console.log('this.state.activity----',this.state.activity);
         const activityLog = this.props.activity;
         let activityTitles = ['Westcon','Knowlegde Meet','Daily Time Analysis'];
         let durationTimeHH = [1,2,3,4,5,6,7,8];
@@ -154,9 +181,9 @@ class ActivityLogComp extends Component{
                     </div>:
                     <div className="data-div">
                         <Row>
-                            <Col md={1} lg={1} className="log-col">
+                            {/*<Col md={1} lg={1} className="log-col">
                                 <span>{activityLog.activity}</span>
-                            </Col>
+                            </Col>*/}
                             <Col md={2} lg={2} className="log-col">
                                 <span>{activityLog.activityType}</span>
                             </Col>
@@ -191,11 +218,27 @@ class ActivityLogComp extends Component{
 
                     </div>
                 }
+
+                <ModalComp modalClassName = 'inmodal'
+                           modalShow = {this.state.displayModal}
+                           modalHide = {() => {this.onCloseModalClick()}}
+                           modalHeaderMsg = "Activity Deleted successfully"
+                           modalBody = {<DeleteModalContent deleteEntry={this.deleteEntry} onCloseModalClick={this.onCloseModalClick}/>}
+                           modalFooterClose = {() => {this.onCloseModalClick()}}
+                           modalFooterText = 'Close'
+                />
+
             </div>
         )
     }
 }
 
-export default ActivityLogComp;
+//export default ActivityLogComp;
 
+const mapDispatchToProps = (dispatch) => ({
+    deleteActivity : (activityId) => {dispatch(deleteActivity(activityId))},
+
+});
+
+export default connect(null, mapDispatchToProps)(ActivityLogComp);
 
