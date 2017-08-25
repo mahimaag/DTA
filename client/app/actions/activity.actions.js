@@ -71,7 +71,6 @@ export const updateActivities = (activityLog) => {
     }
 }
 
-
 export const deleteAllActivity = (date) => {
     return (dispatch) => {
         decoratedFetch(`/api/activity/employee/date/${date}`,{method:'delete'})

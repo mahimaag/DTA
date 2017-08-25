@@ -105,7 +105,7 @@ class NewLogComp extends Component{
                                      title = {this.state.newLogType}
                                      onSelect = {(item) => this.setSelectedValue(item, 'newLogType')}/>
                     </Col>
-                    <Col md = {2} lg = {2} className = "log-col">
+                    <Col md = {3} lg = {3} className = "log-col">
                         <LogDropdown className = 'duration'
                                      data = {durationTimeHH}
                                      title = {this.state.newLogHH}
@@ -124,7 +124,7 @@ class NewLogComp extends Component{
                     <Col md = {1} lg = {1} className = "log-col">
                         <span>{this.state.newLogStatus}</span>
                     </Col>
-                    <Col md = {2} lg = {2} lgOffset = {1} className = "log-col">
+                    <Col md = {2} lg = {2} className = "log-col">
                         <TtnButton iconButton
                                    level = "secondary"
                                    rounded icon = "glyphicon glyphicon-ok"
@@ -143,6 +143,8 @@ class NewLogComp extends Component{
 
 
                     </Col>
+                </Row>
+                <Row>
                     <Col md = {12} lg = {12} className = "log-col">
                         {/*Collaborators: <MultiSelectDropdown collabArray = {newCollabArray}
                                                             newCollab = {this.state.newCollaborators}
