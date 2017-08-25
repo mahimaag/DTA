@@ -29,6 +29,9 @@ export function getActivities(req, res) {
                 date: {
                     $lte: lastDate, // last date of current month
                     $gte: firstDate // first date of current month
+                },
+                status: {
+                    $nin: ["Draft"]
                 }
             }
         },
