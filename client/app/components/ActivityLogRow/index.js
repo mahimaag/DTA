@@ -19,7 +19,7 @@ class ActivityLogRow extends Component{
                 {
                     this.props.timeLog.map((item, index) => {
                         return (
-                            <div key={index} className = "activity-timelog">
+                            <div key={index} className = "col-md-12 activity-timelog">
                                 <ActivityLogHeader logDate = {item._id}
                                                    activities = {item.activities}
                                                    onLogTimeClick = {() => this.props.logItem(item._id)}

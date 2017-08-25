@@ -9,7 +9,7 @@ import LogDropdown from '../../Core/Dropdown/index'
 import ActivityLogCollaborator from '../ActivityLogCollaborator'
 import MultiSelectDropdown from '../../Core/MultiSelectDropDown'
 import TtnButton from 'core/Button/btn';
-import DeleteModalContent from '../DeleteModalContent'
+import DeleteModal from '../../Core/DeleteModal'
 import { deleteActivity } from '../../actions/activity.actions'
 import { connect } from 'react-redux';
 import ModalComp from '../../Core/ModalComp'
@@ -110,8 +110,8 @@ class ActivityLogComp extends Component{
     };
 
     render(){
-        console.log('props in activity log comp',this.props);
-        console.log('this.state.activity----',this.state.activity);
+        // console.log('props in activity log comp',this.props);
+        // console.log('this.state.activity----',this.state.activity);
         const activityLog = this.props.activity;
         let activityTitles = ['Westcon','Knowlegde Meet','Daily Time Analysis'];
         let durationTimeHH = [1,2,3,4,5,6,7,8];
@@ -133,7 +133,7 @@ class ActivityLogComp extends Component{
                                              title={this.state.activity.activityType}
                                              onSelect={(item) => this.setSelectedValue(item, 'activityType')}/>
                             </Col>
-                            <Col md={2} lg={2} className="log-col">
+                            <Col md={3} lg={3} className="log-col">
                                 <LogDropdown className="duration"
                                              title={this.state.activity.hh}
                                              data={durationTimeHH}
@@ -151,7 +151,7 @@ class ActivityLogComp extends Component{
                             <Col md={1} lg={1} className="log-col">
                                 <span>{this.state.activity.status}</span>
                             </Col>
-                            <Col md={2} lg={2} lgOffset={1} className="log-col">
+                            <Col md={2} lg={2} className="log-col">
                                 <TtnButton iconButton
                                            level = "primary"
                                            rounded icon = "glyphicon glyphicon-ok"
@@ -163,6 +163,8 @@ class ActivityLogComp extends Component{
                                            onClick = {() => this.onEditDeleteClick()}/>
 
                             </Col>
+                        </Row>
+                        <Row>
                             {/*<Col md={12} lg={12} className = "log-col">
                                 <MultiSelectDropdown collabArray = {newCollabArray}
                                                      newCollab = {this.state.activity.collaborators}
@@ -187,7 +189,7 @@ class ActivityLogComp extends Component{
                             <Col md={2} lg={2} className="log-col">
                                 <span>{activityLog.activityType}</span>
                             </Col>
-                            <Col md={1} lg={1} className="log-col">
+                            <Col md={3} lg={3} className="log-col">
                                 <span>{activityLog.hh}</span>hrs
                                 <span>{activityLog.mm}</span>mins
                             </Col>
@@ -197,7 +199,7 @@ class ActivityLogComp extends Component{
                             <Col md={1} lg={1} className="log-col">
                                 <span>{activityLog.status}</span>
                             </Col>
-                            <Col md={2} lg={2} lgOffset={1} className="log-col">
+                            <Col md={2} lg={2} className="log-col">
 
                                 <TtnButton iconButton
                                            level = "primary"
@@ -211,6 +213,8 @@ class ActivityLogComp extends Component{
 
 
                             </Col>
+                        </Row>
+                        <Row>
                             <Col md={12} lg={12} className="log-col">
                                 {(activityLog.collaborators && activityLog.collaborators.length > 0) ? <ActivityLogCollaborator collaborators={activityLog.collaborators}/> : null }
                             </Col>
@@ -223,7 +227,7 @@ class ActivityLogComp extends Component{
                            modalShow = {this.state.displayModal}
                            modalHide = {() => {this.onCloseModalClick()}}
                            modalHeaderMsg = "Activity Deleted successfully"
-                           modalBody = {<DeleteModalContent deleteEntry={this.deleteEntry} onCloseModalClick={this.onCloseModalClick}/>}
+                           modalBody = {<DeleteModal deleteActivity={this.deleteEntry} close={this.onCloseModalClick}/>}
                            modalFooterClose = {() => {this.onCloseModalClick()}}
                            modalFooterText = 'Close'
                 />
