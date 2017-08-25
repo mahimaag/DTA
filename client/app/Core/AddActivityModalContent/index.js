@@ -16,11 +16,6 @@ BigCalendar.setLocalizer(
     BigCalendar.momentLocalizer(moment)
 );
 
-let newEvents = [{
-    title:'',
-    start:new Date(),
-    end:new Date()
-}];
 
 class ModalContent extends Component{
     constructor(props){
@@ -33,23 +28,44 @@ class ModalContent extends Component{
             collaborators:[],
             description:'',
             repeatActivity : [],
+            events:[{
+                "title":'',
+                "start":new Date(),
+                "end":new Date()
+            }]
         }
     }
-    selectSlot(slot) {
-        console.log("selected date is ",slot.start)
-        let newRepeatedDates = this.state.repeatActivity;
-        if(newRepeatedDates.indexOf(+new Date(getDate(slot.start)))>=0){
-            newRepeatedDates.splice((newRepeatedDates.indexOf(+new Date(getDate(slot.start)))),1)
-        }else{
-            newRepeatedDates.push(+new Date(getDate(slot.start)));
+
+   selectSlot(slot) {
+        if( JSON.stringify(slot.start) === JSON.stringify(this.props.message)){
+            alert("Sorry...You cannot repeat event on same date")
+        } else{
+            let newRepeatedDates = this.state.repeatActivity;
+            let newevents = this.state.events;
+
+            if(newRepeatedDates.indexOf(+new Date(getDate(slot.start)))>=0){
+                newRepeatedDates.splice((newRepeatedDates.indexOf(+new Date(getDate(slot.start)))),1)
+                newevents.map((item,index) => {
+                    if(item.start===getDate(slot.start)&&item.end===getDate(slot.start)){
+                        newevents.splice(index,1)
+                    }
+                })
+            }else{
+                newRepeatedDates.push(+new Date(getDate(slot.start)));
+                newevents.push({
+                    "title":"done",
+                    "start":getDate(slot.start),
+                    "end":getDate(slot.start)
+                })
+            }
+
+            this.setState({
+                repeatActivity:newRepeatedDates,
+                events:newevents
+            },()=>{
+                console.log(this.state.repeatActivity)
+            });
         }
-
-        this.setState({
-            repeatActivity:newRepeatedDates
-        },()=>{
-            console.log(this.state.repeatActivity)
-        });
-
     } // todo : change color of selected slot
 
     setSelectedValue = (item, property) => {
@@ -118,10 +134,10 @@ class ModalContent extends Component{
         return(
             <div>{
                 this.state.showCalendar ?
-                    <div className="wrapper-calendar">
+                    <div className="repeatedCalendar">
                         <BigCalendar
                             selectable
-                            events={newEvents}
+                            events={this.state.events}
                             views={['month']}
                             toolbar={false}
                             onSelectSlot = { (slot) => this.selectSlot(slot)}
