@@ -17,7 +17,6 @@ function TokenNotExistError () {
  */
 const getFetchOptions = (options = defaultOption) => {
     //_.merge(defaultOption,options);
-    console.log("helloo");
     let token;
     const tokenString = document.cookie.split(';').find( (cookie) => cookie.includes('Tsms') );
     if(!tokenString){
@@ -62,7 +61,6 @@ export  function decoratedFetch (url, customOptions) {
         apiConfig = getFetchOptions(customOptions);
     }catch(e){
         if(e.code=='TOKEN_NOT_EXIST'){
-            console.log("inside catch------------");
             axios({
                 url:"/authFail",
                 method:'get',
@@ -72,8 +70,6 @@ export  function decoratedFetch (url, customOptions) {
             // todo: log error...
         }
     }
-
-    console.log("apiconfig---------",apiConfig);
     return fetch(url, apiConfig);}
 
 
