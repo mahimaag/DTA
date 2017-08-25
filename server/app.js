@@ -13,6 +13,8 @@ mongoose.Promise = Promise;
 import config from './config/environment';
 import seedDatabaseIfNeeded from './config/seed';
 import logger from './components/logger';
+
+
 // Connect to MongoDB
 mongoose.connect(config.mongo.uri, config.mongo.options);
 mongoose.connection.on('error', function(err) {
@@ -24,6 +26,7 @@ mongoose.connection.on('error', function(err) {
 // Setup server
 const app = express();
 require('./config/express').default(app);
+
 require('./routes').default(app);
 
 
