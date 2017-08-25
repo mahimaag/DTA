@@ -11,6 +11,8 @@ import Dropdown from './../Dropdown'
 import TsmsForm from './../Form';
 import MultiSelectDropdown from './../MultiSelectDropDown'
 import {deleteActivity,updateActivities} from './../../actions/activity.actions'
+import ModalComp from './../ModalComp'
+import DeleteModal from './../DeleteModal'
 
 BigCalendar.setLocalizer(
     BigCalendar.momentLocalizer(moment)
@@ -24,7 +26,9 @@ class ModalContent extends Component {
             hh:'',
             mm:0,
             activityType:'',
-            description:''
+            description:'',
+            collaborators:[],
+            deleteModal:false
         }
     }
 
@@ -63,8 +67,9 @@ class ModalContent extends Component {
 
     deleteEvent = (event) => {
         event.preventDefault();
-        console.log("Delete :",this.props.eventInfo);
-        this.props.deleteActivity(this.props.eventInfo.moreInfo._id)
+        this.setState({
+            deleteModal : true
+        })
     };
 
     setSelectedValue = (item, property) => {
@@ -83,7 +88,20 @@ class ModalContent extends Component {
         this.setState({
             collaborators: this.state.collaborators
         })
-    }
+    };
+
+    close = () => {
+        this.setState({deleteModal: false})
+    };
+
+    deleteEventDone = () => {
+        console.log("Delete :",this.props.eventInfo);
+        this.props.deleteActivity(this.props.eventInfo.moreInfo._id)
+        this.setState({
+            deleteModal:false
+        })
+        this.props.closeCalendar();
+    };
 
     render() {
         let hour = [1,2 ,3,4,5,6,7 ,8 ];
@@ -149,6 +167,13 @@ class ModalContent extends Component {
                                    onClick={this.deleteEvent}/>
                     </div>
             }
+                <ModalComp modalShow={this.state.deleteModal}
+                           modalHide = {(e) => {this.close(e)}}
+                           modalHeaderMsg='Delete Activity'
+                           modalBody = {<DeleteModal message={this.props.date} deleteActivity={this.deleteEventDone} close={this.close}/>}
+                           modalFooterClose = {this.close}
+                           modalFooterText = 'Close'
+                />
             </div>
         )
     }
