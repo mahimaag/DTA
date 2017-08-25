@@ -18,5 +18,10 @@ export const ActivityActions = {
         Success: 'Activity.DeleteActivities.Success',
         Failure: 'Activity.DeleteActivities.Failure',
         Start: 'Activity.DeleteActivities.Start'
+    },
+    DeleteAllActivity : {
+        Success: 'Activity.DeleteAllActivities.Success',
+        Failure: 'Activity.DeleteAllActivities.Failure',
+        Start: 'Activity.DeleteAllActivities.Start'
     }
 };

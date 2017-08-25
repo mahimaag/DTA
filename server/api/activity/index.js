@@ -15,7 +15,7 @@ router.get(
 router.post(
     "/employee",
     service.addEmployeeId,
-    controller.save
+    controller.saveActivities
 );
 
 router.put(
@@ -31,7 +31,7 @@ router.delete(
 );
 
 router.delete(
-    "/employee/:id",
+    "/employee/date/:date",
     service.validateEmpId,
     controller.deleteActivityByEmp
 );

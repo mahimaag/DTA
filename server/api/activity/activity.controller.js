@@ -53,10 +53,9 @@ export function getActivities(req, res) {
         .catch(genericRepo.handleError(res));
 }
 
-export function save(req, res) {
-    console.log("======actvity controller // save()=========");
-    console.log("body---------",req.body)
-
+export function saveActivities(req, res) {
+    console.log("======actvity controller // saveActivities()=========");
+    let response = [];
     Activity.create(req.body)
         .then(output => {
 
@@ -73,12 +72,18 @@ export function save(req, res) {
                 repeatActivity(req)
                     .then(result => {
                         if(result) {
+                            response = result.concat(output);
                             console.log("activity repeated successfully..");
+                            console.log("final response==>>>", response);
+                            res.status(200).json(response).end();
                         }
                     });
+            } else {
+                response.push(output);
+                console.log("final else response==>>>", response);
+                res.status(200).json(response).end();
             }
 
-            res.status(200).json(output).end();
         })
         .catch(genericRepo.handleError(res));
 }
@@ -113,7 +118,8 @@ function addCollaborators(req) {
 
 function repeatActivity(req) {
     let defered = Q.defer(),
-        dates = req.body.repeatActivity;
+        dates = req.body.repeatActivity,
+        output = [];
 
     dates.forEach((date, index)=> {
         req.body.date = date
@@ -123,15 +129,15 @@ function repeatActivity(req) {
         Activity.create(req.body)
             .then(result => {
                 console.log("repeated activity cloned..", result);
+                output.push(result);
+                if(index === dates.length - 1) {
+                    console.log("========promise resolve=====>>>", index, dates.length);
+                    defered.resolve(output);
+                }
             })
             .catch(err => {
                 defered.reject(err);
             });
-
-        if(index === dates.length - 1) {
-            defered.resolve(true);
-        }
-
     });
 
     return defered.promise;
@@ -168,17 +174,22 @@ export function deleteActivity(req, res) {
 }
 
 export function deleteActivityByEmp(req, res) {
-    console.log("======actvity controller // deleteActivityByEmp()=========", req.query.date, req.params.id);
+    console.log("======actvity controller // deleteActivityByEmp()=========", req.params.date,req.employeeId, typeof req.params.date,
+        typeof req.employeeId, parseInt(req.employeeId), parseInt(req.params.date));
 
-    if(req.query.hasOwnProperty("date") &&
-        typeof req.query.date === "string" &&
-        !isNaN(parseInt(req.query.date))) {
-
-        Activity.remove({employeeId: parseInt(req.params.id), date: parseInt(req.query.date)})
-            .then(genericRepo.respondWithResult(res))
+    if(req.params.hasOwnProperty("date")) {
+        console.log("------if-------------");
+        Activity.remove({employeeId: parseInt(req.employeeId), date: parseInt(req.params.date)})
+            .then(ressult => {
+                let response = {
+                    date: req.params.date
+                }
+                res.status(200).send(response);
+            })
             .catch(genericRepo.handleError(res));
+
     } else {
+        console.log("------else-------------");
         genericRepo.badInput(res, 500);
     }
 }
-

@@ -27,8 +27,8 @@ class CustomDateHeader extends Component{
         this.setState({show: true});
     };
 
-    close = (e) => {
-        e.preventDefault();
+    close = () => {
+        // e.preventDefault();
         this.setState({show: false})
     };
 
@@ -44,8 +44,8 @@ class CustomDateHeader extends Component{
                                 <ModalComp modalShow={this.state.show}
                                            modalHide = {(e) => {this.close(e)}}
                                            modalHeaderMsg={this.props.date.toString()}
-                                           modalBody = {<ModalContent message={this.props.date}/>}
-                                           modalFooterClose = {(e) => {this.close(e)}}
+                                           modalBody = {<ModalContent message={this.props.date} close={this.close}/>}
+                                           modalFooterClose = {this.close}
                                            modalFooterText = 'Close'
                                 />
 
