@@ -115,20 +115,20 @@ class ModalContent extends Component {
                         <TsmsForm formClassName="add-activity">
                             <div>
                                 <FormGroup controlId="projectCategory">
-                                    <ControlLabel>Activity:</ControlLabel>
+                                    <ControlLabel>Activity Type:*</ControlLabel>
                                     <Dropdown data={activityTitles}
                                               title={this.state.activityType || this.props.eventInfo.moreInfo.activityType}
                                               onSelect={(item) => this.setSelectedValue(item,'activityType')}
                                     />
                                 </FormGroup>
                                 <FormGroup controlId="hh">
-                                    <ControlLabel>hh:</ControlLabel>
+                                    <ControlLabel>hh:*</ControlLabel>
                                     <Dropdown data={hour}
                                               title={this.state.hh || this.props.eventInfo.moreInfo.hh}
                                               onSelect={(item) => this.setSelectedValue(item,'hh')}/>
                                 </FormGroup>
                                 <FormGroup controlId="mm">
-                                    <ControlLabel>mm:</ControlLabel>
+                                    <ControlLabel>mm:*</ControlLabel>
                                     <Dropdown data={minutes}
                                               title={this.state.mm || this.props.eventInfo.moreInfo.mm}
                                               onSelect={(item) => this.setSelectedValue(item,'mm')}/>

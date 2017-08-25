@@ -112,7 +112,6 @@ class ModalContent extends Component{
 
 
     render(){
-        let newCollabArray = [2590,2591,2592,2593];
         let activityTitles = ['Westcon','Knowlegde Meet','Daily Time Analysis'];
         let hour = [1,2,3,4,5,6,7,8];
         let minutes = [0,10,20,30,40,50];
