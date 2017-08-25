@@ -11,12 +11,17 @@ import redirectUrlFunction from "./components/auth/redirectUrl";
 import logout from "./components/auth/logout";
 import express from 'express';
 import cors from "cors";
+const AUTHORIZE_URL = "http://newers-world-oauth.qa2.tothenew.net/oauth/authorize?client_id=e6d6a83e-6c7a-11e7-9394-406186be844b";
 export default function (app) {
     //middlewares
     const indexFile = path.join(app.get('appPath'), 'client', 'assests', 'index.html');
     const distFolder = path.join(app.get('appPath'), 'dist');
-    app.use(authMiddlewares);
     app.use(cors());
+    app.use('/authFail', (req,res) => {
+        res.redirect(AUTHORIZE_URL)
+    });
+    app.use(authMiddlewares);
+
     app.use(express.static(indexFile));
     app.use(express.static(distFolder));
     app.use('/api/employees', require('./api/employee'));
