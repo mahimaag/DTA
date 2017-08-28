@@ -19,7 +19,7 @@ class ActivityLogHeader extends Component{
             totalMins=totalMins+activity.mm;
             while(totalMins > 60){
                 totalHours=totalHours+1;
-                totalMins = totalMins-60
+                totalMins = totalMins-60;
             }
         })
         let date = new Date(this.props.logDate);
@@ -31,10 +31,10 @@ class ActivityLogHeader extends Component{
                     <span className = "log-date-day">{formattedDate}</span>
                     <span className = "log-date-day">{logDay}</span>
                 </Col>
-                <Col md = {1} lg = {1} lgOffset = {1} className = "log-col">
+                <Col md = {2} lg = {2} lgOffset = {1} className = "log-col">
                     <span>{totalHours}Hrs {totalMins}Mins</span>
                 </Col>
-                <Col md = {4} lg = {4} lgOffset = {4} className = "log-col">
+                <Col md = {4} lg = {4} lgOffset = {3} className = "log-col">
                     <TtnButton bClassName = "log-clear-button"
                                level = "primary"
                                title = "Log Time"

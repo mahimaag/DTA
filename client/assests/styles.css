@@ -699,8 +699,16 @@ button.rbc-input::-moz-focus-inner {
 }
 
 .log-col {
-  text-align: center;
     border:none;
+}
+
+.new-collab {
+  text-align: left;
+  display: inline-flex;
+}
+
+.log-col .time-hhmm {
+  display: -webkit-box;
 }
 
 .icon-buttons {

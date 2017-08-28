@@ -44,9 +44,9 @@ class ActivityLog extends Component{
             }
         });
         this.props.postActivities(newTimeLog);
-        this.setState({
+        /*this.setState({
             timeEnteries: this.state.timeEnteries
-        })
+        })*/
     };
 
     addNewLog = (logDate) => {
@@ -114,7 +114,7 @@ class ActivityLog extends Component{
     }*/
 
     render(){
-        // console.log('------------------props in list view--------------',this.props.activityTimeLog);
+        console.log('------------------props in list view--------------',this.props.activityTimeLog,this.state.timeEnteries);
         return(
             <div className="col-md-12 activity-list-comp">
                 <Row className="show-grid log-header">

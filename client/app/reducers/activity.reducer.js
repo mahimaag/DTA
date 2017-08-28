@@ -33,7 +33,7 @@ const ActivityReducer = (state = initialState, action) => {
                              duplicateState.activities[index3].activities.push(repeatedDateActivity);
                          }else{
                              duplicateState.activities.push({
-                                 _id:repeatedDateActivity.date,
+                                 _id: repeatedDateActivity.date,
                                  activities : [repeatedDateActivity]
                              })
                          }
@@ -111,18 +111,18 @@ const ActivityReducer = (state = initialState, action) => {
 
 
         case ActivityActions.DeleteAllActivity.Success:
-            console.log('deleting all activities...***************',action.data.date,duplicateState.activities[1]._id);
+            // console.log('deleting all activities...***************',action.data.date,duplicateState.activities[1]._id);
             let date = parseInt(action.data.date);
             console.log('types--------->>>>>>>',typeof(date),typeof(duplicateState.activities[1]._id));
             if(duplicateState && duplicateState.activities.length>0) {
                 let index = duplicateState.activities.findIndex((dates) => dates._id === date);
-                console.log('&&&&&&&&&&&&&&&&',index);
+                //console.log('&&&&&&&&&&&&&&&&',index);
                 if (index >= 0) {
                     duplicateState.activities.splice(index, 1);
                     console.log('date deleted!!!!!!!!!!!!');
                 }
             }
-            console.log('data after deletion',duplicateState.activities);
+            //console.log('data after deletion',duplicateState.activities);
             break;
 
         default:

@@ -13,6 +13,7 @@ import DeleteModal from '../../Core/DeleteModal'
 import { deleteActivity } from '../../actions/activity.actions'
 import { connect } from 'react-redux';
 import ModalComp from '../../Core/ModalComp'
+import _ from 'lodash'
 
 
 class ActivityLogComp extends Component{
@@ -23,7 +24,8 @@ class ActivityLogComp extends Component{
             editBtn: false,
             activity: logActivity,
             newDesc: logActivity.description,
-            displayModal: false
+            displayModal: false,
+            deleteComp: false
         }
     }
 
@@ -102,16 +104,40 @@ class ActivityLogComp extends Component{
     }
 
     deleteEntry = () => {
-        //console.log('activity to be deleted----',deletedEntry);
+        /*this.props.timeLog.map((dates) => {
+            if(dates._id === this.props.date) {
+                let activityArrayLen = dates.activities.length;
+                console.log('length--------------',activityArrayLen);
+                if (activityArrayLen === 1) {
+                    console.log('last activity being deleted.........');
+                    this.props.deleteActivity(this.state.activity._id);
+                    this.setState({
+                        displayModal: false,
+                        deleteComp : true
+                    },() => {
+                        console.log('this.state.deleteComp------------',this.state.deleteComp);
+                    })
+                }
+                else{
+                    console.log('activity deleted.... but some are left on same date....');
+                    this.props.deleteActivity(this.state.activity._id);
+                    this.setState({
+                        displayModal: false,
+                    })
+                }
+            }
+        })*/
         this.props.deleteActivity(this.state.activity._id);
         this.setState({
-            displayModal: false
+            displayModal: false,
         })
     };
 
+
     render(){
         // console.log('props in activity log comp',this.props);
-        // console.log('this.state.activity----',this.state.activity);
+        console.log('this.state.activity----',this.state.activity);
+        //console.log('deleteComp----------->>>>>>>>>',this.state.deleteComp);
         const activityLog = this.props.activity;
         let activityTitles = ['Westcon','Knowlegde Meet','Daily Time Analysis'];
         let durationTimeHH = [1,2,3,4,5,6,7,8];
@@ -184,8 +210,8 @@ class ActivityLogComp extends Component{
                     <div className="data-div">
                         <Row>
                             {/*<Col md={1} lg={1} className="log-col">
-                                <span>{activityLog.activity}</span>
-                            </Col>*/}
+                             <span>{activityLog.activity}</span>
+                             </Col>*/}
                             <Col md={2} lg={2} className="log-col">
                                 <span>{activityLog.activityType}</span>
                             </Col>
