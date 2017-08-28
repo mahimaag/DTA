@@ -127,7 +127,7 @@ class Calendar extends Component {
                     events={this.props.events}
                     popup
                     views={['month']}
-                    messages={msg}
+                    messages={ msg }
                     components={this.props.getComponents(this.props) || this.defaultComponent(this.props)}
                     onSelectSlot = { (slot) => this.onselectSlot(slot)}
                     onSelectEvent={(event) => this.onselectEvent(event)}
