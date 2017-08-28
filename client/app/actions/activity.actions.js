@@ -36,6 +36,7 @@ export const getActivities = (currentMonth) => {
     }
 };
 export const deleteActivity = (activityId) => {
+    console.log('id of activity**************',activityId);
     return (dispatch) => {
         decoratedFetch(`/api/activity/${activityId}`,{method:'delete'})
             .then(response => {
