@@ -23,8 +23,7 @@ class ActivityLogRow extends Component{
                                     <div key={index} className = "col-md-12 activity-timelog">
                                         <ActivityLogHeader logDate = {item._id}
                                                            activities = {item.activities}
-                                                           onLogTimeClick = {() => this.props.logItem(item._id)}
-                                                           onClearClick = {() => this.props.onClearClick(item._id)}/>
+                                                           onLogTimeClick = {() => this.props.logItem(item._id)}/>
                                         <Row className = "show-grid">
                                             {item.activities.map((activity, index) => {
                                                 return ((activity.status == TimeEntryStatus.New) ? <NewLogComp logDate = {item._id}

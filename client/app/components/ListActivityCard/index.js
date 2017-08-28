@@ -9,7 +9,6 @@ import SampleData from './../../../assests/SampleData'
 import { TimeEntryStatus, HeadingArray } from './../../../constants/Index'
 import './style.css'
 import ModalComp from '../../Core/ModalComp'
-//import DeleteModalContent from '../DeleteModalContent'
 import {postActivities, updateActivities, deleteActivity, deleteAllActivity} from '../../actions/activity.actions'
 import { connect } from 'react-redux';
 import _ from 'lodash';
@@ -44,9 +43,6 @@ class ActivityLog extends Component{
             }
         });
         this.props.postActivities(newTimeLog);
-        /*this.setState({
-            timeEnteries: this.state.timeEnteries
-        })*/
     };
 
     addNewLog = (logDate) => {
@@ -88,7 +84,7 @@ class ActivityLog extends Component{
         })
     };*/
 
-    clearAllLogs = (date) => {
+    /*clearAllLogs = (date) => {
         this.state.timeEnteries.map((entry) => entry.date === date ? this.state.timeEnteries.splice(this.state.timeEnteries.indexOf(date),1) : null);
         this.props.deleteAllActivity(date);
         this.setState({
@@ -97,7 +93,7 @@ class ActivityLog extends Component{
             console.log('---------entries---------',this.state.timeEnteries);
         })
 
-    };
+    };*/
 
     closedWithoutCreate = (logDate) => {
         this.state.timeEnteries.map((entry) => entry._id === logDate ? (
@@ -129,7 +125,7 @@ class ActivityLog extends Component{
                 <ActivityLogRow timeLog={this.state.timeEnteries}
                                 logItem={(logDate) => this.addNewLog(logDate)}
                                 newEntry={(newTimeLog,date) => {this.newEntry(newTimeLog,date)}}
-                                onClearClick={(date) => {this.clearAllLogs(date)}}
+                                //onClearClick={(date) => {this.clearAllLogs(date)}}
                                 edittedLog={(editItem,date) => {this.edittedLog(editItem,date)}}
                                 //deleteEntry={(deletedEntry,logDate) => {this.deleteEntry(deletedEntry,logDate)}}
                                 closedWithoutCreate={(logDate) => {this.closedWithoutCreate(logDate)}}/>
@@ -151,7 +147,7 @@ const mapDispatchToProps = (dispatch) => ({
     postActivities : (childItem) => {dispatch(postActivities(childItem))},
     updateActivities : (childItem) => {dispatch(updateActivities(childItem))},
     //deleteActivity : (activityId) => {dispatch(deleteActivity(activityId))},
-    deleteAllActivity : (date) => {dispatch(deleteAllActivity(date))}
+    //deleteAllActivity : (date) => {dispatch(deleteAllActivity(date))}
 
 });
 
@@ -169,12 +165,9 @@ export default connect(null, mapDispatchToProps)(ActivityLog);
  modalFooterText = 'Close'
  />*/
 
-//entry.activities.splice(entry.activities.indexOf(deletedEntry),1)
-
 /*componentWillReceiveProps(newProps) {
  this.setState({
  timeEnteries: newProps.activityTimeLog.slice()
  },() => {console.log(`${tag}[cwrp]state in list card-----`,this.state.timeEnteries)})
  }*/
 
-//entry.activities = []
