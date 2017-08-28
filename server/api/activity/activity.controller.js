@@ -57,7 +57,7 @@ export function getActivities(req, res) {
 }
 
 export function saveActivities(req, res) {
-    console.log("======actvity controller // saveActivities()=========");
+    console.log("======actvity controller // saveActivities()=========", req.body);
     let response = [];
     Activity.create(req.body)
         .then(output => {
@@ -93,18 +93,17 @@ export function saveActivities(req, res) {
 
 function addCollaborators(req) {
     let defered = Q.defer(),
-        collaborators = req.body.collaborators;
+        collaborators = req.body.collaborators,
+        body = Object.assign({}, req.body);
 
     collaborators.forEach((item, index)=> {
-        req.body.employeeId = item;
-        req.body.status = "Draft";
-        req.body.collaborators = [];
+        body.employeeId = item;
+        body.status = "Draft";
+        body.taggedBy = req.employeeId;
 
-        console.log("=======req.body=====", req.body);
-
-        Activity.create(req.body)
+        Activity.create(body)
             .then(result => {
-                console.log("activity cloned..", result);
+                console.log("activity cloned.......", result);
             })
             .catch(err => {
                 defered.reject(err);
@@ -122,19 +121,17 @@ function addCollaborators(req) {
 function repeatActivity(req) {
     let defered = Q.defer(),
         dates = req.body.repeatActivity,
-        output = [];
+        output = [],
+        body = Object.assign({}, req.body);
 
     dates.forEach((date, index)=> {
-        req.body.date = date
+        body.date = date;
 
-        console.log("=======req.body=====", req.body);
-
-        Activity.create(req.body)
+        Activity.create(body)
             .then(result => {
-                console.log("repeated activity cloned..", result);
+                console.log("repeated activity cloned.....", result);
                 output.push(result);
                 if(index === dates.length - 1) {
-                    console.log("========promise resolve=====>>>", index, dates.length);
                     defered.resolve(output);
                 }
             })
