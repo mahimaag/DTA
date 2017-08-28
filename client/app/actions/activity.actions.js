@@ -18,9 +18,9 @@ export const postActivities = (activityLog) => {
             })
     };
 };
-export const getActivities = () => {
+export const getActivities = (currentMonth) => {
     return (dispatch) => {
-        decoratedFetch('/api/activity/employee',{method:'get'})
+        decoratedFetch(`/api/activity/employee?month=${currentMonth}`,{method:'get'})
             .then(response => {
                 if (response.status == ApiResponseCode.OK) {
                     return response.json();

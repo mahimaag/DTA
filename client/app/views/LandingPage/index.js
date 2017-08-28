@@ -20,8 +20,11 @@ class Main extends React.Component {
     }
     componentWillMount () {
         // get events/activities from db
-        this.props.getActivities();
+        let date = new Date();
+        let currentMonth = date.getMonth();
+        this.props.getActivities(currentMonth);
     }
+
 
     handleChange = (item) => {
         let itemList = [];
@@ -117,7 +120,7 @@ class Main extends React.Component {
     }
 }
 const mapDispatchToProps = (dispatch) => ({
-    getActivities : () => {dispatch(getActivities())}
+    getActivities : (currentMonth) => {dispatch(getActivities(currentMonth))}
 });
 const mapStateToProps = (state) => {
     return {

@@ -13,6 +13,7 @@ const ActivityReducer = (state = initialState, action) => {
     switch (action.type) {
         case ActivityActions.GetActivity.Success:
             duplicateState.activities = action.data;
+            console.log("inside reducer of getActivities:",action.data)
             break;
         case ActivityActions.GetActivity.Failure:
             duplicateState.error = action.error;
