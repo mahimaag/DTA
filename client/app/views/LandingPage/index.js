@@ -16,15 +16,17 @@ class Main extends React.Component {
         this.state = {
             searchedList: [],
             textValue: '',
+            missingLogs:new Date().getDate(),
+            partialLogs:new Date().getDate()
         }
     }
     componentWillMount () {
         // get events/activities from db
         let date = new Date();
-        let currentMonth = date.getMonth();
+       let currentMonth = date.getMonth();
         this.props.getActivities(currentMonth);
-    }
 
+    }
 
     handleChange = (item) => {
         let itemList = [];
@@ -55,6 +57,7 @@ class Main extends React.Component {
                 })
             })
         }
+
         return events;
     };
 
@@ -78,7 +81,7 @@ class Main extends React.Component {
                                 <ActivityLog activityTimeLog={this.props.activity.activities}/>
                             </div>
                             <div className="col-md-3 pull-right">
-                                <NotificationCards/>
+                                <NotificationCards activity={this.props.activity}/>
                             </div>
                         </div>
                     </div>
