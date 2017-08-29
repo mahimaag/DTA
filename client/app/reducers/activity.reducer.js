@@ -13,7 +13,7 @@ const ActivityReducer = (state = initialState, action) => {
     switch (action.type) {
         case ActivityActions.GetActivity.Success:
             duplicateState.activities = action.data;
-            console.log("inside reducer of getActivities:",action.data)
+            console.log("===activity got in reducer is=====",duplicateState)
             break;
         case ActivityActions.GetActivity.Failure:
             duplicateState.error = action.error;
@@ -23,7 +23,6 @@ const ActivityReducer = (state = initialState, action) => {
             break;
 
         case ActivityActions.PostActivity.Success:
-            console.log('data in action',duplicateState.activities,action.data);
              if(duplicateState && duplicateState.activities.length>0){
                  //if state exists
                  if(action.data.length >1){
@@ -109,7 +108,6 @@ const ActivityReducer = (state = initialState, action) => {
         case ActivityActions.DeleteActivity.Failure:
             console.log('error in reducer');
             break;
-
 
         case ActivityActions.DeleteAllActivity.Success:
             console.log('deleting all activities...***************',action.data.date,duplicateState.activities[1]._id);

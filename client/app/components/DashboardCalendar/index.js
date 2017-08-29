@@ -80,6 +80,7 @@ class DashboardCalendar extends Component{
         return(
             <Calendar
                 events={this.props.events}
+                messageDecoration = {this.props.messageDecoration}
                 getComponents = {(props) => getComponents(props)}
             />
 

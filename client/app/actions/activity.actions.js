@@ -19,6 +19,7 @@ export const postActivities = (activityLog) => {
     };
 };
 export const getActivities = (currentMonth) => {
+    console.log("====getting activities for month=====",currentMonth);
     return (dispatch) => {
         decoratedFetch(`/api/activity/employee?month=${currentMonth}`,{method:'get'})
             .then(response => {

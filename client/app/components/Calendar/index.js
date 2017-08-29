@@ -11,20 +11,31 @@ BigCalendar.setLocalizer(
     BigCalendar.momentLocalizer(moment)
 );
 
-/*function CustomToolbar() {
-    return (
-        <div className="fc-toolbar">
-            <div className="fc-center">
-                Aug-Sept 2016
-            </div>
-        </div >
+/*function back(){
+    return(
+        <button>{`<`}</button>
     )
-}*/
-//add custom toolbar in Calendar
+}
+
+function next() {
+    return(
+        <button>{`>`}</button>
+    )
+}
+
+function today() {
+    return(
+        <button>today</button>
+    )
+}
 
 let msg = {
     showMore: total => `+${total} ...`,
-    };
+    previous : back(),
+    today : today(),
+    next : next()
+};*/
+
 let customHeader = (props) => {
     return (
         <div className="fc-day-header fc-widget-header ">
@@ -127,7 +138,7 @@ class Calendar extends Component {
                     events={this.props.events}
                     popup
                     views={['month']}
-                    messages={ msg }
+                    messages={ this.props.messageDecoration }
                     components={this.props.getComponents(this.props) || this.defaultComponent(this.props)}
                     onSelectSlot = { (slot) => this.onselectSlot(slot)}
                     onSelectEvent={(event) => this.onselectEvent(event)}
