@@ -22,19 +22,19 @@ class NotificationCards extends Component{
     }
 
     componentWillReceiveProps(nextProps){
-        if(nextProps.month <= new Date().getMonth()){
-            this.setState({
-                missingLogs: this.props.days,
-                partialLogs:0
-            })
+        console.log("======Props received in card======",nextProps)
+        let totalDays ;
+        if(nextProps.month < new Date().getMonth()){
+            totalDays = nextProps.days;
+        }else if(nextProps.month === new Date().getMonth()){
+           totalDays = this.state.missingLogs;
         }else{
-            this.setState({
-                partialLogs : 0,
-                totalHours:0
-            })
+            totalDays =0;
         }
+        console.log("==total days of selected month is:==",totalDays)
+
             let totalHoursForDay = 0,totalMins = 0,localTotalHours= this.state.totalHours;
-            let localPartial = this.state.partialLogs, localMissing = this.state.missingLogs;
+            let localPartial = 0, localMissing = totalDays;
 
             if(nextProps.activity && nextProps.activity.activities.length >0){
                 //calculate total hours completed on a day
@@ -47,23 +47,26 @@ class NotificationCards extends Component{
                             totalMins = totalMins-60
                         }
                     });
-                      if( totalHoursForDay>=8 ){
+                    if( totalHoursForDay>=8 ){
                         localMissing = localMissing-1;
                     }
                     else if( totalHoursForDay > 0 && totalHoursForDay <8 ){
                         localMissing = localMissing-1;
                         localPartial = localPartial+1
-                      }
+                    }
                     localTotalHours = localTotalHours + totalHoursForDay;
                     totalHoursForDay = 0,totalMins = 0;
                 });
 
-               this.setState({
+                this.setState({
                     missingLogs:localMissing,
                     partialLogs:localPartial,
                     totalHours : localTotalHours
+                },()=>{
+                    console.log("==final missing, partial,totalHours are :",this.state.missingLogs,this.state.partialLogs,this.state.totalHours)
                 });
             }
+
     }
   render(){
 

@@ -11,7 +11,6 @@ import ActivityAutoComplete from './../../Core/ActivityAutoComplete'
 import {getActivities} from './../../actions/activity.actions'
 import CalendarNavigation from './../../components/CalendarNavigation'
 
-
 const days = [31,28,31,30,31,30,31,31,30,31,30,31];
 class Main extends React.Component {
     constructor(props){
