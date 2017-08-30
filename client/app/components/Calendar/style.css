@@ -27,7 +27,8 @@
 }
 
 .rbc-event.rbc-selected {
-    background-color: white;
+    background-color: lightgray;
+    color:black;
 }
 
 .todayDate{

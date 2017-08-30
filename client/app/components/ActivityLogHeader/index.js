@@ -65,16 +65,20 @@ class ActivityLogHeader extends Component{
                         <span>{totalHours} : {totalMins}</span>
                     </Col>
                     <Col md = {4} lg = {4} lgOffset = {3} className = "log-col">
-                        <TtnButton bClassName = "log-clear-button"
-                                   level = "primary"
-                                   title = "Log Time"
-                                   onClick = {this.props.onLogTimeClick}/>:
+                        {
+                            this.props.month === new Date().getMonth() ?
+                                <div>
+                                    <TtnButton bClassName = "log-clear-button"
+                                               level = "primary"
+                                               title = "Log Time"
+                                               onClick = {this.props.onLogTimeClick}/>:
 
-                        <TtnButton bClassName = "log-clear-button"
-                                   level = "primary"
-                                   title = "Clear"
-                                   onClick = {this.onClearClick}/>
-
+                                    <TtnButton bClassName = "log-clear-button"
+                                               level = "primary"
+                                               title = "Clear"
+                                               onClick = {this.onClearClick}/>
+                                                                                                </div>:null
+                        }
 
                     </Col>
                 </Row>

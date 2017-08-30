@@ -1,6 +1,4 @@
-/**
- * Created by saubhagya on 20/7/17.
- */
+
 import React, { Component } from 'react'
 import { Row, Col } from 'react-bootstrap'
 import ActivityLogComp from '../ActivityLogComp/index'
@@ -23,7 +21,9 @@ class ActivityLogRow extends Component{
                                     <div key={index} className = "col-md-12 activity-timelog">
                                         <ActivityLogHeader logDate = {item._id}
                                                            activities = {item.activities}
-                                                           onLogTimeClick = {() => this.props.logItem(item._id)}/>
+                                                           onLogTimeClick = {() => this.props.logItem(item._id)}
+                                                           month={this.props.month}
+                                        />
                                         <Row className = "show-grid">
                                             {item.activities.map((activity, index) => {
                                                 return ((activity.status == TimeEntryStatus.New) ? <NewLogComp logDate = {item._id}
@@ -31,6 +31,7 @@ class ActivityLogRow extends Component{
                                                                                                                closedWithoutCreate = {() => {this.props.closedWithoutCreate(item._id)}} key={index}/> :
                                                         <ActivityLogComp activity = {activity}
                                                                          date = {item._id}
+                                                                         month={this.props.month}
                                                                          timeLog = {this.props.timeLog}
                                                                          edittedLog = {(editLog) => {this.props.edittedLog(editLog, item._id)}}
                                                                          key = {index}

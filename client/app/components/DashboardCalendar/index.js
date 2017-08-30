@@ -27,7 +27,8 @@ class CustomDateHeader extends Component{
         this.setState({show: true});
     };
 
-    close = () => {
+    close = (e) => {
+        e.preventDefault();
         this.setState({show: false})
     };
 
@@ -77,6 +78,7 @@ class DashboardCalendar extends Component{
                 messageDecoration = {this.props.messageDecoration}
                 getComponents = {(props) => getComponents(props)}
                 month = {this.props.month}
+                date={this.props.date}
             />
 
         )

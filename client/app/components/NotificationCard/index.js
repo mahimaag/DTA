@@ -61,8 +61,6 @@ class NotificationCards extends Component{
                     missingLogs:localMissing,
                     partialLogs:localPartial,
                     totalHours : localTotalHours
-                },()=>{
-                    console.log("==final missing, partial,totalHours are :",this.state.missingLogs,this.state.partialLogs,this.state.totalHours)
                 });
             }
             else{
@@ -70,8 +68,6 @@ class NotificationCards extends Component{
                     missingLogs:nextProps.days,
                     partialLogs:0,
                     totalHours : 0
-                },()=>{
-                    console.log("==final missing, partial,totalHours are :",this.state.missingLogs,this.state.partialLogs,this.state.totalHours)
                 });
             }
 

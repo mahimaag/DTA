@@ -181,17 +181,20 @@ class ActivityLogComp extends Component{
                             </Col>
                             <Col md={2} lg={2} className="log-col">
 
-                                <TtnButton iconButton
-                                           level = "primary"
-                                           rounded icon = "glyphicon glyphicon-pencil"
-                                           onClick = {() => this.onEditClick()}/>
+                                {
+                                    this.props.month === new Date().getMonth() ?
+                                        <div>
+                                            <TtnButton iconButton
+                                                       level = "primary"
+                                                       rounded icon = "glyphicon glyphicon-pencil"
+                                                       onClick = {() => this.onEditClick()}/>
 
-                                <TtnButton iconButton
-                                           level = "primary"
-                                           rounded icon = "glyphicon glyphicon-trash"
-                                           onClick = {() => this.onDeleteClick(activityLog)}/>
-
-
+                                            <TtnButton iconButton
+                                                       level = "primary"
+                                                       rounded icon = "glyphicon glyphicon-trash"
+                                                       onClick = {() => this.onDeleteClick(activityLog)}/>
+                                        </div>:null
+                                }
                             </Col>
                         </Row>
                         <Row>
