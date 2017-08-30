@@ -37,7 +37,7 @@ class ModalContent extends Component{
         }
     }
 
-   selectSlot(slot) {
+    selectSlot(slot) {
         if( JSON.stringify(slot.start) === JSON.stringify(this.props.message)){
             alert("Sorry...You cannot repeat event on same date")
         } else{
@@ -129,7 +129,6 @@ class ModalContent extends Component{
     }
 
     eventStyleGetterRepeat(event, start, end, isSelected) {
-        console.log('event-------------------->>>>>>>>>>',event);
         let cssClass = "repeat-icon";
         if(event.title === " "){
 
