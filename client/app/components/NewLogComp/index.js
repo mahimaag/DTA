@@ -17,8 +17,8 @@ class NewLogComp extends Component{
 
         this.state = {
             newLogType: 'Select',
-            newLogHH: 'Select',
-            newLogMM:'Select',
+            newLogHH: 'hh',
+            newLogMM:'mm',
             newLogDesc: '',
             newLogStatus: TimeEntryStatus.New,
             newCollaborators: []
@@ -54,8 +54,8 @@ class NewLogComp extends Component{
     onCloseClick = () => {
             this.setState({
                 newLogType: 'Select',
-                newLogHH: 'Select',
-                newLogMM: 'Select',
+                newLogHH: 'hh',
+                newLogMM: 'mm',
                 newLogDesc: '',
                 newLogStatus: TimeEntryStatus.New,
                 newCollaborators: []
@@ -106,14 +106,14 @@ class NewLogComp extends Component{
                                      onSelect = {(item) => this.setSelectedValue(item, 'newLogType')}/>
                     </Col>
                     <Col md = {3} lg = {3} className = "log-col">
-                        <LogDropdown className = 'duration'
+                        <LogDropdown className = 'duration time-hhmm'
                                      data = {durationTimeHH}
                                      title = {this.state.newLogHH}
-                                     onSelect = {(item) => this.setSelectedValue(item, 'newLogHH')}/>Hrs
+                                     onSelect = {(item) => this.setSelectedValue(item, 'newLogHH')}/>:
                         <LogDropdown className = 'duration'
                                      data = {durationTimeMM}
                                      title = {this.state.newLogMM}
-                                     onSelect = {(item) => this.setSelectedValue(item, 'newLogMM')}/>Mins
+                                     onSelect = {(item) => this.setSelectedValue(item, 'newLogMM')}/>
                     </Col>
                     <Col md = {4} lg = {4} className = "log-col">
                         <input type = "text"
@@ -145,18 +145,19 @@ class NewLogComp extends Component{
                     </Col>
                 </Row>
                 <Row>
-                    <Col md = {12} lg = {12} className = "log-col">
+                    <Col md = {12} lg = {12} className = "log-col new-collab">
                         {/*Collaborators: <MultiSelectDropdown collabArray = {newCollabArray}
                                                             newCollab = {this.state.newCollaborators}
                                                             title = 'Select'
                                                             onSelectedVal = {(newCollab) => {this.onSelectedVal(newCollab)}}
                                                             onDeleteCollab = {(deletedVal) => {this.onDeleteCollab(deletedVal)}}/>*/}
-                        Collaborators: <Tags updateTag = {(tags) => {this.getTags(tags)}}/>
+                        <span>Collaborators:</span> <Tags updateTag = {(tags) => {this.getTags(tags)}}/>
                     </Col>
                 </Row>
             </div>
         );
     }
 }
+
 
 export default NewLogComp;

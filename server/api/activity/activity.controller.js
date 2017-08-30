@@ -166,7 +166,7 @@ export function updateActivity(req, res) {
 }
 
 export function deleteActivity(req, res) {
-    console.log("======actvity controller // deleteActivity()=========");
+    console.log("======actvity controller // deleteActivity()=========",req.params.id);
 
     Activity.findByIdAndRemove(req.params.id)
         .then(genericRepo.respondWithResult(res))
