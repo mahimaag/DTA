@@ -36,7 +36,6 @@ export const getActivities = (currentMonth) => {
     }
 };
 export const deleteActivity = (activityId) => {
-    console.log('id of activity**************',activityId);
     return (dispatch) => {
         decoratedFetch(`/api/activity/${activityId}`,{method:'delete'})
             .then(response => {
@@ -52,7 +51,7 @@ export const deleteActivity = (activityId) => {
                 dispatch({type:ActivityActions.DeleteActivity.Failure})
             })
     }
-}
+};
 export const updateActivities = (activityLog) => {
     return (dispatch) => {
         decoratedFetch(`/api/activity/${activityLog._id}`,{method: 'put',body:activityLog})
@@ -70,8 +69,7 @@ export const updateActivities = (activityLog) => {
                 dispatch({type:ActivityActions.UpdateActivity.Failure})
             })
     }
-}
-
+};
 export const deleteAllActivity = (date) => {
     return (dispatch) => {
         decoratedFetch(`/api/activity/employee/date/${date}`,{method:'delete'})
@@ -89,6 +87,6 @@ export const deleteAllActivity = (date) => {
             })
 
     }
-}
+};
 
 

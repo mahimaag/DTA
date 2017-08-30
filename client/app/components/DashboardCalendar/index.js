@@ -23,23 +23,21 @@ class CustomDateHeader extends Component{
         };
     }
 
-    showModal = (e) => {
-        e.preventDefault();
+    showModal = () => {
         this.setState({show: true});
     };
 
     close = () => {
-        // e.preventDefault();
         this.setState({show: false})
     };
 
     render(){
-        return (
+       return (
             <div className="fc-day-number fc-future date-header" >
                 <span>{ this.props.label }</span>
                 <span>
                     {
-                        this.props.date < new Date() ?
+                        this.props.date.getMonth() === new Date().getMonth() && this.props.date < new Date() ?
                             <div className="modal-container">
                                 <TtnButton level="secondary" title="+" onClick = {this.showModal}/>
                                 <ModalComp modalShow={this.state.show}
@@ -60,13 +58,8 @@ class CustomDateHeader extends Component{
 
 let getComponents  = (props) => {
     return {
-        // event: customEvent,
-        // eventWrapper: customEventWrapper,
-        //  dayWrapper: customDayWrapper,  // called when day format is displayed
-        //  dateCellWrapper: customDateCellWrapper,
-        month: {
+       month: {
             header: customHeader,
-            // event: customEvent,
             dateHeader: CustomDateHeader   // refer source code DateHeader.js
         }
     };
@@ -81,7 +74,9 @@ class DashboardCalendar extends Component{
         return(
             <Calendar
                 events={this.props.events}
+                messageDecoration = {this.props.messageDecoration}
                 getComponents = {(props) => getComponents(props)}
+                month = {this.props.month}
             />
 
         )

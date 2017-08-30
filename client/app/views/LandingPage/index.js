@@ -9,6 +9,9 @@ import TtnButton from 'core/Button/btn';
 import TypeAhead from './../../Core/TypeAhead'
 import ActivityAutoComplete from './../../Core/ActivityAutoComplete'
 import {getActivities} from './../../actions/activity.actions'
+import CalendarNavigation from './../../components/CalendarNavigation'
+
+const days = [31,28,31,30,31,30,31,31,30,31,30,31];
 
 class Main extends React.Component {
     constructor(props){
@@ -18,16 +21,14 @@ class Main extends React.Component {
             textValue: '',
             switchBtn: false,
             missingLogs:new Date().getDate(),
-            partialLogs:new Date().getDate()
-
+            partialLogs:new Date().getDate(),
+            month: new Date().getMonth()
         }
     }
     componentWillMount () {
-        // get events/activities from db
         let date = new Date();
-       let currentMonth = date.getMonth();
+        let currentMonth = date.getMonth();
         this.props.getActivities(currentMonth);
-
     }
 
     handleChange = (item) => {
@@ -42,6 +43,33 @@ class Main extends React.Component {
 
     displayText = (item) => {
         return item.name + ' : ' + item.id;
+    };
+
+    previousEvents = () => {
+        let newMonth = this.state.month -1;
+        this.setState({
+            month:newMonth
+        },()=>{
+            this.props.getActivities(this.state.month)
+        })
+    };
+
+    nextEvents = () => {
+        let newMonth = this.state.month +1;
+        this.setState({
+            month:newMonth
+        },()=>{
+            this.props.getActivities(this.state.month)
+        })
+    };
+
+    todayEvents = () => {
+        let newMonth = new Date().getMonth();
+        this.setState({
+            month:newMonth
+        },()=>{
+            this.props.getActivities(this.state.month)
+        })
     };
 
     mapDataToEvents = () => {
@@ -59,7 +87,6 @@ class Main extends React.Component {
                 })
             })
         }
-
         return events;
     };
 
@@ -81,6 +108,14 @@ class Main extends React.Component {
 
     render() {
         let events = this.mapDataToEvents();
+
+        let msg = {
+            showMore: total => `+${total} ...`,
+            previous : <CalendarNavigation title="back" month={this.state.month} previousEvents={this.previousEvents}/>,
+            today : <CalendarNavigation title="today" month={this.state.month} todayEvents={this.todayEvents}/>,
+            next : <CalendarNavigation title="next" month={this.state.month} nextEvents={this.nextEvents}/>
+        };
+
         return (
             <div className="wrapper wrapper-content animated fadeInRight">
                 <div className="row">
@@ -101,7 +136,11 @@ class Main extends React.Component {
 
                                 {this.state.switchBtn === false?
                                     <DashboardCalendar
-                                        events={events}/>:
+                                        events={events}
+                                        messageDecoration={ msg }
+                                        month = {this.state.month}
+
+                                    />:
                                     <ActivityLog activityTimeLog={this.props.activity.activities}/>
                                 }
 
@@ -109,7 +148,7 @@ class Main extends React.Component {
 
                             </div>
                             <div className="col-md-3 pull-right">
-                                <NotificationCards activity={this.props.activity}/>
+                                <NotificationCards activity={this.props.activity} month={this.state.month} days={days[this.state.month]}/>
                             </div>
                         </div>
                     </div>

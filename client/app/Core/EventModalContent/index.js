@@ -157,14 +157,20 @@ class ModalContent extends Component {
                         <div>mm : {this.props.eventInfo.moreInfo.mm}</div>
                         <div>Description : {this.props.eventInfo.moreInfo.description}</div>
                         <div>Collaborators : {this.props.eventInfo.moreInfo.collaborators}</div>
-                        <TtnButton iconButton
-                                   level="secondary"
-                                   rounded icon ="glyphicon glyphicon-pencil"
-                                   onClick={this.onEdit}/>
-                        <TtnButton iconButton
-                                   level="secondary"
-                                   rounded icon ="glyphicon glyphicon-trash"
-                                   onClick={this.deleteEvent}/>
+                        {
+                            this.props.month === new Date().getMonth() ?
+                            <div>
+                                <TtnButton iconButton
+                                           level="secondary"
+                                           rounded icon ="glyphicon glyphicon-pencil"
+                                           onClick={this.onEdit}/>
+                                <TtnButton iconButton
+                                           level="secondary"
+                                           rounded icon ="glyphicon glyphicon-trash"
+                                           onClick={this.deleteEvent}/>
+                            </div> : null
+                        }
+
                     </div>
             }
                 <ModalComp modalShow={this.state.deleteModal}

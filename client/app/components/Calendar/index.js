@@ -11,20 +11,6 @@ BigCalendar.setLocalizer(
     BigCalendar.momentLocalizer(moment)
 );
 
-/*function CustomToolbar() {
-    return (
-        <div className="fc-toolbar">
-            <div className="fc-center">
-                Aug-Sept 2016
-            </div>
-        </div >
-    )
-}*/
-//add custom toolbar in Calendar
-
-let msg = {
-    showMore: total => `+${total} ...`,
-    };
 let customHeader = (props) => {
     return (
         <div className="fc-day-header fc-widget-header ">
@@ -41,19 +27,16 @@ class CustomDateHeader extends Component{
         };
     }
 
-    showModal = (e) => {
-        e.preventDefault();
+    showModal = () => {
         this.setState({show: true});
     };
 
-    close = (e) => {
-        e.preventDefault();
+    close = () => {
         this.setState({show: false})
     };
 
     render(){
         return (
-
             <div className="fc-day-number fc-future date-header" >
                 <span>{ this.props.label }</span>
                 <span>
@@ -78,20 +61,15 @@ class CustomDateHeader extends Component{
 
 let defaultComponent  = (props) => {
     return {
-        // event: customEvent,
-        // eventWrapper: customEventWrapper,
-        //  dayWrapper: customDayWrapper,  // called when day format is displayed
-        //  dateCellWrapper: customDateCellWrapper,
-        month: {
+         month: {
             header: customHeader,
-            // event: customEvent,
             dateHeader: CustomDateHeader   // refer source code DateHeader.js
         }
     };
 };
 class Calendar extends Component {
     constructor(props){
-        super(props)
+        super(props);
         this.state = {
             showEventModal : false,
             eventSelected : ''
@@ -104,9 +82,6 @@ class Calendar extends Component {
             className:cssClass,
         };
     }
-    onselectSlot(slot) {
-        console.log("selected slot",slot)
-    } //called when tile is clicked
     onselectEvent(slotId) {
         this.setState({
             showEventModal : true,
@@ -114,9 +89,7 @@ class Calendar extends Component {
         })
     } //called when event is clicked
     closeCalendar  = () => {
-        console.log("close of calendar called++++++++++")
-        // event.preventDefault();
-        this.setState({showEventModal:false})
+       this.setState({showEventModal:false})
     };
 
     render() {
@@ -127,16 +100,15 @@ class Calendar extends Component {
                     events={this.props.events}
                     popup
                     views={['month']}
-                    messages={ msg }
+                    messages={ this.props.messageDecoration }
                     components={this.props.getComponents(this.props) || this.defaultComponent(this.props)}
-                    onSelectSlot = { (slot) => this.onselectSlot(slot)}
                     onSelectEvent={(event) => this.onselectEvent(event)}
                     eventPropGetter={(this.eventStyleGetter)}
                 />
                 <ModalComp modalShow={this.state.showEventModal}
                            modalHide = {this.closeCalendar}
                            modalHeaderMsg="Edit Event"
-                           modalBody = {<EventModalContent message={this.state.eventSelected.start} eventInfo={this.state.eventSelected} closeCalendar={this.closeCalendar}/>}
+                           modalBody = {<EventModalContent message={this.state.eventSelected.start} eventInfo={this.state.eventSelected} closeCalendar={this.closeCalendar} month={this.props.month}/>}
                            modalFooterClose = {this.closeCalendar}
                            modalFooterText = 'Close'
                 />

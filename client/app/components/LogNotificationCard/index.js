@@ -11,7 +11,7 @@ class LogNotificationCard extends Component{
         return(
             <Card>
                 <CardHeader>
-                    <h4>Total hours logged in {month[new Date().getMonth()]} {this.props.totalHours}</h4>
+                    <span>Total hrs logged in {month[this.props.month]} <h2> {this.props.totalHours}</h2></span>
                 </CardHeader>
                 <CardContent>
                     <div className="col-md-12 col-lg-12 col-sm-12 clearfix">
