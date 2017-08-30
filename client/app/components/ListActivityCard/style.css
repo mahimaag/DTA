@@ -63,6 +63,24 @@
     margin: 2px 0 2px 0;*/
 }
 
+.switch-cal-list>button{
+    float: right;
+    width: 75px;
+    height: 36px;
+    background-color: #DDDDDD;
+    color: #676A6C;
+}
+
+.switch-cal-list>button:hover ,
+.switch-cal-list>button:focus ,
+.switch-cal-list>button:active
+{
+    background-color: lightgray;
+    /*border: lightgray;*/
+    color: black;
+
+}
+
 .menu-items {
     border: transparent;
     background-color: white;

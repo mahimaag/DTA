@@ -14,8 +14,21 @@
 
 }
 
-.pending{
+.repeat-icon{
+    background-image: url(../../../assests/img/newImg2.png);
+    background-repeat: no-repeat;
+    width: 75px;
+    height: 20px;
+}
 
+.rbc-event {
+    background-color: white;
+    width:20px;
+}
+
+.rbc-event.rbc-selected {
+    background-color: white;
+    width:20px;
 }
 
 .todayDate{
@@ -48,11 +61,22 @@
 }
 
 .rbc-event {
-    cursor: pointer;
+   /* cursor: pointer;
     padding: 2px 5px;
     background-color: antiquewhite;
     border-radius: 5px;
-    color: #000000;
+    color: #000000;*/
+    /*background-image: url(../../../assests/img/newImg2.png);
+    background-repeat: no-repeat;
+    width: 75px;
+    height: 20px;*/
+}
+
+.rbc-event-content {
+   /* background-image: url(../../../assests/img/newImg2.png);
+    background-repeat: no-repeat;
+    width: 75px;
+    height: 20px;*/
 }
 
 .rbc-day-bg {

@@ -19,6 +19,7 @@ class Main extends React.Component {
         this.state = {
             searchedList: [],
             textValue: '',
+            switchBtn: false,
             missingLogs:new Date().getDate(),
             partialLogs:new Date().getDate(),
             month: new Date().getMonth()
@@ -89,6 +90,22 @@ class Main extends React.Component {
         return events;
     };
 
+    onSwitchCal = () => {
+        if(this.state.switchBtn === true){
+            this.setState({
+                switchBtn: false
+            })
+        }
+    }
+
+    onSwitchList = () => {
+        if(this.state.switchBtn === false){
+            this.setState({
+                switchBtn: true
+            })
+        }
+    }
+
     render() {
         let events = this.mapDataToEvents();
 
@@ -111,13 +128,24 @@ class Main extends React.Component {
                                            valueGenerator={this.displayText} searchItem={(item) => this.searchItem(item)}
                                 />
 
-                                <DashboardCalendar
-                                    events={events}
-                                    messageDecoration={ msg }
-                                    month = {this.state.month}
-                                />
+                                <div className="switch-cal-list">
+                                    <button onClick = {this.onSwitchList}>List</button>
 
-                                <ActivityLog activityTimeLog={this.props.activity.activities}/>
+                                    <button onClick = {this.onSwitchCal}>Calendar</button>
+                                </div>
+
+                                {this.state.switchBtn === false?
+                                    <DashboardCalendar
+                                        events={events}
+                                        messageDecoration={ msg }
+                                        month = {this.state.month}
+
+                                    />:
+                                    <ActivityLog activityTimeLog={this.props.activity.activities}/>
+                                }
+
+
+
                             </div>
                             <div className="col-md-3 pull-right">
                                 <NotificationCards activity={this.props.activity} month={this.state.month} days={days[this.state.month]}/>
@@ -167,8 +195,7 @@ const mapDispatchToProps = (dispatch) => ({
 const mapStateToProps = (state) => {
     return {
         activity: state.activity
-
     }
 };
+export default connect(mapStateToProps,mapDispatchToProps)(Main);
 
- export default connect(mapStateToProps,mapDispatchToProps)(Main);
