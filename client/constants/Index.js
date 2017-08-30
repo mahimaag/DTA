@@ -26,8 +26,8 @@ export const HeadingArray = [
         title: 'Duration'
     },
     {
-        md: 4,
-        lg: 4,
+        md: 3,
+        lg: 3,
         title: 'Description'
     },
     {
@@ -36,8 +36,8 @@ export const HeadingArray = [
         title: 'Status'
     },
     {
-        md: 2,
-        lg: 2,
+        md: 3,
+        lg: 3,
         title: ''
     }
 ]

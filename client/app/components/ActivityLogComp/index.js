@@ -133,7 +133,7 @@ class ActivityLogComp extends Component{
                                              data={durationTimeMM}
                                              onSelect={(item) => {this.setSelectedValue(item, 'mm')}}/>
                             </Col>
-                            <Col md={4} lg={4} className="log-col">
+                            <Col md={3} lg={3} className="log-col">
                                 <input type="text"
                                        value={this.state.activity.description}
                                        onChange={(value) => {this.onDescChange(value)}}/>
@@ -141,7 +141,7 @@ class ActivityLogComp extends Component{
                             <Col md={1} lg={1} className="log-col">
                                 <span>{this.state.activity.status}</span>
                             </Col>
-                            <Col md={2} lg={2} className="log-col">
+                            <Col md={2} lg={2} lgOffset={1} className="log-col">
                                 <TtnButton iconButton
                                            level = "primary"
                                            rounded icon = "glyphicon glyphicon-ok"
@@ -170,13 +170,13 @@ class ActivityLogComp extends Component{
                                 <span>{activityLog.hh}</span>:
                                 <span>{activityLog.mm}</span>
                             </Col>
-                            <Col md={4} lg={4} className="log-col">
+                            <Col md={3} lg={3} className="log-col">
                                 <span>{activityLog.description}</span>
                             </Col>
                             <Col md={1} lg={1} className="log-col">
                                 <span>{activityLog.status}</span>
                             </Col>
-                            <Col md={2} lg={2} className="log-col">
+                            <Col md={2} lg={2} lgOffset = {1} className="log-col">
 
                                 {this.props.month === new Date().getMonth()?
                                     <div>

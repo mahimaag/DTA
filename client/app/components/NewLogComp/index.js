@@ -97,7 +97,7 @@ class NewLogComp extends Component{
                                      title = {this.state.newLogMM}
                                      onSelect = {(item) => this.setSelectedValue(item, 'newLogMM')}/>
                     </Col>
-                    <Col md = {4} lg = {4} className = "log-col">
+                    <Col md = {3} lg = {3} className = "log-col">
                         <input type = "text"
                                name = "newLogDesc"
                                value = {this.state.newLogDesc}
@@ -106,7 +106,7 @@ class NewLogComp extends Component{
                     <Col md = {1} lg = {1} className = "log-col">
                         <span>{this.state.newLogStatus}</span>
                     </Col>
-                    <Col md = {2} lg = {2} className = "log-col">
+                    <Col md = {2} lg = {2} lgOffset = {1} className = "log-col">
                         <TtnButton iconButton
                                    level = "secondary"
                                    rounded icon = "glyphicon glyphicon-ok"
