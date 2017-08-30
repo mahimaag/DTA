@@ -22,17 +22,19 @@ class NotificationCards extends Component{
     }
 
     componentWillReceiveProps(nextProps){
-        if(this.props.month < new Date().getMonth()){
+        if(nextProps.month <= new Date().getMonth()){
             this.setState({
-                missingLogs: this.props.days
+                missingLogs: this.props.days,
+                partialLogs:0
+            })
+        }else{
+            this.setState({
+                partialLogs : 0,
+                totalHours:0
             })
         }
-        this.setState({
-            partialLogs : 0,
-            totalHours:0
-        },()=>{
             let totalHoursForDay = 0,totalMins = 0,localTotalHours= this.state.totalHours;
-            let localPartial = this.state.partialLogs, localMissing = this.props.missingLogs;
+            let localPartial = this.state.partialLogs, localMissing = this.state.missingLogs;
 
             if(nextProps.activity && nextProps.activity.activities.length >0){
                 //calculate total hours completed on a day
@@ -62,7 +64,6 @@ class NotificationCards extends Component{
                     totalHours : localTotalHours
                 });
             }
-        });
     }
   render(){
 
