@@ -95,7 +95,10 @@ class Main extends React.Component {
         console.log('month--------',this.state.month);
         if(this.state.switchBtn === true){
             this.setState({
-                switchBtn: false
+                switchBtn: false,
+                month:new Date().getMonth()
+            },()=>{
+                this.props.getActivities(this.state.month)
             })
         }
     }
