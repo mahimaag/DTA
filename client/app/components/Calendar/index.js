@@ -147,7 +147,7 @@ class Calendar extends Component {
                 <ModalComp modalShow={this.state.showEventModal}
                            modalHide = {this.closeCalendar}
                            modalHeaderMsg="Edit Event"
-                           modalBody = {<EventModalContent message={this.state.eventSelected.start} eventInfo={this.state.eventSelected} closeCalendar={this.closeCalendar}/>}
+                           modalBody = {<EventModalContent message={this.state.eventSelected.start} eventInfo={this.state.eventSelected} closeCalendar={this.closeCalendar} month={this.props.month}/>}
                            modalFooterClose = {this.closeCalendar}
                            modalFooterText = 'Close'
                 />

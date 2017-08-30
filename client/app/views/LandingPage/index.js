@@ -113,6 +113,7 @@ class Main extends React.Component {
                                 <DashboardCalendar
                                     events={events}
                                     messageDecoration={ msg }
+                                    month = {this.state.month}
                                 />
 
                                 <ActivityLog activityTimeLog={this.props.activity.activities}/>
