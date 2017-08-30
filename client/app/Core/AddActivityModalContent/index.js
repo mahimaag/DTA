@@ -131,7 +131,7 @@ class ModalContent extends Component{
     eventStyleGetterRepeat(event, start, end, isSelected) {
         console.log('event-------------------->>>>>>>>>>',event);
         let cssClass = "repeat-icon";
-        if(event.title === "                                                                    "){
+        if(event.title === " "){
 
             return {
                 className:cssClass,

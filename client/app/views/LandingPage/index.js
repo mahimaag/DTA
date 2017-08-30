@@ -16,12 +16,18 @@ class Main extends React.Component {
         this.state = {
             searchedList: [],
             textValue: '',
-            switchBtn: false
+            switchBtn: false,
+            missingLogs:new Date().getDate(),
+            partialLogs:new Date().getDate()
+
         }
     }
     componentWillMount () {
         // get events/activities from db
-        this.props.getActivities();
+        let date = new Date();
+       let currentMonth = date.getMonth();
+        this.props.getActivities(currentMonth);
+
     }
 
     handleChange = (item) => {
@@ -53,6 +59,7 @@ class Main extends React.Component {
                 })
             })
         }
+
         return events;
     };
 
@@ -102,7 +109,7 @@ class Main extends React.Component {
 
                             </div>
                             <div className="col-md-3 pull-right">
-                                <NotificationCards/>
+                                <NotificationCards activity={this.props.activity}/>
                             </div>
                         </div>
                     </div>
@@ -144,7 +151,7 @@ class Main extends React.Component {
     }
 }
 const mapDispatchToProps = (dispatch) => ({
-    getActivities : () => {dispatch(getActivities())}
+    getActivities : (currentMonth) => {dispatch(getActivities(currentMonth))}
 });
 const mapStateToProps = (state) => {
     return {

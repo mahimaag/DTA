@@ -30,7 +30,7 @@ class ActivityLog extends Component{
 
 
     componentWillReceiveProps(newProps) {
-        console.log("cwrp",newProps)
+        console.log("cwrp in activity list")
         this.setState({
             timeEnteries: newProps.activityTimeLog.slice()
         },() => {console.log(`[cwrp]state in list card-----`,this.state.timeEnteries)})
