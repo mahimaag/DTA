@@ -3,22 +3,16 @@ import React from 'react';
 class CalendarNavigation extends React.Component{
     constructor(props){
         super(props);
-        console.log("=====constructor is called=========")
     }
 
     backClick = () => {
-        console.log("state in back is:",this.props);
-        this.props.previousEvents();
-
+         this.props.previousEvents();
     };
     nextClick = () => {
-        console.log("state in back is:",this.props);
         this.props.nextEvents();
-
     };
     todayClick = () => {
-        console.log("today clicked");
-        this.props.todayEvents();
+         this.props.todayEvents();
     };
 
     render(){

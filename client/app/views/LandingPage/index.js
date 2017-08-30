@@ -12,6 +12,7 @@ import {getActivities} from './../../actions/activity.actions'
 import CalendarNavigation from './../../components/CalendarNavigation'
 
 const days = [31,28,31,30,31,30,31,31,30,31,30,31];
+
 class Main extends React.Component {
     constructor(props){
         super(props);
@@ -24,7 +25,6 @@ class Main extends React.Component {
         }
     }
     componentWillMount () {
-        // get events/activities from db
         let date = new Date();
         let currentMonth = date.getMonth();
         this.props.getActivities(currentMonth);
@@ -51,7 +51,7 @@ class Main extends React.Component {
         },()=>{
             this.props.getActivities(this.state.month)
         })
-    }
+    };
 
     nextEvents = () => {
         let newMonth = this.state.month +1;
@@ -60,7 +60,7 @@ class Main extends React.Component {
         },()=>{
             this.props.getActivities(this.state.month)
         })
-    }
+    };
 
     todayEvents = () => {
         let newMonth = new Date().getMonth();
@@ -69,7 +69,7 @@ class Main extends React.Component {
         },()=>{
             this.props.getActivities(this.state.month)
         })
-    }
+    };
 
     mapDataToEvents = () => {
         let events = [];
@@ -86,18 +86,19 @@ class Main extends React.Component {
                 })
             })
         }
-
         return events;
     };
 
     render() {
         let events = this.mapDataToEvents();
+
         let msg = {
             showMore: total => `+${total} ...`,
             previous : <CalendarNavigation title="back" month={this.state.month} previousEvents={this.previousEvents}/>,
             today : <CalendarNavigation title="today" month={this.state.month} todayEvents={this.todayEvents}/>,
             next : <CalendarNavigation title="next" month={this.state.month} nextEvents={this.nextEvents}/>
         };
+
         return (
             <div className="wrapper wrapper-content animated fadeInRight">
                 <div className="row">

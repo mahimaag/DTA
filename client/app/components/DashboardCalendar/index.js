@@ -23,13 +23,11 @@ class CustomDateHeader extends Component{
         };
     }
 
-    showModal = (e) => {
-        e.preventDefault();
+    showModal = () => {
         this.setState({show: true});
     };
 
     close = () => {
-        // e.preventDefault();
         this.setState({show: false})
     };
 
@@ -59,13 +57,8 @@ class CustomDateHeader extends Component{
 
 let getComponents  = (props) => {
     return {
-        // event: customEvent,
-        // eventWrapper: customEventWrapper,
-        //  dayWrapper: customDayWrapper,  // called when day format is displayed
-        //  dateCellWrapper: customDateCellWrapper,
-        month: {
+       month: {
             header: customHeader,
-            // event: customEvent,
             dateHeader: CustomDateHeader   // refer source code DateHeader.js
         }
     };
