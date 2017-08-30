@@ -90,7 +90,8 @@ class ModalContent extends Component {
         })
     };
 
-    close = () => {
+    close = (e) => {
+        e.preventDefault();
         this.setState({deleteModal: false})
     };
 
