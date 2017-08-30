@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 //import {Glyphicon} from 'react-bootstrap';
 import TtnButton from 'core/Button/btn';
-
 import {Card, CardHeader, CardContent, CardFooter} from './../../Core/Card';
 
 class LogActivityCard extends Component{

@@ -1,6 +1,4 @@
-/**
- * Created by saubhagya on 20/7/17.
- */
+
 
 import React, { Component } from 'react'
 import { Row, Col } from 'react-bootstrap'
@@ -109,7 +107,6 @@ class ActivityLogComp extends Component{
         })
     };
 
-
     render(){
         const activityLog = this.props.activity;
         let activityTitles = ['Westcon','Knowlegde Meet','Daily Time Analysis'];
@@ -181,16 +178,19 @@ class ActivityLogComp extends Component{
                             </Col>
                             <Col md={2} lg={2} className="log-col">
 
-                                <TtnButton iconButton
-                                           level = "primary"
-                                           rounded icon = "glyphicon glyphicon-pencil"
-                                           onClick = {() => this.onEditClick()}/>
+                                {this.props.month === new Date().getMonth()?
+                                    <div>
+                                        <TtnButton iconButton
+                                                   level = "primary"
+                                                   rounded icon = "glyphicon glyphicon-pencil"
+                                                   onClick = {() => this.onEditClick()}/>
 
-                                <TtnButton iconButton
-                                           level = "primary"
-                                           rounded icon = "glyphicon glyphicon-trash"
-                                           onClick = {() => this.onDeleteClick(activityLog)}/>
-
+                                        <TtnButton iconButton
+                                                   level = "primary"
+                                                   rounded icon = "glyphicon glyphicon-trash"
+                                                   onClick = {() => this.onDeleteClick(activityLog)}/>
+                                    </div>: null
+                                }
 
                             </Col>
                         </Row>

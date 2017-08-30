@@ -91,6 +91,8 @@ class Main extends React.Component {
     };
 
     onSwitchCal = () => {
+        event.preventDefault();
+        console.log('month--------',this.state.month);
         if(this.state.switchBtn === true){
             this.setState({
                 switchBtn: false
@@ -98,7 +100,9 @@ class Main extends React.Component {
         }
     }
 
-    onSwitchList = () => {
+    onSwitchList = (event) => {
+        event.preventDefault();
+        console.log('month--------',this.state.month);
         if(this.state.switchBtn === false){
             this.setState({
                 switchBtn: true
@@ -141,7 +145,7 @@ class Main extends React.Component {
                                         month = {this.state.month}
 
                                     />:
-                                    <ActivityLog activityTimeLog={this.props.activity.activities}/>
+                                    <ActivityLog activityTimeLog={this.props.activity.activities} month={this.state.month}/>
                                 }
 
 
