@@ -1,6 +1,4 @@
-/**
- * Created by saubhagya on 28/7/17.
- */
+
 import React, { Component } from 'react'
 
 class ActivityLogCollaborator extends Component{

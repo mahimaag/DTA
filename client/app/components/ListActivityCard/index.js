@@ -1,6 +1,4 @@
-/**
- * Created by saubhagya on 27/7/17.
- */
+
 
 import React, { Component } from 'react'
 import ActivityLogRow from './../ActivityLogRow'
@@ -94,6 +92,7 @@ class ActivityLog extends Component{
                 </Row>
                 {(this.state.timeEnteries && this.state.timeEnteries.length > 0) ?
                     <ActivityLogRow timeLog={this.state.timeEnteries}
+                                    month={this.props.month}
                                     logItem={(logDate) => this.addNewLog(logDate)}
                                     newEntry={(newTimeLog,date) => {this.newEntry(newTimeLog,date)}}
                                     edittedLog={(editItem,date) => {this.edittedLog(editItem,date)}}
