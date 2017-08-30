@@ -5,7 +5,6 @@
 import React, { Component } from 'react'
 import ActivityLogRow from './../ActivityLogRow'
 import { Grid, Row, Col } from 'react-bootstrap';
-import SampleData from './../../../assests/SampleData'
 import { TimeEntryStatus, HeadingArray } from './../../../constants/Index'
 import './style.css'
 import ModalComp from '../../Core/ModalComp'
@@ -18,7 +17,6 @@ class ActivityLog extends Component{
         super(props);
         this.state = {
             timeEnteries: [],
-            // displayModal: false
         }
     }
 
@@ -74,27 +72,6 @@ class ActivityLog extends Component{
         })
     }
 
-    /*deleteEntry = (deletedEntry,logDate) => {
-        //console.log('activity to be deleted----',deletedEntry);
-        this.props.deleteActivity(deletedEntry._id);
-        this.state.timeEnteries.map((entry) => entry._id === logDate ? this.state.timeEnteries.splice(this.state.timeEnteries.indexOf(deletedEntry),1) : null);
-        this.setState({
-            timeEnteries:this.state.timeEnteries,
-            displayModal: true
-        })
-    };*/
-
-    /*clearAllLogs = (date) => {
-        this.state.timeEnteries.map((entry) => entry.date === date ? this.state.timeEnteries.splice(this.state.timeEnteries.indexOf(date),1) : null);
-        this.props.deleteAllActivity(date);
-        this.setState({
-            timeEnteries:this.state.timeEnteries
-        },() => {
-            console.log('---------entries---------',this.state.timeEnteries);
-        })
-
-    };*/
-
     closedWithoutCreate = (logDate) => {
         this.state.timeEnteries.map((entry) => entry._id === logDate ? (
             entry.activities.splice(entry.activities.findIndex((activity) => activity.status === TimeEntryStatus.New), 1)) : null);
@@ -103,14 +80,7 @@ class ActivityLog extends Component{
         })
     };
 
-    /*onCloseModalClick = () => {
-        this.setState({
-            displayModal: false
-        })
-    }*/
-
     render(){
-        // console.log('------------------props in list view--------------',this.props.activityTimeLog,this.state.timeEnteries);
         return(
             <div className="col-md-12 activity-list-comp">
                 <Row className="show-grid log-header">
@@ -126,22 +96,10 @@ class ActivityLog extends Component{
                     <ActivityLogRow timeLog={this.state.timeEnteries}
                                     logItem={(logDate) => this.addNewLog(logDate)}
                                     newEntry={(newTimeLog,date) => {this.newEntry(newTimeLog,date)}}
-                                    //onClearClick={(date) => {this.clearAllLogs(date)}}
                                     edittedLog={(editItem,date) => {this.edittedLog(editItem,date)}}
-                                    //deleteEntry={(deletedEntry,logDate) => {this.deleteEntry(deletedEntry,logDate)}}
                                     closedWithoutCreate={(logDate) => {this.closedWithoutCreate(logDate)}}/>:
                     null
                 }
-
-
-                {/*<ModalComp modalClassName = 'inmodal'
-                           modalShow = {this.state.displayModal}
-                           modalHide = {() => {this.onCloseModalClick()}}
-                           modalHeaderMsg = "Activity Deleted successfully"
-                           modalBody = {<DeleteModalContent/>}
-                           modalFooterClose = {() => {this.onCloseModalClick()}}
-                           modalFooterText = 'Close'
-                />*/}
             </div>
         );
     }
@@ -149,9 +107,7 @@ class ActivityLog extends Component{
 
 const mapDispatchToProps = (dispatch) => ({
     postActivities : (childItem) => {dispatch(postActivities(childItem))},
-    updateActivities : (childItem) => {dispatch(updateActivities(childItem))},
-    //deleteActivity : (activityId) => {dispatch(deleteActivity(activityId))},
-    //deleteAllActivity : (date) => {dispatch(deleteAllActivity(date))}
+    updateActivities : (childItem) => {dispatch(updateActivities(childItem))}
 
 });
 
@@ -164,14 +120,10 @@ export default connect(null, mapDispatchToProps)(ActivityLog);
  <ModalComp modalShow={this.state.displayModal}
  modalHide = {() => {this.onCloseModalClick()}}
  modalHeaderMsg="Activity Deleted successfully"
- modalBody = {<ModalBodyComp/>}
+ modalBody = {<ModalBodyComp/>} // or you can add text as body--------->>>modalBody = {'hello world'}
  modalFooterClose = {() => {this.onCloseModalClick()}}
  modalFooterText = 'Close'
  />*/
 
-/*componentWillReceiveProps(newProps) {
- this.setState({
- timeEnteries: newProps.activityTimeLog.slice()
- },() => {console.log(`${tag}[cwrp]state in list card-----`,this.state.timeEnteries)})
- }*/
+
 

@@ -5,9 +5,7 @@
 import React, { Component } from 'react'
 import { Row, Col } from 'react-bootstrap'
 import LogDropdown from '../../Core/Dropdown/index'
-//import { TSMS_IconButton } from './../../Core/Button'
 import {TimeEntryStatus} from '../../../constants/Index'
-//import MultiSelectDropdown from '../../Core/MultiSelectDropDown'
 import TtnButton from 'core/Button/btn';
 import Tags from '../../Core/ReactTags'
 
@@ -69,18 +67,6 @@ class NewLogComp extends Component{
         })
     }
 
-    /*onSelectedVal = (newCollab) => {
-        (this.state.newCollaborators.length && this.state.newCollaborators.indexOf(newCollab) > -1) ? null : this.state.newCollaborators.push(newCollab);
-        this.setState({newCollaborators: this.state.newCollaborators});
-    };
-
-    onDeleteCollab = (deletedVal) => {
-        this.state.newCollaborators.splice(this.state.newCollaborators.indexOf(deletedVal), 1);
-        this.setState({
-            newCollaborators: this.state.newCollaborators
-        })
-    }*/
-
     getTags = (tags) => {
         let empSet = new Set();
         tags.forEach(obj => {
@@ -95,7 +81,6 @@ class NewLogComp extends Component{
         let activityTitles = ['Westcon','Knowlegde Meet','Daily Time Analysis'];
         let durationTimeHH = [1,2,3,4,5,6,7,8];
         let durationTimeMM = [0,10,20,30,40,50];
-        //let newCollabArray = ['Gaurav','Rubi','Mahima','Nitin'];
         return(
             <div className = "data-div">
                 <Row>
@@ -133,24 +118,11 @@ class NewLogComp extends Component{
 
                         <TtnButton nature = "Decline"
                                    onClick = {() => this.onCloseClick()}/>
-                        {/*<TSMS_IconButton bClassName="btn btn-default btn-sm edit-clear-button"
-                         onClickFunc={() => this.onDoneClick()}
-                         spanClass="glyphicon glyphicon-ok"/>
-
-                        <TSMS_IconButton bClassName="btn btn-default btn-sm edit-clear-button"
-                                         onClickFunc={() => this.onCloseClick()}
-                                         spanClass="glyphicon glyphicon-remove"/>*/}
-
 
                     </Col>
                 </Row>
                 <Row>
                     <Col md = {12} lg = {12} className = "log-col new-collab">
-                        {/*Collaborators: <MultiSelectDropdown collabArray = {newCollabArray}
-                                                            newCollab = {this.state.newCollaborators}
-                                                            title = 'Select'
-                                                            onSelectedVal = {(newCollab) => {this.onSelectedVal(newCollab)}}
-                                                            onDeleteCollab = {(deletedVal) => {this.onDeleteCollab(deletedVal)}}/>*/}
                         <span>Collaborators:</span> <Tags updateTag = {(tags) => {this.getTags(tags)}}/>
                     </Col>
                 </Row>
