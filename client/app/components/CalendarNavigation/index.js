@@ -20,6 +20,7 @@ class CalendarNavigation extends React.Component{
         console.log("today clicked");
         this.props.todayEvents();
     };
+
     render(){
         return(
             <div>

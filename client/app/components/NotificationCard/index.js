@@ -27,13 +27,12 @@ class NotificationCards extends Component{
         if(nextProps.month < new Date().getMonth()){
             totalDays = nextProps.days;
         }else if(nextProps.month === new Date().getMonth()){
-           totalDays = this.state.missingLogs;
+           totalDays = new Date().getDate();
         }else{
             totalDays =0;
         }
         console.log("==total days of selected month is:==",totalDays)
-
-            let totalHoursForDay = 0,totalMins = 0,localTotalHours= this.state.totalHours;
+        let totalHoursForDay = 0,totalMins = 0,localTotalHours= 0;
             let localPartial = 0, localMissing = totalDays;
 
             if(nextProps.activity && nextProps.activity.activities.length >0){
@@ -62,6 +61,15 @@ class NotificationCards extends Component{
                     missingLogs:localMissing,
                     partialLogs:localPartial,
                     totalHours : localTotalHours
+                },()=>{
+                    console.log("==final missing, partial,totalHours are :",this.state.missingLogs,this.state.partialLogs,this.state.totalHours)
+                });
+            }
+            else{
+                this.setState({
+                    missingLogs:nextProps.days,
+                    partialLogs:0,
+                    totalHours : 0
                 },()=>{
                     console.log("==final missing, partial,totalHours are :",this.state.missingLogs,this.state.partialLogs,this.state.totalHours)
                 });
