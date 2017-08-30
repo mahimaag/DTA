@@ -11,32 +11,16 @@ import ActivityAutoComplete from './../../Core/ActivityAutoComplete'
 import {getActivities} from './../../actions/activity.actions'
 
 class Main extends React.Component {
-    constructor(props){
-        super(props);
-        this.state = {
-            searchedList: [],
-            textValue: '',
-        }
-    }
-
     componentWillMount () {
         // get events/activities from db
         this.props.getActivities();
     }
-
-
-    handleChange = (item) => {
-        let itemList = [];
-        item ? itemList = [{id: 1, name: "item 1"}, {id: 2, name: "item 2"},{id: 3, name: "item 3"}, {id: 4, name: "item 4"}] : itemList = [];
-        setTimeout(() => this.setState({searchedList: itemList}), 500)
-    };
-
     searchItem = (item) => {
       this.setState({searchedList: []})
     };
 
     displayText = (item) => {
-        return item.name + ' : ' + item.id;
+        return item.activityType;
     };
     mapDataToEvents = () => {
         let events = [];
@@ -53,7 +37,7 @@ class Main extends React.Component {
                 })
             })
         }
-        console.log("events are :",events)
+
         return events;
     };
     render() {
@@ -66,18 +50,19 @@ class Main extends React.Component {
                             <div className="col-lg-9 pull-left">
 
                                 <div className="col-lg-9 pull-left ">
-                                    <TypeAhead wrappedComponenent={ActivityAutoComplete} apiPath="apiPath"
-                                               icon={{name: "glyphicon glyphicon-search", position: 'place-right'}}
-                                               handleChange={(item) => this.handleChange(item)} searchedList={this.state.searchedList}
-                                               valueGenerator={this.displayText} searchItem={(item) => this.searchItem(item)}
+                                    <TypeAhead
+                                        wrappedComponent={ActivityAutoComplete}
+                                        apiPath="apiPath"
+                                        icon={{name: "glyphicon glyphicon-search", position: 'place-right'}}
+                                        handleChange={this.handleChange}
+                                        valueGenerator={this.displayText}
+                                        searchItem={(item) => this.searchItem(item)}
                                     />
-                                    <DashboardCalendar
-                                        events={events}/>
-
-                                    <ActivityLog activityTimeLog={this.props.activity.activities}/>
+                                    <DashboardCalendar events={events} />
+                                    <ActivityLog activityTimeLog={this.props.activity.activities} />
                                 </div>
                                 <div className="col-md-3 pull-right">
-                                    <NotificationCards/>
+                                    <NotificationCards />
                                 </div>
                             </div>
                         </div>
@@ -119,13 +104,13 @@ class Main extends React.Component {
         });
     }
 }
+
 const mapDispatchToProps = (dispatch) => ({
-    getActivities : () => {dispatch(getActivities())}
+    getActivities : () => dispatch(getActivities())
 });
-const mapStateToProps = (state) => {
-    return {
-        activity: state.activity
-    }
-};
+const mapStateToProps = (state) => ({
+    activity: state.activity,
+
+});
 export default connect(mapStateToProps,mapDispatchToProps)(Main);
 

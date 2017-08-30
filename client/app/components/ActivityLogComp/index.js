@@ -9,7 +9,7 @@ import LogDropdown from '../../Core/Dropdown/index'
 import ActivityLogCollaborator from '../ActivityLogCollaborator'
 import MultiSelectDropdown from '../../Core/MultiSelectDropDown'
 import TtnButton from 'core/Button/btn';
-
+import {connect} from "react-redux";
 
 
 class ActivityLogComp extends Component{
@@ -82,9 +82,8 @@ class ActivityLogComp extends Component{
             activity: this.state.activity
         })
     };
-
     render(){
-        //console.log('props in activity log comp',this.props);
+        console.log('props in activity log comp',this.props.searchedList);
         const activityLog = this.props.activity;
         let activityTitles = ['Westcon','Knowlegde Meet','Daily Time Analysis'];
         let durationTimeHH = [1,2,3,4,5,6,7,8];
@@ -196,6 +195,10 @@ class ActivityLogComp extends Component{
     }
 }
 
-export default ActivityLogComp;
+
+const mapStateToProps = (state) => ({
+    searchedList : state.activity.searchedList,
+});
+export default connect(mapStateToProps)(ActivityLogComp);
 
 

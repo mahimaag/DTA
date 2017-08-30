@@ -23,5 +23,10 @@ export const ActivityActions = {
         Success: 'Activity.DeleteAllActivities.Success',
         Failure: 'Activity.DeleteAllActivities.Failure',
         Start: 'Activity.DeleteAllActivities.Start'
+    },
+    SearchActivity : {
+        Success: 'Activity.SearchActivity.Success',
+        Failure: 'Activity.SearchActivity.Failure',
+        Start: 'Activity.SearchActivity.Start'
     }
 };

@@ -5,6 +5,8 @@ import _ from 'lodash';
 // Represents an activity object and its current state.
 const initialState = {
     activities: [],                // activities Array from Apis.
+    searchedList: [],
+    search:false,
     error: {}                  // error from Apis.
 };
 
@@ -124,6 +126,13 @@ const ActivityReducer = (state = initialState, action) => {
             }
             console.log('data after deletion',duplicateState.activities);
             break;
+        case  ActivityActions.SearchActivity.Success:
+              duplicateState.searchedList = action.data;
+              break;
+
+        case ActivityActions.SearchActivity.Failure:
+             duplicateState.error = action.error;
+             break;
 
         default:
             break;

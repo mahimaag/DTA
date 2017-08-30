@@ -152,10 +152,10 @@ const mapDispatchToProps = (dispatch) => ({
     updateActivities : (childItem) => {dispatch(updateActivities(childItem))},
     deleteActivity : (activityId) => {dispatch(deleteActivity(activityId))},
     deleteAllActivity : (date) => {dispatch(deleteAllActivity(date))}
-
 });
 
-export default connect(null, mapDispatchToProps)(ActivityLog);
+
+export default connect(null , mapDispatchToProps)(ActivityLog);
 
 
 //Modal component ---------------------------

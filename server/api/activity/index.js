@@ -35,5 +35,10 @@ router.delete(
     service.validateEmpId,
     controller.deleteActivityByEmp
 );
+router.get(
+    "/searchActivity",
+    service.validateEmpId,
+    controller.getSearchedActivity
+);
 
 module.exports = router;
