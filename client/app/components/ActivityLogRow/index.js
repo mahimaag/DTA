@@ -20,10 +20,9 @@ class ActivityLogRow extends Component{
                         return ((item.activities.length > 0 ?
                                     <div key={index} className = "col-md-12 activity-timelog">
                                         <ActivityLogHeader logDate = {item._id}
+                                                           month = {this.props.month}
                                                            activities = {item.activities}
-                                                           onLogTimeClick = {() => this.props.logItem(item._id)}
-                                                           month={this.props.month}
-                                        />
+                                                           onLogTimeClick = {() => this.props.logItem(item._id)}/>
                                         <Row className = "show-grid">
                                             {item.activities.map((activity, index) => {
                                                 return ((activity.status == TimeEntryStatus.New) ? <NewLogComp logDate = {item._id}
@@ -31,7 +30,7 @@ class ActivityLogRow extends Component{
                                                                                                                closedWithoutCreate = {() => {this.props.closedWithoutCreate(item._id)}} key={index}/> :
                                                         <ActivityLogComp activity = {activity}
                                                                          date = {item._id}
-                                                                         month={this.props.month}
+                                                                         month = {this.props.month}
                                                                          timeLog = {this.props.timeLog}
                                                                          edittedLog = {(editLog) => {this.props.edittedLog(editLog, item._id)}}
                                                                          key = {index}

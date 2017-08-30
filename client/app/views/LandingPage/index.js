@@ -90,8 +90,9 @@ class Main extends React.Component {
         return events;
     };
 
-    onSwitchCal = (event) => {
+    onSwitchCal = () => {
         event.preventDefault();
+        console.log('month--------',this.state.month);
         if(this.state.switchBtn === true){
             this.setState({
                 switchBtn: false,
@@ -100,10 +101,11 @@ class Main extends React.Component {
                 this.props.getActivities(this.state.month)
             })
         }
-    };
+    }
 
     onSwitchList = (event) => {
         event.preventDefault();
+        console.log('month--------',this.state.month);
         if(this.state.switchBtn === false){
             this.setState({
                 switchBtn: true
@@ -134,17 +136,17 @@ class Main extends React.Component {
                                 />
 
                                 <div className="switch-cal-list">
-                                    <button onClick = {(e) =>this.onSwitchList(e)}>List</button>
+                                    <button onClick = {this.onSwitchList}>List</button>
 
-                                    <button onClick = {(e) =>this.onSwitchCal(e)}>Calendar</button>
+                                    <button onClick = {this.onSwitchCal}>Calendar</button>
                                 </div>
 
-                                {
-                                    this.state.switchBtn === false?
+                                {this.state.switchBtn === false?
                                     <DashboardCalendar
                                         events={events}
                                         messageDecoration={ msg }
                                         month = {this.state.month}
+
                                     />:
                                     <ActivityLog activityTimeLog={this.props.activity.activities} month={this.state.month}/>
                                 }

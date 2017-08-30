@@ -1,5 +1,4 @@
 import React,{Component} from 'react'
-
 import Calendar from 'components/Calendar'
 import ModalComp from './../../Core/ModalComp'
 import ModalContent from './../../Core/AddActivityModalContent'

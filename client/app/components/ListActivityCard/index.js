@@ -1,6 +1,4 @@
-/**
- * Created by saubhagya on 27/7/17.
- */
+
 
 import React, { Component } from 'react'
 import ActivityLogRow from './../ActivityLogRow'
