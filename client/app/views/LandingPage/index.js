@@ -11,6 +11,8 @@ import ActivityAutoComplete from './../../Core/ActivityAutoComplete'
 import {getActivities} from './../../actions/activity.actions'
 import CalendarNavigation from './../../components/CalendarNavigation'
 
+
+const days = [31,28,31,30,31,30,31,31,30,31,30,31];
 class Main extends React.Component {
     constructor(props){
         super(props);
@@ -117,7 +119,7 @@ class Main extends React.Component {
                                 <ActivityLog activityTimeLog={this.props.activity.activities}/>
                             </div>
                             <div className="col-md-3 pull-right">
-                                <NotificationCards activity={this.props.activity} month={this.state.month}/>
+                                <NotificationCards activity={this.props.activity} month={this.state.month} days={days[this.state.month]}/>
                             </div>
                         </div>
                     </div>

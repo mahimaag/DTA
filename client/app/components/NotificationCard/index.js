@@ -15,21 +15,24 @@ class NotificationCards extends Component{
     constructor(props){
         super(props);
         this.state = {
-            missingLogs:new Date().getDate(),
             partialLogs : 0,
-            totalHours:0
+            totalHours:0,
+            missingLogs: new Date().getDate()
         }
     }
 
     componentWillReceiveProps(nextProps){
-
+        if(this.props.month < new Date().getMonth()){
+            this.setState({
+                missingLogs: this.props.days
+            })
+        }
         this.setState({
-            missingLogs:new Date().getDate(),
             partialLogs : 0,
             totalHours:0
         },()=>{
             let totalHoursForDay = 0,totalMins = 0,localTotalHours= this.state.totalHours;
-            let localPartial = this.state.partialLogs, localMissing = this.state.missingLogs;
+            let localPartial = this.state.partialLogs, localMissing = this.props.missingLogs;
 
             if(nextProps.activity && nextProps.activity.activities.length >0){
                 //calculate total hours completed on a day
