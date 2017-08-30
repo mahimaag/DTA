@@ -22,8 +22,7 @@ class NotificationCards extends Component{
     }
 
     componentWillReceiveProps(nextProps){
-        let totalDays , totalHoursForDay = 0,totalMins = 0,localTotalHours= 0, localPartial = 0, localMissing = totalDays;
-
+        let totalDays ;
         if(nextProps.month < new Date().getMonth()){
             totalDays = nextProps.days;
         }else if(nextProps.month === new Date().getMonth()){
@@ -32,8 +31,11 @@ class NotificationCards extends Component{
             totalDays =0;
         }
 
+        let totalHoursForDay = 0,totalMins = 0,localTotalHours= 0
+        let localPartial = 0, localMissing = totalDays;
 
-            if(nextProps.activity && nextProps.activity.activities.length >0){
+
+        if(nextProps.activity && nextProps.activity.activities.length >0){
                 //calculate total hours completed on a day
                 nextProps.activity.activities.map((activitites)=>{
                     activitites.activities.map((data)=>{

@@ -23,12 +23,11 @@
 
 .rbc-event {
     background-color: white;
-    width:20px;
+
 }
 
 .rbc-event.rbc-selected {
     background-color: white;
-    width:20px;
 }
 
 .todayDate{
