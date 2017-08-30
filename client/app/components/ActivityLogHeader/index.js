@@ -55,16 +55,16 @@ class ActivityLogHeader extends Component{
         return(
             <div>
                 <Row className = "show-grid">
-                    <Col md = {2} lg = {2} className = "log-col">
+                    <Col md = {2} lg = {2} className = "log-col date-day-col">
                         <span className = "log-date-day">{formattedDate}</span>
                         <span className = "log-date-day">{logDay}</span>
                     </Col>
-                    <Col md = {2} lg = {2} lgOffset = {1} className = "log-col">
+                    <Col md = {2} lg = {2}  className = "log-col totalHours-col">
                         <span>{totalHours} : {totalMins}</span>
                     </Col>
-                    <Col md = {4} lg = {4} lgOffset = {3} className = "log-col">
+                    <Col md = {4} lg = {4} lgOffset = {3} className = "log-col header-buttons-col">
                         {this.props.month === new Date().getMonth()?
-                            <div>
+                            <div className="header-buttons">
                                 <TtnButton bClassName = "log-clear-button"
                                            level = "primary"
                                            title = "Log Time"
