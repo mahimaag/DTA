@@ -46,7 +46,7 @@ class ActivityLogHeader extends Component{
         activityArray.map(function(activity){
             totalHours=totalHours+activity.hh;
             totalMins=totalMins+activity.mm;
-            while(totalMins > 60){
+            while(totalMins >= 60){
                 totalHours=totalHours+1;
                 totalMins = totalMins-60;
             }
@@ -62,13 +62,13 @@ class ActivityLogHeader extends Component{
                         <span className = "log-date-day">{logDay}</span>
                     </Col>
                     <Col md = {2} lg = {2} lgOffset = {1} className = "log-col">
-                        <span>{totalHours}Hrs {totalMins}Mins</span>
+                        <span>{totalHours} : {totalMins}</span>
                     </Col>
                     <Col md = {4} lg = {4} lgOffset = {3} className = "log-col">
                         <TtnButton bClassName = "log-clear-button"
                                    level = "primary"
                                    title = "Log Time"
-                                   onClick = {this.props.onLogTimeClick}/>
+                                   onClick = {this.props.onLogTimeClick}/>:
 
                         <TtnButton bClassName = "log-clear-button"
                                    level = "primary"

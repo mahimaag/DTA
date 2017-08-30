@@ -94,7 +94,7 @@ class NewLogComp extends Component{
     render(){
         let activityTitles = ['Westcon','Knowlegde Meet','Daily Time Analysis'];
         let durationTimeHH = [1,2,3,4,5,6,7,8];
-        let durationTimeMM = [10,20,30,40,50];
+        let durationTimeMM = [0,10,20,30,40,50];
         //let newCollabArray = ['Gaurav','Rubi','Mahima','Nitin'];
         return(
             <div className = "data-div">

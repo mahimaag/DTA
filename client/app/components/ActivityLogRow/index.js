@@ -32,7 +32,7 @@ class ActivityLogRow extends Component{
                                                         <ActivityLogComp activity = {activity}
                                                                          date = {item._id}
                                                                          timeLog = {this.props.timeLog}
-                                                                         deleteEntry = {(deletedEntry) => this.props.deleteEntry(deletedEntry, item._id)}
+                                                                         //deleteEntry = {(deletedEntry) => this.props.deleteEntry(deletedEntry, item._id)}
                                                                          edittedLog = {(editLog) => {this.props.edittedLog(editLog, item._id)}}
                                                                          key = {index}
                                                         />

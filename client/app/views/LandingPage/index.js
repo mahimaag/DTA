@@ -16,6 +16,7 @@ class Main extends React.Component {
         this.state = {
             searchedList: [],
             textValue: '',
+            switchBtn: false
         }
     }
     componentWillMount () {
@@ -55,6 +56,22 @@ class Main extends React.Component {
         return events;
     };
 
+    onSwitchCal = () => {
+        if(this.state.switchBtn === true){
+            this.setState({
+                switchBtn: false
+            })
+        }
+    }
+
+    onSwitchList = () => {
+        if(this.state.switchBtn === false){
+            this.setState({
+                switchBtn: true
+            })
+        }
+    }
+
     render() {
         let events = this.mapDataToEvents();
         return (
@@ -69,10 +86,20 @@ class Main extends React.Component {
                                            valueGenerator={this.displayText} searchItem={(item) => this.searchItem(item)}
                                 />
 
-                                <DashboardCalendar
-                                    events={events}/>
+                                <div className="switch-cal-list">
+                                    <button onClick = {this.onSwitchList}>List</button>
 
-                                <ActivityLog activityTimeLog={this.props.activity.activities}/>
+                                    <button onClick = {this.onSwitchCal}>Calendar</button>
+                                </div>
+
+                                {this.state.switchBtn === false?
+                                    <DashboardCalendar
+                                        events={events}/>:
+                                    <ActivityLog activityTimeLog={this.props.activity.activities}/>
+                                }
+
+
+
                             </div>
                             <div className="col-md-3 pull-right">
                                 <NotificationCards/>

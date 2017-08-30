@@ -7,6 +7,7 @@ import {FormGroup, ControlLabel, FormControl} from 'react-bootstrap';
 
 import Tags from './../ReactTags'
 import TtnButton from './../Button/btn';
+import '../../components/Calendar/style.css'
 import TsmsForm from './../Form';
 import {TimeEntryStatus} from './../../../constants/Index'
 import {postActivities} from './../../actions/activity.actions'
@@ -29,7 +30,7 @@ class ModalContent extends Component{
             description:'',
             repeatActivity : [],
             events:[{
-                "title":'',
+                "title":'today',
                 "start":new Date(),
                 "end":new Date()
             }]
@@ -44,6 +45,7 @@ class ModalContent extends Component{
             let newevents = this.state.events;
 
             if(newRepeatedDates.indexOf(+new Date(getDate(slot.start)))>=0){
+                console.log(newRepeatedDates.indexOf(+new Date(getDate(slot.start))))
                 newRepeatedDates.splice((newRepeatedDates.indexOf(+new Date(getDate(slot.start)))),1)
                 newevents.map((item,index) => {
                     if(item.start===getDate(slot.start)&&item.end===getDate(slot.start)){
@@ -53,9 +55,9 @@ class ModalContent extends Component{
             }else{
                 newRepeatedDates.push(+new Date(getDate(slot.start)));
                 newevents.push({
-                    "title":"done",
-                    "start":getDate(slot.start),
-                    "end":getDate(slot.start)
+                    "title": " ",
+                    "start": getDate(slot.start),
+                    "end": getDate(slot.start)
                 })
             }
 
@@ -126,6 +128,22 @@ class ModalContent extends Component{
         });
     }
 
+    eventStyleGetterRepeat(event, start, end, isSelected) {
+        console.log('event-------------------->>>>>>>>>>',event);
+        let cssClass = "repeat-icon";
+        if(event.title === "                                                                    "){
+
+            return {
+                className:cssClass,
+            };
+        }else{
+            return{
+                className:cssClass
+            }
+        }
+
+    }
+
 
     render(){
         let activityTitles = ['Westcon','Knowlegde Meet','Daily Time Analysis'];
@@ -141,6 +159,7 @@ class ModalContent extends Component{
                             views={['month']}
                             toolbar={false}
                             onSelectSlot = { (slot) => this.selectSlot(slot)}
+                            eventPropGetter={(this.eventStyleGetterRepeat)}
                         />
                         <button onClick={(e) => this.saveEvent(e)}>Save </button>
                     </div>:

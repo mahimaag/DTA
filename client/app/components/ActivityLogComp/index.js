@@ -39,6 +39,7 @@ class ActivityLogComp extends Component{
         this.setState({
             editBtn: false,
         });
+        console.log('this.state.activity--------->>>>',this.state.activity);
         this.props.edittedLog(this.state.activity);
 
     };
@@ -136,12 +137,12 @@ class ActivityLogComp extends Component{
 
     render(){
         // console.log('props in activity log comp',this.props);
-        console.log('this.state.activity----',this.state.activity);
+        //console.log('this.state.activity----',this.state.activity);
         //console.log('deleteComp----------->>>>>>>>>',this.state.deleteComp);
         const activityLog = this.props.activity;
         let activityTitles = ['Westcon','Knowlegde Meet','Daily Time Analysis'];
         let durationTimeHH = [1,2,3,4,5,6,7,8];
-        let durationTimeMM = [10,20,30,40,50];
+        let durationTimeMM = [0,10,20,30,40,50];
         return(
             <div>
                 {this.state.editBtn === true?
@@ -163,11 +164,11 @@ class ActivityLogComp extends Component{
                                 <LogDropdown className="duration"
                                              title={this.state.activity.hh}
                                              data={durationTimeHH}
-                                             onSelect={(item) => {this.setSelectedValue(item, 'hh')}}/>Hrs
+                                             onSelect={(item) => {this.setSelectedValue(item, 'hh')}}/>:
                                 <LogDropdown className="duration"
                                              title={this.state.activity.mm}
                                              data={durationTimeMM}
-                                             onSelect={(item) => {this.setSelectedValue(item, 'mm')}}/>Mins
+                                             onSelect={(item) => {this.setSelectedValue(item, 'mm')}}/>
                             </Col>
                             <Col md={4} lg={4} className="log-col">
                                 <input type="text"
@@ -216,8 +217,8 @@ class ActivityLogComp extends Component{
                                 <span>{activityLog.activityType}</span>
                             </Col>
                             <Col md={3} lg={3} className="log-col">
-                                <span>{activityLog.hh}</span>hrs
-                                <span>{activityLog.mm}</span>mins
+                                <span>{activityLog.hh}</span>:
+                                <span>{activityLog.mm}</span>
                             </Col>
                             <Col md={4} lg={4} className="log-col">
                                 <span>{activityLog.description}</span>

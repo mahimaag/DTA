@@ -110,7 +110,7 @@ class ActivityLog extends Component{
     }*/
 
     render(){
-        console.log('------------------props in list view--------------',this.props.activityTimeLog,this.state.timeEnteries);
+        // console.log('------------------props in list view--------------',this.props.activityTimeLog,this.state.timeEnteries);
         return(
             <div className="col-md-12 activity-list-comp">
                 <Row className="show-grid log-header">
@@ -122,13 +122,17 @@ class ActivityLog extends Component{
                         )})
                     }
                 </Row>
-                <ActivityLogRow timeLog={this.state.timeEnteries}
-                                logItem={(logDate) => this.addNewLog(logDate)}
-                                newEntry={(newTimeLog,date) => {this.newEntry(newTimeLog,date)}}
-                                //onClearClick={(date) => {this.clearAllLogs(date)}}
-                                edittedLog={(editItem,date) => {this.edittedLog(editItem,date)}}
-                                //deleteEntry={(deletedEntry,logDate) => {this.deleteEntry(deletedEntry,logDate)}}
-                                closedWithoutCreate={(logDate) => {this.closedWithoutCreate(logDate)}}/>
+                {(this.state.timeEnteries && this.state.timeEnteries.length > 0) ?
+                    <ActivityLogRow timeLog={this.state.timeEnteries}
+                                    logItem={(logDate) => this.addNewLog(logDate)}
+                                    newEntry={(newTimeLog,date) => {this.newEntry(newTimeLog,date)}}
+                                    //onClearClick={(date) => {this.clearAllLogs(date)}}
+                                    edittedLog={(editItem,date) => {this.edittedLog(editItem,date)}}
+                                    //deleteEntry={(deletedEntry,logDate) => {this.deleteEntry(deletedEntry,logDate)}}
+                                    closedWithoutCreate={(logDate) => {this.closedWithoutCreate(logDate)}}/>:
+                    null
+                }
+
 
                 {/*<ModalComp modalClassName = 'inmodal'
                            modalShow = {this.state.displayModal}
