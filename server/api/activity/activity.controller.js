@@ -29,9 +29,6 @@ export function getActivities(req, res) {
                 date: {
                     $lte: lastDate, // last date of current month
                     $gte: firstDate // first date of current month
-                },
-                status: {
-                    $nin: ["Draft"]
                 }
             }
         },
@@ -57,7 +54,7 @@ export function getActivities(req, res) {
 }
 
 export function saveActivities(req, res) {
-    console.log("======actvity controller // saveActivities()=========", req.body);
+    console.log("======actvity controller // saveActivities()=========");
     let response = [];
     Activity.create(req.body)
         .then(output => {
@@ -93,17 +90,18 @@ export function saveActivities(req, res) {
 
 function addCollaborators(req) {
     let defered = Q.defer(),
-        collaborators = req.body.collaborators,
-        body = Object.assign({}, req.body);
+        collaborators = req.body.collaborators;
 
     collaborators.forEach((item, index)=> {
-        body.employeeId = item;
-        body.status = "Draft";
-        body.taggedBy = req.employeeId;
+        req.body.employeeId = item;
+        req.body.status = "Draft";
+        req.body.collaborators = [];
 
-        Activity.create(body)
+        console.log("=======req.body=====", req.body);
+
+        Activity.create(req.body)
             .then(result => {
-                console.log("activity cloned.......", result);
+                console.log("activity cloned..", result);
             })
             .catch(err => {
                 defered.reject(err);
@@ -192,4 +190,38 @@ export function deleteActivityByEmp(req, res) {
         console.log("------else-------------");
         genericRepo.badInput(res, 500);
     }
+}
+
+export function getSearchedActivity(req, res) {
+    let date = new Date();
+    let m =parseInt(req.query.month);
+    let y = date.getFullYear();
+    let firstDate = new Date(y, m, 1).getTime();
+    let lastDate = new Date(y, m + 1, 0).getTime();
+    const searchValue = req.query.activityName;
+    const regex = new RegExp(`.*${searchValue}.*`);
+
+    Activity.find(
+                 {
+                    $or:[
+                            { $and: [ {activityType: { $regex: regex, $options: "sxi" } },
+                            { date: {
+                                $lte: lastDate,
+                                $gte: firstDate
+                            } }, { employeeId: parseInt(req.employeeId) } ] }
+                            ,
+                            { $and : [ {description: { $regex: regex, $options: "sxi" } },
+                            { date: {
+                                $lte: lastDate,
+                                $gte: firstDate
+                            } },{ employeeId: parseInt(req.employeeId) } ] }
+
+                       ]
+                   }
+                  )
+                .then(activities => {
+                    res.send({activities})
+        })
+        .catch(genericRepo.handleError(res))
+
 }

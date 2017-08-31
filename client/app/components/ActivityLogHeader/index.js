@@ -2,14 +2,14 @@
 import React, { Component } from 'react'
 import { Row, Col} from 'react-bootstrap'
 //import { TSMS_TextButton } from './../../Core/Button'
-import TtnButton from 'core/Button/btn';
-import {monthArray} from '../../../constants/Index'
+import TtnButton from '../../Core/Button/btn'
 import {getDate} from '../../../utils/common'
 import moment from 'moment'
 import {deleteAllActivity} from '../../actions/activity.actions'
 import { connect } from 'react-redux';
 import ModalComp from '../../Core/ModalComp'
 import DeleteModal from '../../Core/DeleteModal'
+
 
 class ActivityLogHeader extends Component{
     constructor(props){
@@ -18,7 +18,6 @@ class ActivityLogHeader extends Component{
             displayModal: false
         }
     }
-
     onClearClick = (activity) => {
         this.setState({
             displayModal: true
@@ -39,6 +38,7 @@ class ActivityLogHeader extends Component{
     };
 
     render(){
+        console.log('&&&&&&&&&&&&&&&&&&&&&&&&&&&&&',this.props.month);
         let activityArray = this.props.activities;
         let totalHours = 0,totalMins = 0;
         activityArray.map(function(activity){

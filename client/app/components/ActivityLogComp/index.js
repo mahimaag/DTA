@@ -1,11 +1,13 @@
-
+/**
+ * Created by saubhagya on 20/7/17.
+ */
 
 import React, { Component } from 'react'
 import { Row, Col } from 'react-bootstrap'
 import LogDropdown from '../../Core/Dropdown/index'
 import ActivityLogCollaborator from '../ActivityLogCollaborator'
 import MultiSelectDropdown from '../../Core/MultiSelectDropDown'
-import TtnButton from 'core/Button/btn';
+import TtnButton from '../../Core/Button/btn';
 import DeleteModal from '../../Core/DeleteModal'
 import { deleteActivity, updateActivities } from '../../actions/activity.actions'
 import { connect } from 'react-redux';
@@ -104,6 +106,7 @@ class ActivityLogComp extends Component{
             displayModal: false,
         })
     };
+
 
     render(){
         const activityLog = this.props.activity;

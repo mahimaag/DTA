@@ -97,7 +97,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 });
 
-export default connect(null, mapDispatchToProps)(ActivityLog);
+export default connect(null , mapDispatchToProps)(ActivityLog);
 
 
 //Modal component ---------------------------
@@ -106,10 +106,17 @@ export default connect(null, mapDispatchToProps)(ActivityLog);
  <ModalComp modalShow={this.state.displayModal}
  modalHide = {() => {this.onCloseModalClick()}}
  modalHeaderMsg="Activity Deleted successfully"
- modalBody = {<ModalBodyComp/>} // or you can add text as body--------->>>modalBody = {'hello world'}
+ modalBody = {<ModalBodyComp/>}
  modalFooterClose = {() => {this.onCloseModalClick()}}
  modalFooterText = 'Close'
  />*/
 
+//entry.activities.splice(entry.activities.indexOf(deletedEntry),1)
 
+/*componentWillReceiveProps(newProps) {
+ this.setState({
+ timeEnteries: newProps.activityTimeLog.slice()
+ },() => {console.log(`${tag}[cwrp]state in list card-----`,this.state.timeEnteries)})
+ }*/
 
+//entry.activities = []

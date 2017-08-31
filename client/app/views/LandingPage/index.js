@@ -8,7 +8,7 @@ import ActivityLog from 'components/ListActivityCard';
 import TtnButton from 'core/Button/btn';
 import TypeAhead from './../../Core/TypeAhead'
 import ActivityAutoComplete from './../../Core/ActivityAutoComplete'
-import {getActivities} from './../../actions/activity.actions'
+import {getActivities,display} from './../../actions/activity.actions'
 import CalendarNavigation from './../../components/CalendarNavigation'
 
 const days = [31,28,31,30,31,30,31,31,30,31,30,31];
@@ -31,11 +31,6 @@ class Main extends React.Component {
         this.props.getActivities(currentMonth);
     }
 
-    handleChange = (item) => {
-        let itemList = [];
-        item ? itemList = [{id: 1, name: "item 1"}, {id: 2, name: "item 2"},{id: 3, name: "item 3"}, {id: 4, name: "item 4"}] : itemList = [];
-        setTimeout(() => this.setState({searchedList: itemList}), 500)
-    };
 
     searchItem = (item) => {
       this.setState({searchedList: []})
@@ -89,48 +84,40 @@ class Main extends React.Component {
         }
         return events;
     };
-
     onSwitchCal = () => {
-        event.preventDefault();
-        if(this.state.switchBtn === true){
-            this.setState({
-                switchBtn: false,
-                month:new Date().getMonth()
-            },()=>{
-                this.props.getActivities(this.state.month)
-            })
-        }
+        this.props.display('calendar');
+        this.setState({
+            month:new Date().getMonth()
+        },()=>{
+            this.props.getActivities(this.state.month)})
     };
 
-    onSwitchList = (event) => {
-        event.preventDefault();
-        if(this.state.switchBtn === false){
-            this.setState({
-                switchBtn: true
-            })
-        }
+    onSwitchList = () => {
+        this.props.display('list');
     };
-
     render() {
         let events = this.mapDataToEvents();
-
         let msg = {
             showMore: total => `+${total} ...`,
             previous : <CalendarNavigation title="back" month={this.state.month} previousEvents={this.previousEvents}/>,
             today : <CalendarNavigation title="today" month={this.state.month} todayEvents={this.todayEvents}/>,
             next : <CalendarNavigation title="next" month={this.state.month} nextEvents={this.nextEvents}/>
         };
-
         return (
             <div className="wrapper wrapper-content animated fadeInRight">
                 <div className="row">
                     <div className="col-lg-12">
                         <div className="text-center m-t-lg">
                             <div className="col-lg-9 pull-left ">
-                                <TypeAhead wrappedComponenent={ActivityAutoComplete} apiPath="apiPath"
-                                           icon={{name: "glyphicon glyphicon-search", position: 'place-right'}}
-                                           handleChange={(item) => this.handleChange(item)} searchedList={this.state.searchedList}
-                                           valueGenerator={this.displayText} searchItem={(item) => this.searchItem(item)}
+                                <TypeAhead
+                                    wrappedComponenent={ActivityAutoComplete}
+                                    apiPath="apiPath"
+                                    icon={{name: "glyphicon glyphicon-search", position: 'place-right'}}
+                                    handleChange={this.handleChange}
+                                    searchedList={this.state.searchedList}
+                                    valueGenerator={this.displayText}
+                                    searchItem={this.searchItem}
+                                    month={this.state.month}
                                 />
 
                                 <div className="switch-cal-list">
@@ -139,16 +126,16 @@ class Main extends React.Component {
                                     <button onClick = {this.onSwitchCal}>Calendar</button>
                                 </div>
 
-                                {this.state.switchBtn === false?
+                                {
+                                  this.props.currentView === 'calendar' ?
                                     <DashboardCalendar
                                         events={events}
                                         messageDecoration={ msg }
-                                        month = {this.state.month}
+                                        month={this.state.month}
 
-                                    />:
-                                    <ActivityLog activityTimeLog={this.props.activity.activities} month={this.state.month}/>
+                                    /> :
+                                      <ActivityLog activityTimeLog={this.props.activity.activities} month={this.state.month}/>
                                 }
-
                             </div>
                             <div className="col-md-3 pull-right">
                                 <NotificationCards activity={this.props.activity} month={this.state.month} days={days[this.state.month]}/>
@@ -176,12 +163,13 @@ class Main extends React.Component {
     }
 }
 const mapDispatchToProps = (dispatch) => ({
-    getActivities : (currentMonth) => {dispatch(getActivities(currentMonth))}
+    getActivities: (currentMonth) => {dispatch(getActivities(currentMonth))},
+    display: (currentView) => {dispatch(display(currentView))}
 });
-const mapStateToProps = (state) => {
-    return {
-        activity: state.activity
-    }
-};
-export default connect(mapStateToProps,mapDispatchToProps)(Main);
+const mapStateToProps = (state) => ({
+    activity: state.activity,
+    currentView: state.activity.currentView,
+
+});
+export default connect(mapStateToProps, mapDispatchToProps)(Main);
 

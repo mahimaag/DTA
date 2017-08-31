@@ -5,6 +5,10 @@ import _ from 'lodash';
 // Represents an activity object and its current state.
 const initialState = {
     activities: [],                // activities Array from Apis.
+    searchedList: [],
+    searchPermit:false,
+    currentView:'calendar',
+    isFetching:false,
     error: {}                  // error from Apis.
 };
 
@@ -17,8 +21,10 @@ const ActivityReducer = (state = initialState, action) => {
         case ActivityActions.GetActivity.Failure:
             duplicateState.error = action.error;
             break;
+
         case ActivityActions.GetActivity.Start:
             break;
+
         case ActivityActions.PostActivity.Success:
              if(duplicateState && duplicateState.activities.length>0){
                  //if state exists
@@ -63,17 +69,21 @@ const ActivityReducer = (state = initialState, action) => {
                          activities : [action.data[0]]
                      }]
                  }
+
              }
+             console.log("data added in reducer is :",action.data,duplicateState);
              break;
         case ActivityActions.PostActivity.Failure:
             console.log('error in reducer');
             break;
         case ActivityActions.UpdateActivity.Success:
+            console.log('action.data in reducer----',action.data);
             if(duplicateState && duplicateState.activities.length>0){
                 duplicateState.activities.map((activityLogs) => {
                     activityLogs.activities.map((activity) => {
+                        console.log('activity found-----------',activity._id,action.data._id);
                         if(activity._id === action.data._id){
-                            activityLogs.activities.splice(activityLogs.activities.indexOf(action.data._id),1,action.data);
+                            activity = action.data;
                         }
                     })
                 })
@@ -105,6 +115,26 @@ const ActivityReducer = (state = initialState, action) => {
                     }
             }
             break;
+        case  ActivityActions.SearchActivity.Success:
+              duplicateState.searchedList = action.data;
+            break;
+
+        case ActivityActions.SearchActivity.Failure:
+             duplicateState.error = action.error;
+             break;
+
+        case ActivityActions.SearchActivity.Permit:
+             duplicateState.searchPermit = action.data;
+             break;
+
+        case ActivityActions.SearchActivity.CurrentView:
+             duplicateState.currentView = action.data;
+             break;
+
+        case ActivityActions.SearchActivity.Fetching:
+             duplicateState.isFetching = action.data;
+             break;
+
         default:
             break;
     }
