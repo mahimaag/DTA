@@ -7,7 +7,7 @@ import ActivityLogCollaborator from '../ActivityLogCollaborator'
 import MultiSelectDropdown from '../../Core/MultiSelectDropDown'
 import TtnButton from 'core/Button/btn';
 import DeleteModal from '../../Core/DeleteModal'
-import { deleteActivity } from '../../actions/activity.actions'
+import { deleteActivity, updateActivities } from '../../actions/activity.actions'
 import { connect } from 'react-redux';
 import ModalComp from '../../Core/ModalComp'
 import _ from 'lodash'
@@ -36,9 +36,7 @@ class ActivityLogComp extends Component{
         this.setState({
             editBtn: false,
         });
-        console.log('this.state.activity--------->>>>',this.state.activity);
-        this.props.edittedLog(this.state.activity);
-
+        this.props.updateActivities(this.state.activity);
     };
 
     onEditDeleteClick = () => {
@@ -221,6 +219,7 @@ class ActivityLogComp extends Component{
 
 const mapDispatchToProps = (dispatch) => ({
     deleteActivity : (activityId) => {dispatch(deleteActivity(activityId))},
+    updateActivities : (activity) => {dispatch(updateActivities(activity))}
 
 });
 

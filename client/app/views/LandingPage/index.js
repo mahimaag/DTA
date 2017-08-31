@@ -92,7 +92,6 @@ class Main extends React.Component {
 
     onSwitchCal = () => {
         event.preventDefault();
-        console.log('month--------',this.state.month);
         if(this.state.switchBtn === true){
             this.setState({
                 switchBtn: false,
@@ -105,7 +104,6 @@ class Main extends React.Component {
 
     onSwitchList = (event) => {
         event.preventDefault();
-        console.log('month--------',this.state.month);
         if(this.state.switchBtn === false){
             this.setState({
                 switchBtn: true

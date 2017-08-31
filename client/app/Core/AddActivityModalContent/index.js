@@ -129,11 +129,14 @@ class ModalContent extends Component{
     }
 
     eventStyleGetterRepeat(event, start, end, isSelected) {
-        let cssClass = "repeat-icon",todayClass = "current-date";
-        if(event.title === " "){
-            return { className:cssClass };
-        }else{
-            return{ className:todayClass }
+        let cssClass = "repeat-icon", todayClass = "current-date";
+
+        if (event.title === " ") {
+            return {className: cssClass};
+        } else {
+            return {
+                className: todayClass,
+            }
         }
     }
 
