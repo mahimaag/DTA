@@ -26,7 +26,7 @@ class ModalContent extends Component {
             hh:'',
             mm:0,
             activityType:'',
-            description:'',
+            description:this.props.eventInfo.moreInfo.description,
             collaborators:[],
             deleteModal:false
         }
@@ -61,7 +61,7 @@ class ModalContent extends Component {
 
     onInputChange = (event) => {
         this.setState({
-            [event.target.name] : event.target.value
+            description : event.target.value
         })
     };
 
@@ -135,7 +135,7 @@ class ModalContent extends Component {
                                 </FormGroup>
                                 <FormGroup controlId="description">
                                     <ControlLabel>Description:</ControlLabel>
-                                    <FormControl type="text" label="Description" placeholder="Description" value={this.state.description || this.props.eventInfo.moreInfo.description} onChange={this.onInputChange} name="description"/>
+                                    <FormControl type="text" label="Description" placeholder="Description" value={this.state.description} onChange={this.onInputChange} name="description"/>
                                 </FormGroup>
                                 <div>Collaborators : {this.props.eventInfo.moreInfo.collaborators}</div>
 
