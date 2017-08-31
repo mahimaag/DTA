@@ -21,6 +21,10 @@
     height: 20px;
 }
 
+.current-date{
+    background-color: white;
+}
+
 .rbc-event {
     background-color: white;
 

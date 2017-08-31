@@ -28,6 +28,10 @@
     display: inline-flex;
 }
 
+.row {
+    margin-bottom: 12px;
+}
+
 .new-collab>span{
     font-weight: bold;
 }

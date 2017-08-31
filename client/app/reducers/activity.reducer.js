@@ -73,7 +73,7 @@ const ActivityReducer = (state = initialState, action) => {
                 duplicateState.activities.map((activityLogs) => {
                     activityLogs.activities.map((activity) => {
                         if(activity._id === action.data._id){
-                            activity = action.data;
+                            activityLogs.activities.splice(activityLogs.activities.indexOf(action.data._id),1,action.data);
                         }
                     })
                 })

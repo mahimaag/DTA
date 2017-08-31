@@ -32,7 +32,6 @@ class ActivityLogRow extends Component{
                                                                          date = {item._id}
                                                                          month = {this.props.month}
                                                                          timeLog = {this.props.timeLog}
-                                                                         edittedLog = {(editLog) => {this.props.edittedLog(editLog, item._id)}}
                                                                          key = {index}
                                                         />
                                                 )

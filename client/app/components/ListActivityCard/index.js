@@ -6,7 +6,7 @@ import { Grid, Row, Col } from 'react-bootstrap';
 import { TimeEntryStatus, HeadingArray } from './../../../constants/Index'
 import './style.css'
 import ModalComp from '../../Core/ModalComp'
-import {postActivities, updateActivities, deleteActivity, deleteAllActivity} from '../../actions/activity.actions'
+import { postActivities } from '../../actions/activity.actions'
 import { connect } from 'react-redux';
 import _ from 'lodash';
 
@@ -59,17 +59,6 @@ class ActivityLog extends Component{
         });
     };
 
-    edittedLog = (editItem,date) => {
-        this.state.timeEnteries.map((entry) => {
-            if (entry._id === date) {
-                entry.activities.map((childItem) => childItem._id === editItem._id ? (Object.assign(childItem, editItem), this.props.updateActivities(childItem)) : null);
-            }
-        })
-        this.setState({
-            timeEnteries: this.state.timeEnteries
-        })
-    }
-
     closedWithoutCreate = (logDate) => {
         this.state.timeEnteries.map((entry) => entry._id === logDate ? (
             entry.activities.splice(entry.activities.findIndex((activity) => activity.status === TimeEntryStatus.New), 1)) : null);
@@ -95,7 +84,6 @@ class ActivityLog extends Component{
                                     month={this.props.month}
                                     logItem={(logDate) => this.addNewLog(logDate)}
                                     newEntry={(newTimeLog,date) => {this.newEntry(newTimeLog,date)}}
-                                    edittedLog={(editItem,date) => {this.edittedLog(editItem,date)}}
                                     closedWithoutCreate={(logDate) => {this.closedWithoutCreate(logDate)}}/>:
                     null
                 }
@@ -106,7 +94,6 @@ class ActivityLog extends Component{
 
 const mapDispatchToProps = (dispatch) => ({
     postActivities : (childItem) => {dispatch(postActivities(childItem))},
-    updateActivities : (childItem) => {dispatch(updateActivities(childItem))}
 
 });
 
