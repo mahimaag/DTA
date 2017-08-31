@@ -57,7 +57,7 @@ class ModalContent extends Component {
         console.log(updatedEvent);
         this.props.updateActivities(updatedEvent);
         this.props.closeCalendar();
-    }
+    };
 
     onInputChange = (event) => {
         this.setState({
@@ -96,11 +96,10 @@ class ModalContent extends Component {
     };
 
     deleteEventDone = () => {
-        console.log("Delete :",this.props.eventInfo);
         this.props.deleteActivity(this.props.eventInfo.moreInfo._id)
         this.setState({
             deleteModal:false
-        })
+        });
         this.props.closeCalendar();
     };
 

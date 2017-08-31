@@ -101,7 +101,7 @@ class Main extends React.Component {
                 this.props.getActivities(this.state.month)
             })
         }
-    }
+    };
 
     onSwitchList = (event) => {
         event.preventDefault();
@@ -111,7 +111,7 @@ class Main extends React.Component {
                 switchBtn: true
             })
         }
-    }
+    };
 
     render() {
         let events = this.mapDataToEvents();
@@ -150,8 +150,6 @@ class Main extends React.Component {
                                     />:
                                     <ActivityLog activityTimeLog={this.props.activity.activities} month={this.state.month}/>
                                 }
-
-
 
                             </div>
                             <div className="col-md-3 pull-right">

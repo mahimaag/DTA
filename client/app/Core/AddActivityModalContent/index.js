@@ -78,7 +78,7 @@ class ModalContent extends Component{
 
     repeatEvent = () => {
         if(this.state.hh === 'Select' || this.state.activityType === 'Select')
-            alert("First fill all the fields!!!")
+            alert("First fill all the fields!!!");
         else{
             this.setState({
                 showCalendar:true,
@@ -167,15 +167,15 @@ class ModalContent extends Component{
                             <FormGroup controlId="activityType">
                                 <ControlLabel>Activity Type:*</ControlLabel>
                                 <Dropdown data={activityTitles}
-                                                 title={this.state.activityType}
-                                                 onSelect={(item) => this.setSelectedValue(item,'activityType')}
+                                          title={this.state.activityType}
+                                          onSelect={(item) => this.setSelectedValue(item,'activityType')}
                                 />
                             </FormGroup>
                             <FormGroup controlId="hh">
                                 <ControlLabel>hh:*</ControlLabel>
                                 <Dropdown data={hour}
-                                                 title={this.state.hh}
-                                                 onSelect={(item) => this.setSelectedValue(item,'hh')}/>
+                                          title={this.state.hh}
+                                          onSelect={(item) => this.setSelectedValue(item,'hh')}/>
                             </FormGroup>
                             <FormGroup controlId="mm">
                                 <ControlLabel>mm:*</ControlLabel>
@@ -192,17 +192,17 @@ class ModalContent extends Component{
                             </FormGroup>
 
                             <TtnButton level = "primary"
-                                               title = "Repeat"
-                                               onClick={(e) => this.repeatEvent(e)}/>
+                                       title = "Repeat"
+                                       onClick={(e) => this.repeatEvent(e)}/>
                             :
                             <TtnButton level = "primary"
-                                               title = "Save"
-                                               onClick={(e) => this.saveEvent(e)}/>
+                                       title = "Save"
+                                       onClick={(e) => this.saveEvent(e)}/>
 
                         </div>
 
                     </TsmsForm>
-                 }
+            }
             </div>
         )
     }
