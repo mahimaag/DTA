@@ -21,13 +21,21 @@
     height: 20px;
 }
 
+.current-date{
+    background-color: white;
+}
+
 .rbc-event {
     background-color: white;
 
 }
 
+.requiredField{
+    color: red;
+}
+
 .rbc-event.rbc-selected {
-    background-color: lightgray;
+    background-color: blue;
     color:black;
 
 }

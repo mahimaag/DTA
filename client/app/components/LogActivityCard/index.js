@@ -107,13 +107,13 @@ class LogActivityCard extends Component{
 LogActivityCard.defaultProps = {
     activityCount:2,
     activityList: [{
-        description: "D1 - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer fermentum quam ligula, in lobortis lacus rutrum sit amet. Cras fringilla mauris diam, ac hendrerit elit vestibulum a. Sed ornare egestas nibh tincidunt mollis."
+        description: "D1 - Lorem ipsum dolor sit amet, consectetur adipiscing elit."
     },{
-        description: "D2 - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer fermentum quam ligula, in lobortis lacus rutrum sit amet. Cras fringilla mauris diam, ac hendrerit elit vestibulum a. Sed ornare egestas nibh tincidunt mollis."
+        description: "D2 - Lorem ipsum dolor sit amet, consectetur adipiscing elit."
     },{
-        description: "D3 - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer fermentum quam ligula, in lobortis lacus rutrum sit amet. Cras fringilla mauris diam, ac hendrerit elit vestibulum a. Sed ornare egestas nibh tincidunt mollis."
+        description: "D3 - Lorem ipsum dolor sit amet, consectetur adipiscing elit."
     },{
-        description: "D4 - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer fermentum quam ligula, in lobortis lacus rutrum sit amet. Cras fringilla mauris diam, ac hendrerit elit vestibulum a. Sed ornare egestas nibh tincidunt mollis."
+        description: "D4 - Lorem ipsum dolor sit amet, consectetur adipiscing elit."
     }]
 };
 

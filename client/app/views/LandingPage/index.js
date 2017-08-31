@@ -101,7 +101,7 @@ class Main extends React.Component {
                 this.props.getActivities(this.state.month)
             })
         }
-    }
+    };
 
     onSwitchList = (event) => {
         event.preventDefault();
@@ -111,7 +111,7 @@ class Main extends React.Component {
                 switchBtn: true
             })
         }
-    }
+    };
 
     render() {
         let events = this.mapDataToEvents();
@@ -151,31 +151,12 @@ class Main extends React.Component {
                                     <ActivityLog activityTimeLog={this.props.activity.activities} month={this.state.month}/>
                                 }
 
-
-
                             </div>
                             <div className="col-md-3 pull-right">
                                 <NotificationCards activity={this.props.activity} month={this.state.month} days={days[this.state.month]}/>
                             </div>
                         </div>
                     </div>
-                    <div className="row">
-                        <div className="col-lg-6">
-                            <div className="ibox float-e-margins">
-                                <div className="ibox-title">
-                                    <h5>List of components</h5>
-                                </div>
-                                <div className="ibox-content">
-                                    <div>
-                                        <h3> Buttons </h3>
-                                        <TtnButton level="primary" title="Flat Button"/>
-                                        <TtnButton nature="Decline"/>
-                                        <TtnButton iconButton level="primary" rounded icon="fa fa-address-book-o"/>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>                
                 </div>
             </div>
         )
