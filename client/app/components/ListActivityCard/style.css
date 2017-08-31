@@ -7,6 +7,15 @@
     border:none;
 }
 
+.new-collab {
+    text-align: left;
+    display: inline-flex;
+}
+
+.log-col .time-hhmm {
+    display: -webkit-box;
+}
+
 .log-clear-button {
     border-radius: 15px;
     margin: 10px;
@@ -34,6 +43,10 @@
     box-shadow: 5px 5px 10px;
 }
 
+/*.log-header Col{
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}*/
+
 .collab-div {
     /*float:left;
     width:100%;*/
@@ -44,10 +57,28 @@
 }
 
 .data-div {
-    display: -webkit-box;
+    display: block;
     height: 100%;
    /* padding: 5px 0 5px 0;
     margin: 2px 0 2px 0;*/
+}
+
+.switch-cal-list>button{
+    float: right;
+    width: 75px;
+    height: 36px;
+    background-color: #DDDDDD;
+    color: #676A6C;
+}
+
+.switch-cal-list>button:hover ,
+.switch-cal-list>button:focus ,
+.switch-cal-list>button:active
+{
+    background-color: lightgray;
+    /*border: lightgray;*/
+    color: black;
+
 }
 
 .menu-items {

@@ -18,9 +18,9 @@ export const postActivities = (activityLog) => {
             })
     };
 };
-export const getActivities = () => {
+export const getActivities = (currentMonth) => {
     return (dispatch) => {
-        decoratedFetch('/api/activity/employee',{method:'get'})
+        decoratedFetch(`/api/activity/employee?month=${currentMonth}`,{method:'get'})
             .then(response => {
                 if (response.status == ApiResponseCode.OK) {
                     return response.json();
@@ -51,7 +51,7 @@ export const deleteActivity = (activityId) => {
                 dispatch({type:ActivityActions.DeleteActivity.Failure, error:error})
             })
     }
-}
+};
 export const updateActivities = (activityLog) => {
     return (dispatch) => {
         decoratedFetch(`/api/activity/${activityLog._id}`,{method: 'put',body:activityLog})
@@ -88,17 +88,19 @@ export const deleteAllActivity = (date) => {
 
     }
 };
-export const searchActivity = (textValue) => {
+export const searchActivity = (textValue,month) => {
     return (dispatch) => {
-        decoratedFetch("/api/activity/searchActivity?activityName="+textValue,{method:'get'})
+        decoratedFetch("/api/activity/searchActivity?activityName="+textValue+"&month="+month,{method:'get'})
             .then(response => {
                 if(response.status == ApiResponseCode.OK){
+                    dispatch({type:ActivityActions.SearchActivity.Fetching,data:true});
                     return response.json()
                 }else if(response.status == ApiResponseCode.AUTH_FAIL){
                     //fetch(AUTHORIZE_URL)
                 }
             }).then(data => {
               dispatch({type:ActivityActions.SearchActivity.Success, data:data.activities})
+
         })
             .catch(error => {
                 dispatch({type:ActivityActions.SearchActivity.Failure,error:error})
@@ -106,4 +108,14 @@ export const searchActivity = (textValue) => {
     }
 };
 
+export const searchPermit = (value) => {
+    return (dispatch) => {
+        dispatch({type:ActivityActions.SearchActivity.Permit,data:value})
+    }
+};
 
+export const view = (currentView) => {
+   return (dispatch) => {
+       dispatch({type:ActivityActions.SearchActivity.CurrentView,data:currentView})
+   }
+};

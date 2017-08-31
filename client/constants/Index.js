@@ -16,24 +16,29 @@ export const HeadingArray = [
         title: 'Activity'
     },*/
     {
-        md:2,
+        md: 2,
         lg: 2,
         title: 'Type'
     },
     {
-        md: 2,
-        lg: 2,
+        md: 3,
+        lg: 3,
         title: 'Duration'
     },
     {
-        md:3,
-        lg: 3,
+        md: 4,
+        lg: 4,
         title: 'Description'
     },
     {
-        md:1,
+        md: 1,
         lg: 1,
         title: 'Status'
+    },
+    {
+        md: 2,
+        lg: 2,
+        title: ''
     }
 ]
 

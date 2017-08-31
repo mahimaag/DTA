@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 
 import {Card, CardHeader, CardContent, CardFooter} from './../../Core/Card';
 
+const month=["JAN","FEB","MARCH","APR","MAY","JUNE","JULY","AUG","SEPT","OCT","NOV","DEC"];
 class LogNotificationCard extends Component{
     constructor(props){
         super(props);
@@ -10,15 +11,17 @@ class LogNotificationCard extends Component{
         return(
             <Card>
                 <CardHeader>
-                    <h4>Lorem ipsum dolor sit amet, consectetur adipiscing elit. {this.props.dueDate + ' '+ this.props.month}</h4>
+                    <span>Total hrs logged in {month[this.props.month]} <h2> {this.props.totalHours}</h2></span>
                 </CardHeader>
                 <CardContent>
                     <div className="col-md-12 col-lg-12 col-sm-12 clearfix">
                         <div className="col-md-6">
-                            {this.props.missingLog} -  missing logs
+                            <span>{this.props.missingLog} Days</span>
+                            <span>NO LOG</span>
                         </div>
                         <div className="col-md-6">
-                            {this.props.partialLog} - partial logs
+                            <span>{this.props.partialLog} Days</span>
+                            <span>PARTIAL LOG</span>
                         </div>
                     </div>
                 </CardContent>

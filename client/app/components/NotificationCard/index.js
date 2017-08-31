@@ -12,13 +12,75 @@ import styles from './style.css';
 //import Authorization from "../../../utils/Authorization";
 
 class NotificationCards extends Component{
+    constructor(props){
+        super(props);
+        this.state = {
+            partialLogs : 0,
+            totalHours:0,
+            missingLogs: new Date().getDate()
+        }
+    }
+
+    componentWillReceiveProps(nextProps){
+        let totalDays , totalHoursForDay = 0,totalMins = 0,localTotalHours= 0, localPartial = 0, localMissing = totalDays;
+
+        if(nextProps.month < new Date().getMonth()){
+            totalDays = nextProps.days;
+        }else if(nextProps.month === new Date().getMonth()){
+           totalDays = new Date().getDate();
+        }else{
+            totalDays =0;
+        }
+
+
+            if(nextProps.activity && nextProps.activity.activities.length >0){
+                //calculate total hours completed on a day
+                nextProps.activity.activities.map((activitites)=>{
+                    activitites.activities.map((data)=>{
+                        totalHoursForDay=totalHoursForDay+data.hh;
+                        totalMins=totalMins+data.mm;
+                        while(totalMins > 60){
+                            totalHoursForDay=totalHoursForDay+1;
+                            totalMins = totalMins-60
+                        }
+                    });
+                    if( totalHoursForDay>=8 ){
+                        localMissing = localMissing-1;
+                    }
+                    else if( totalHoursForDay > 0 && totalHoursForDay <8 ){
+                        localMissing = localMissing-1;
+                        localPartial = localPartial+1
+                    }
+                    localTotalHours = localTotalHours + totalHoursForDay;
+                    totalHoursForDay = 0,totalMins = 0;
+                });
+
+                this.setState({
+                    missingLogs:localMissing,
+                    partialLogs:localPartial,
+                    totalHours : localTotalHours
+                },()=>{
+                    console.log("==final missing, partial,totalHours are :",this.state.missingLogs,this.state.partialLogs,this.state.totalHours)
+                });
+            }
+            else{
+                this.setState({
+                    missingLogs:nextProps.days,
+                    partialLogs:0,
+                    totalHours : 0
+                },()=>{
+                    console.log("==final missing, partial,totalHours are :",this.state.missingLogs,this.state.partialLogs,this.state.totalHours)
+                });
+            }
+
+    }
   render(){
-    //console.log(Authorization2, Authorization);
-    let LogNotificationCardHOC = Authorization(LogNotificationCard, 'admin');
-    let LogActivityCardHOC = Authorization(LogActivityCard, 'user');
+
+      let LogNotificationCardHOC = Authorization(LogNotificationCard, 'admin');
+      let LogActivityCardHOC = Authorization(LogActivityCard, 'user');
     return(
       <div className="left-panel">
-        {LogNotificationCardHOC && <LogNotificationCardHOC dueDate="26" month="Jul" missingLog="10" partialLog="3" />}
+        {LogNotificationCardHOC && <LogNotificationCardHOC  missingLog={this.state.missingLogs} partialLog={this.state.partialLogs} totalHours={this.state.totalHours} month={this.props.month}/>}
         <br/>
         <Authorization2 allowedRoles = {['admin', 'user']} user={{role:"undefined"}}>
           <LogNotificationCard dueDate="24" month="Jul" missingLog="8" partialLog="3"/>

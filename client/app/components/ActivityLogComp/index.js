@@ -9,7 +9,11 @@ import LogDropdown from '../../Core/Dropdown/index'
 import ActivityLogCollaborator from '../ActivityLogCollaborator'
 import MultiSelectDropdown from '../../Core/MultiSelectDropDown'
 import TtnButton from 'core/Button/btn';
-import {connect} from "react-redux";
+import DeleteModal from '../../Core/DeleteModal'
+import { deleteActivity } from '../../actions/activity.actions'
+import { connect } from 'react-redux';
+import ModalComp from '../../Core/ModalComp'
+import _ from 'lodash'
 
 
 class ActivityLogComp extends Component{
@@ -19,7 +23,9 @@ class ActivityLogComp extends Component{
         this.state = {
             editBtn: false,
             activity: logActivity,
-            newDesc: logActivity.Description,
+            newDesc: logActivity.description,
+            displayModal: false,
+            deleteComp: false
         }
     }
 
@@ -27,7 +33,7 @@ class ActivityLogComp extends Component{
         this.setState({
             editBtn: true
         })
-    }
+    };
 
     onOkClick = () => {
         this.setState({
@@ -38,16 +44,18 @@ class ActivityLogComp extends Component{
     };
 
     onEditDeleteClick = () => {
-        const activity = Object.assign({}, this.props.activity);
+        let activityLog = Object.assign({}, this.props.activity);
         this.setState({
             editBtn: false,
-            activity: activity
+            activity: activityLog
         });
-    }
+    };
 
     onDeleteClick = (activity) => {
-        this.props.deleteEntry(activity);
-    }
+        this.setState({
+            displayModal: true
+        })
+    };
 
 
     setSelectedValue = (item, property) => {
@@ -60,6 +68,11 @@ class ActivityLogComp extends Component{
     onDescChange = (event) => {
         this.setState({
             newDesc: event.target.value
+        },() => {
+            this.state.activity.description = this.state.newDesc;
+            this.setState({
+                activity: this.state.activity
+            })
         });
     }
 
@@ -82,12 +95,27 @@ class ActivityLogComp extends Component{
             activity: this.state.activity
         })
     };
+
+    onCloseModalClick = () => {
+        this.setState({
+            displayModal: false
+        })
+    }
+
+    deleteEntry = () => {
+        this.props.deleteActivity(this.state.activity._id);
+        this.setState({
+            displayModal: false,
+        })
+    };
+
+
     render(){
-        console.log('props in activity log comp',this.props.searchedList);
+        //console.log('props in activity log comp',this.props);
         const activityLog = this.props.activity;
         let activityTitles = ['Westcon','Knowlegde Meet','Daily Time Analysis'];
         let durationTimeHH = [1,2,3,4,5,6,7,8];
-        let durationTimeMM = [10,20,30,40,50];
+        let durationTimeMM = [0,10,20,30,40,50];
         return(
             <div>
                 {this.state.editBtn === true?
@@ -105,15 +133,15 @@ class ActivityLogComp extends Component{
                                              title={this.state.activity.activityType}
                                              onSelect={(item) => this.setSelectedValue(item, 'activityType')}/>
                             </Col>
-                            <Col md={2} lg={2} className="log-col">
+                            <Col md={3} lg={3} className="log-col">
                                 <LogDropdown className="duration"
                                              title={this.state.activity.hh}
                                              data={durationTimeHH}
-                                             onSelect={(item) => {this.setSelectedValue(item, 'hh')}}/>Hrs
+                                             onSelect={(item) => {this.setSelectedValue(item, 'hh')}}/>:
                                 <LogDropdown className="duration"
                                              title={this.state.activity.mm}
                                              data={durationTimeMM}
-                                             onSelect={(item) => {this.setSelectedValue(item, 'mm')}}/>Mins
+                                             onSelect={(item) => {this.setSelectedValue(item, 'mm')}}/>
                             </Col>
                             <Col md={4} lg={4} className="log-col">
                                 <input type="text"
@@ -123,7 +151,7 @@ class ActivityLogComp extends Component{
                             <Col md={1} lg={1} className="log-col">
                                 <span>{this.state.activity.status}</span>
                             </Col>
-                            <Col md={2} lg={2} lgOffset={1} className="log-col">
+                            <Col md={2} lg={2} className="log-col">
                                 <TtnButton iconButton
                                            level = "primary"
                                            rounded icon = "glyphicon glyphicon-ok"
@@ -135,16 +163,8 @@ class ActivityLogComp extends Component{
                                            onClick = {() => this.onEditDeleteClick()}/>
 
                             </Col>
-                            {/*<Col md={12} lg={12} className = "log-col">
-                                <MultiSelectDropdown collabArray = {newCollabArray}
-                                                     newCollab = {this.state.activity.collaborators}
-                                                     title = 'Select'
-                                                     onSelectedVal = {(newCollab) => {this.onSelectedVal(newCollab)}}
-                                                     onDeleteCollab = {(deletedVal) => {this.onDeleteCollab(deletedVal)}}/>
-                                /!*<ActivityLogCollaborator collaborators={activity.Collaborators}
-                                                         onCollabChange={(collaborators) => {this.onCollabChange(collaborators)}}
-                                                         editable='true'/>*!/
-                            </Col>*/}
+                        </Row>
+                        <Row>
                             <Col md={12} lg={12} className="log-col">
                                 {(activityLog.collaborators && activityLog.collaborators.length > 0) ? <ActivityLogCollaborator collaborators={activityLog.collaborators}/> : null }
                             </Col>
@@ -153,15 +173,12 @@ class ActivityLogComp extends Component{
                     </div>:
                     <div className="data-div">
                         <Row>
-                            <Col md={1} lg={1} className="log-col">
-                                <span>{activityLog.activity}</span>
-                            </Col>
                             <Col md={2} lg={2} className="log-col">
                                 <span>{activityLog.activityType}</span>
                             </Col>
-                            <Col md={1} lg={1} className="log-col">
-                                <span>{activityLog.hh}</span>hrs
-                                <span>{activityLog.mm}</span>mins
+                            <Col md={3} lg={3} className="log-col">
+                                <span>{activityLog.hh}</span>:
+                                <span>{activityLog.mm}</span>
                             </Col>
                             <Col md={4} lg={4} className="log-col">
                                 <span>{activityLog.description}</span>
@@ -169,7 +186,7 @@ class ActivityLogComp extends Component{
                             <Col md={1} lg={1} className="log-col">
                                 <span>{activityLog.status}</span>
                             </Col>
-                            <Col md={2} lg={2} lgOffset={1} className="log-col">
+                            <Col md={2} lg={2} className="log-col">
 
                                 <TtnButton iconButton
                                            level = "primary"
@@ -183,6 +200,8 @@ class ActivityLogComp extends Component{
 
 
                             </Col>
+                        </Row>
+                        <Row>
                             <Col md={12} lg={12} className="log-col">
                                 {(activityLog.collaborators && activityLog.collaborators.length > 0) ? <ActivityLogCollaborator collaborators={activityLog.collaborators}/> : null }
                             </Col>
@@ -190,6 +209,16 @@ class ActivityLogComp extends Component{
 
                     </div>
                 }
+
+                <ModalComp modalClassName = 'inmodal'
+                           modalShow = {this.state.displayModal}
+                           modalHide = {() => {this.onCloseModalClick()}}
+                           modalHeaderMsg = "Activity Deleted successfully"
+                           modalBody = {<DeleteModal deleteActivity={this.deleteEntry} close={this.onCloseModalClick}/>}
+                           modalFooterClose = {() => {this.onCloseModalClick()}}
+                           modalFooterText = 'Close'
+                />
+
             </div>
         )
     }
@@ -197,8 +226,15 @@ class ActivityLogComp extends Component{
 
 
 const mapStateToProps = (state) => ({
-    searchedList : state.activity.searchedList,
+    searchedList: state.activity.searchedList,
+    searchPermit: state.activity.searchPermit
 });
-export default connect(mapStateToProps)(ActivityLogComp);
 
+
+const mapDispatchToProps = (dispatch) => ({
+    deleteActivity : (activityId) => {dispatch(deleteActivity(activityId))},
+
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(ActivityLogComp);
 

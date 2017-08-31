@@ -5,23 +5,18 @@ import {connect} from 'react-redux'
 import Dropdown from './../Dropdown'
 import {FormGroup, ControlLabel, FormControl} from 'react-bootstrap';
 
-import events from '../../config/events'
+import Tags from './../ReactTags'
 import TtnButton from './../Button/btn';
+import '../../components/Calendar/style.css'
 import TsmsForm from './../Form';
 import {TimeEntryStatus} from './../../../constants/Index'
 import {postActivities} from './../../actions/activity.actions'
-import MultiSelectDropdown from '../../Core/MultiSelectDropDown'
 import {getDate} from './../../../utils/common'
 
 BigCalendar.setLocalizer(
     BigCalendar.momentLocalizer(moment)
 );
 
-let newEvents = [{
-    title:'',
-    start:new Date(),
-    end:new Date()
-}];
 
 class ModalContent extends Component{
     constructor(props){
@@ -34,23 +29,45 @@ class ModalContent extends Component{
             collaborators:[],
             description:'',
             repeatActivity : [],
+            events:[{
+                "title":'today',
+                "start":new Date(),
+                "end":new Date()
+            }]
         }
     }
+
     selectSlot(slot) {
-        console.log("selected date is ",slot.start)
-        let newRepeatedDates = this.state.repeatActivity;
-        if(newRepeatedDates.indexOf(+new Date(getDate(slot.start)))>=0){
-            newRepeatedDates.splice((newRepeatedDates.indexOf(+new Date(getDate(slot.start)))),1)
-        }else{
-            newRepeatedDates.push(+new Date(getDate(slot.start)));
+        if( JSON.stringify(slot.start) === JSON.stringify(this.props.message)){
+            alert("Sorry...You cannot repeat event on same date")
+        } else{
+            let newRepeatedDates = this.state.repeatActivity;
+            let newevents = this.state.events;
+
+            if(newRepeatedDates.indexOf(+new Date(getDate(slot.start)))>=0){
+                console.log(newRepeatedDates.indexOf(+new Date(getDate(slot.start))))
+                newRepeatedDates.splice((newRepeatedDates.indexOf(+new Date(getDate(slot.start)))),1)
+                newevents.map((item,index) => {
+                    if(item.start===getDate(slot.start)&&item.end===getDate(slot.start)){
+                        newevents.splice(index,1)
+                    }
+                })
+            }else{
+                newRepeatedDates.push(+new Date(getDate(slot.start)));
+                newevents.push({
+                    "title": " ",
+                    "start": getDate(slot.start),
+                    "end": getDate(slot.start)
+                })
+            }
+
+            this.setState({
+                repeatActivity:newRepeatedDates,
+                events:newevents
+            },()=>{
+                console.log(this.state.repeatActivity)
+            });
         }
-
-        this.setState({
-            repeatActivity:newRepeatedDates
-        },()=>{
-            console.log(this.state.repeatActivity)
-        });
-
     } // todo : change color of selected slot
 
     setSelectedValue = (item, property) => {
@@ -77,11 +94,9 @@ class ModalContent extends Component{
             alert("Fields cannot be empty")
         }else{
             let dated = getDate(this.props.message);
-            console.log("**********",dated)
             let activityLog = {
-                "employeeId":2590,
                 "activityType":this.state.activityType,
-                "status":TimeEntryStatus.Pending,
+                "status":TimeEntryStatus.Submitted,
                 "hh":this.state.hh,
                 "mm":this.state.mm,
                 "collaborators":this.state.collaborators,
@@ -103,33 +118,47 @@ class ModalContent extends Component{
         })
     };
 
-    onSelectedVal = (newCollab) => {
-        (this.state.collaborators.length && this.state.collaborators.indexOf(newCollab) > -1) ? null : this.state.collaborators.push(newCollab);
-        this.setState({collaborators: this.state.collaborators});
-    };
-
-    onDeleteCollab = (deletedVal) => {
-        this.state.collaborators.splice(this.state.collaborators.indexOf(deletedVal), 1);
+    getTags = (tags) => {
+        let empSet = new Set();
+        tags.forEach(obj => {
+            empSet.add(obj.id);
+        });
         this.setState({
-            collaborators: this.state.collaborators
-        })
+            collaborators: [...empSet]
+        });
     }
 
+    eventStyleGetterRepeat(event, start, end, isSelected) {
+        let cssClass = "repeat-icon";
+        if(event.title === " "){
+
+            return {
+                className:cssClass,
+            };
+        }else{
+            return{
+                className:cssClass
+            }
+        }
+
+    }
+
+
     render(){
-        let newCollabArray = [2590,2591,2592,2593];
         let activityTitles = ['Westcon','Knowlegde Meet','Daily Time Analysis'];
         let hour = [1,2,3,4,5,6,7,8];
-        let minutes = [10,20,30,40,50];
+        let minutes = [0,10,20,30,40,50];
         return(
             <div>{
                 this.state.showCalendar ?
-                    <div className="wrapper-calendar">
+                    <div className="repeatedCalendar">
                         <BigCalendar
                             selectable
-                            events={newEvents}
+                            events={this.state.events}
                             views={['month']}
                             toolbar={false}
                             onSelectSlot = { (slot) => this.selectSlot(slot)}
+                            eventPropGetter={(this.eventStyleGetterRepeat)}
                         />
                         <button onClick={(e) => this.saveEvent(e)}>Save </button>
                     </div>:
@@ -159,12 +188,7 @@ class ModalContent extends Component{
                                 <FormControl type="text" label="Description" placeholder="Description" value={this.state.description} onChange={this.onInputChange} name="description"/>
                             </FormGroup>
                             <FormGroup controlId="collaborators">
-                                Collaborators: <MultiSelectDropdown collabArray = {newCollabArray}
-                                                                    newCollab = {this.state.collaborators}
-                                                                    title = 'Select'
-                                                                    onSelectedVal = {(newCollab) => {this.onSelectedVal(newCollab)}}
-                                                                    onDeleteCollab = {(deletedVal) => {this.onDeleteCollab(deletedVal)}}/>
-
+                                Collaborators: <Tags updateTag = {(tags) => {this.getTags(tags)}}/>
                             </FormGroup>
 
                             <TtnButton level = "primary"

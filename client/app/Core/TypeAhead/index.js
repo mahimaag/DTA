@@ -1,20 +1,26 @@
 import React, { Component } from 'react';
 import styles from './style.css';
 import {connect} from "react-redux";
-import {searchActivity} from "../../actions/activity.actions"
+import {searchActivity,searchPermit,view} from "../../actions/activity.actions"
 
 class TypeAhead extends Component {
     constructor (props) {
         super(props);
-        this.state = { searchText: '', showSearchResults: false }
+        this.state = {
+            searchText: '',
+        }
     }
     handleChange = (e) => {
         const value = e.target.value;
         if(value.length >= 2) {
-            this.props.searchActivity(value);
-            this.setState({searchText: value, showSearchResults: true});
-        } else {
-            this.setState({searchText: value, showSearchResults: false});
+            this.props.searchActivity(value, this.props.month);
+            if(this.props.isFetching){
+                this.props.searchPermit(true);
+            }
+            this.props.view('list');
+            this.setState({searchText: value});
+        }else{
+            this.props.searchPermit(false)
         }
     };
 
@@ -31,7 +37,7 @@ class TypeAhead extends Component {
 
     render(){
         const { wrappedComponent, icon, searchedList, valueGenerator } = this.props;
-        const { searchText } = this.state
+        const { searchText } = this.state;
         // const WrappedComponent = wrappedComponent;
         // const renderList = WrappedComponent
         // ? (
@@ -49,7 +55,7 @@ class TypeAhead extends Component {
                     placeholder="item..."
                     className="form-control"
                     onChange={this.handleChange}
-                    value={searchText}
+                    defaultValue={searchText}
                 />
                 <span className={`${icon.name}` +' ' +`${icon.position}`}></span>
                 {/*{renderList}*/}
@@ -59,12 +65,13 @@ class TypeAhead extends Component {
 }
 
 const mapStateToProps = (state) => ({
-    searchedList: state.activity.searchedList,
+    isFetching: state.activity.isFetching,
 });
-
 const mapDispatchToProps = (dispatch) => ({
-    searchActivity : (textValue) => dispatch(searchActivity(textValue))
+    searchActivity : (textValue,month) => dispatch(searchActivity(textValue,month)),
+    searchPermit : (value) => dispatch(searchPermit(value)),
+    view: (currentView) => dispatch(view(currentView))
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(TypeAhead)
+export default connect(mapStateToProps , mapDispatchToProps)(TypeAhead)
 

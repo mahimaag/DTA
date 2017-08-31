@@ -5,6 +5,7 @@ import ModalComp from './../../Core/ModalComp'
 import ModalContent from './../../Core/AddActivityModalContent'
 import 'components/Calendar/style.css'
 import TtnButton from 'core/Button/btn';
+import {getDate} from './../../../utils/common'
 
 let customHeader = (props) => {
     return (
@@ -22,33 +23,30 @@ class CustomDateHeader extends Component{
         };
     }
 
-    showModal = (e) => {
-        e.preventDefault();
+    showModal = () => {
         this.setState({show: true});
     };
 
     close = () => {
-        // e.preventDefault();
         this.setState({show: false})
     };
 
     render(){
-        return (
+       return (
             <div className="fc-day-number fc-future date-header" >
                 <span>{ this.props.label }</span>
                 <span>
                     {
-                        this.props.date < new Date() ?
+                        this.props.date.getMonth() === new Date().getMonth() && this.props.date < new Date() ?
                             <div className="modal-container">
                                 <TtnButton level="secondary" title="+" onClick = {this.showModal}/>
                                 <ModalComp modalShow={this.state.show}
                                            modalHide = {(e) => {this.close(e)}}
-                                           modalHeaderMsg={this.props.date.toString()}
+                                           modalHeaderMsg={"Add log on "+getDate(this.props.date).toString()}
                                            modalBody = {<ModalContent message={this.props.date} close={this.close}/>}
                                            modalFooterClose = {this.close}
                                            modalFooterText = 'Close'
                                 />
-
                             </div>:null
                     }
                 </span>
@@ -57,15 +55,11 @@ class CustomDateHeader extends Component{
     }
 }
 
+
 let getComponents  = (props) => {
     return {
-        // event: customEvent,
-        // eventWrapper: customEventWrapper,
-        //  dayWrapper: customDayWrapper,  // called when day format is displayed
-        //  dateCellWrapper: customDateCellWrapper,
-        month: {
+       month: {
             header: customHeader,
-            // event: customEvent,
             dateHeader: CustomDateHeader   // refer source code DateHeader.js
         }
     };
@@ -78,12 +72,13 @@ class DashboardCalendar extends Component{
 
     render(){
         return(
-            <div className=" ibox-content wrapper-calendar">
-                <Calendar
-                    events={this.props.events}
-                    getComponents = {(props) => getComponents(props)}
-                />
-            </div>
+            <Calendar
+                events={this.props.events}
+                messageDecoration = {this.props.messageDecoration}
+                getComponents = {(props) => getComponents(props)}
+                month = {this.props.month}
+            />
+
         )
     }
 }

@@ -27,6 +27,9 @@ export const ActivityActions = {
     SearchActivity : {
         Success: 'Activity.SearchActivity.Success',
         Failure: 'Activity.SearchActivity.Failure',
-        Start: 'Activity.SearchActivity.Start'
+        Start: 'Activity.SearchActivity.Start',
+        Permit: 'Activity.SearchActivity.Permit',
+        CurrentView: 'Activity.SearchActivity.CurrentView',
+        Fetching: 'Activity.SearchActivity.Fetching',
     }
 };

@@ -6,10 +6,11 @@ import _ from 'lodash';
 const initialState = {
     activities: [],                // activities Array from Apis.
     searchedList: [],
-    search:false,
+    searchPermit:false,
+    currentView:'calendar',
+    isFetching:false,
     error: {}                  // error from Apis.
 };
-
 const ActivityReducer = (state = initialState, action) => {
     let duplicateState = _.cloneDeep(state);
     switch (action.type) {
@@ -25,7 +26,7 @@ const ActivityReducer = (state = initialState, action) => {
 
         case ActivityActions.PostActivity.Success:
             console.log('data in action',duplicateState.activities,action.data);
-             if(duplicateState && duplicateState.activities.length>0){
+             if(duplicateState && duplicateState.activities.length>0) {
                  //if state exists
                  if(action.data.length >1){
                      // if repeated activity is to be added;
@@ -121,17 +122,28 @@ const ActivityReducer = (state = initialState, action) => {
                 console.log('&&&&&&&&&&&&&&&&',index);
                 if (index >= 0) {
                     duplicateState.activities.splice(index, 1);
-                    console.log('date deleted!!!!!!!!!!!!');
-                }
+                    }
             }
             console.log('data after deletion',duplicateState.activities);
             break;
         case  ActivityActions.SearchActivity.Success:
               duplicateState.searchedList = action.data;
-              break;
+            break;
 
         case ActivityActions.SearchActivity.Failure:
              duplicateState.error = action.error;
+             break;
+
+        case ActivityActions.SearchActivity.Permit:
+             duplicateState.searchPermit = action.data;
+             break;
+
+        case ActivityActions.SearchActivity.CurrentView:
+             duplicateState.currentView = action.data;
+             break;
+
+        case ActivityActions.SearchActivity.Fetching:
+             duplicateState.isFetching = action.data;
              break;
 
         default:
