@@ -1,5 +1,5 @@
 .log-date-day{
-    margin:10px;
+    margin-right:10px;
     font-size: 15px;
 }
 
@@ -7,9 +7,33 @@
     border:none;
 }
 
+.header-buttons-col {
+    margin-left: 202px;
+}
+
+.totalHours-col {
+    margin-right: 35px;
+}
+
+.date-day-col {
+    margin-right: 20px;
+}
+
+.header-buttons {
+    float:right;
+}
+
 .new-collab {
     text-align: left;
     display: inline-flex;
+}
+
+.row {
+    margin-bottom: 12px;
+}
+
+.new-collab>span{
+    font-weight: bold;
 }
 
 .log-col .time-hhmm {

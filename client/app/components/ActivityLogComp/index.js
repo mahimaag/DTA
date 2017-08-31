@@ -5,12 +5,11 @@
 import React, { Component } from 'react'
 import { Row, Col } from 'react-bootstrap'
 import LogDropdown from '../../Core/Dropdown/index'
-//import {TSMS_IconButton} from './../../Core/Button'
 import ActivityLogCollaborator from '../ActivityLogCollaborator'
 import MultiSelectDropdown from '../../Core/MultiSelectDropDown'
-import TtnButton from 'core/Button/btn';
+import TtnButton from '../../Core/Button/btn';
 import DeleteModal from '../../Core/DeleteModal'
-import { deleteActivity } from '../../actions/activity.actions'
+import { deleteActivity, updateActivities } from '../../actions/activity.actions'
 import { connect } from 'react-redux';
 import ModalComp from '../../Core/ModalComp'
 import _ from 'lodash'
@@ -33,14 +32,13 @@ class ActivityLogComp extends Component{
         this.setState({
             editBtn: true
         })
-    };
+    }
 
     onOkClick = () => {
         this.setState({
             editBtn: false,
         });
-        this.props.edittedLog(this.state.activity);
-
+        this.props.updateActivities(this.state.activity);
     };
 
     onEditDeleteClick = () => {
@@ -49,13 +47,13 @@ class ActivityLogComp extends Component{
             editBtn: false,
             activity: activityLog
         });
-    };
+    }
 
     onDeleteClick = (activity) => {
         this.setState({
             displayModal: true
         })
-    };
+    }
 
 
     setSelectedValue = (item, property) => {
@@ -111,7 +109,6 @@ class ActivityLogComp extends Component{
 
 
     render(){
-        //console.log('props in activity log comp',this.props);
         const activityLog = this.props.activity;
         let activityTitles = ['Westcon','Knowlegde Meet','Daily Time Analysis'];
         let durationTimeHH = [1,2,3,4,5,6,7,8];
@@ -121,12 +118,6 @@ class ActivityLogComp extends Component{
                 {this.state.editBtn === true?
                     <div className="data-div">
                         <Row>
-                            {/*<Col md={1} lg={1} className="log-col">
-                                <LogDropdown className='activity'
-                                             title={this.state.activity.activity}
-                                             data={activityCategory}
-                                             onSelect={(item) => {this.setSelectedValue(item, 'activity')}}/>
-                            </Col>*/}
                             <Col md={2} lg={2} className="log-col">
                                 <LogDropdown className='type'
                                              data={activityTitles}
@@ -143,7 +134,7 @@ class ActivityLogComp extends Component{
                                              data={durationTimeMM}
                                              onSelect={(item) => {this.setSelectedValue(item, 'mm')}}/>
                             </Col>
-                            <Col md={4} lg={4} className="log-col">
+                            <Col md={3} lg={3} className="log-col">
                                 <input type="text"
                                        value={this.state.activity.description}
                                        onChange={(value) => {this.onDescChange(value)}}/>
@@ -151,7 +142,7 @@ class ActivityLogComp extends Component{
                             <Col md={1} lg={1} className="log-col">
                                 <span>{this.state.activity.status}</span>
                             </Col>
-                            <Col md={2} lg={2} className="log-col">
+                            <Col md={2} lg={2} lgOffset={1} className="log-col">
                                 <TtnButton iconButton
                                            level = "primary"
                                            rounded icon = "glyphicon glyphicon-ok"
@@ -180,24 +171,27 @@ class ActivityLogComp extends Component{
                                 <span>{activityLog.hh}</span>:
                                 <span>{activityLog.mm}</span>
                             </Col>
-                            <Col md={4} lg={4} className="log-col">
+                            <Col md={3} lg={3} className="log-col">
                                 <span>{activityLog.description}</span>
                             </Col>
                             <Col md={1} lg={1} className="log-col">
                                 <span>{activityLog.status}</span>
                             </Col>
-                            <Col md={2} lg={2} className="log-col">
+                            <Col md={2} lg={2} lgOffset = {1} className="log-col">
 
-                                <TtnButton iconButton
-                                           level = "primary"
-                                           rounded icon = "glyphicon glyphicon-pencil"
-                                           onClick = {() => this.onEditClick()}/>
+                                {this.props.month === new Date().getMonth()?
+                                    <div>
+                                        <TtnButton iconButton
+                                                   level = "primary"
+                                                   rounded icon = "glyphicon glyphicon-pencil"
+                                                   onClick = {() => this.onEditClick()}/>
 
-                                <TtnButton iconButton
-                                           level = "primary"
-                                           rounded icon = "glyphicon glyphicon-trash"
-                                           onClick = {() => this.onDeleteClick(activityLog)}/>
-
+                                        <TtnButton iconButton
+                                                   level = "primary"
+                                                   rounded icon = "glyphicon glyphicon-trash"
+                                                   onClick = {() => this.onDeleteClick(activityLog)}/>
+                                    </div>: null
+                                }
 
                             </Col>
                         </Row>
@@ -224,17 +218,13 @@ class ActivityLogComp extends Component{
     }
 }
 
-
-const mapStateToProps = (state) => ({
-    searchedList: state.activity.searchedList,
-    searchPermit: state.activity.searchPermit
-});
-
+//export default ActivityLogComp;
 
 const mapDispatchToProps = (dispatch) => ({
     deleteActivity : (activityId) => {dispatch(deleteActivity(activityId))},
+    updateActivities : (activity) => {dispatch(updateActivities(activity))}
 
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(ActivityLogComp);
+export default connect(null, mapDispatchToProps)(ActivityLogComp);
 

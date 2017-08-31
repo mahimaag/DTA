@@ -1,5 +1,4 @@
 import React,{Component} from 'react'
-
 import Calendar from 'components/Calendar'
 import ModalComp from './../../Core/ModalComp'
 import ModalContent from './../../Core/AddActivityModalContent'
@@ -27,7 +26,8 @@ class CustomDateHeader extends Component{
         this.setState({show: true});
     };
 
-    close = () => {
+    close = (e) => {
+        e.preventDefault();
         this.setState({show: false})
     };
 
@@ -77,6 +77,7 @@ class DashboardCalendar extends Component{
                 messageDecoration = {this.props.messageDecoration}
                 getComponents = {(props) => getComponents(props)}
                 month = {this.props.month}
+                date={this.props.date}
             />
 
         )

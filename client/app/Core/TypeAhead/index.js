@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import styles from './style.css';
 import {connect} from "react-redux";
-import {searchActivity,searchPermit,view} from "../../actions/activity.actions"
+import {searchActivity,searchPermit,display} from "../../actions/activity.actions"
 
 class TypeAhead extends Component {
     constructor (props) {
@@ -14,10 +14,8 @@ class TypeAhead extends Component {
         const value = e.target.value;
         if(value.length >= 2) {
             this.props.searchActivity(value, this.props.month);
-            if(this.props.isFetching){
-                this.props.searchPermit(true);
-            }
-            this.props.view('list');
+            this.props.searchPermit(true);
+            this.props.display('list');
             this.setState({searchText: value});
         }else{
             this.props.searchPermit(false)
@@ -34,10 +32,10 @@ class TypeAhead extends Component {
     //         this.props.searchedList.map((item, index) => <div key={index} onClick={() => this.showItemDetails(item)}>{this.props.valueGenerator(item)}</div>)
     //     )
     // };
-
     render(){
         const { wrappedComponent, icon, searchedList, valueGenerator } = this.props;
         const { searchText } = this.state;
+
         // const WrappedComponent = wrappedComponent;
         // const renderList = WrappedComponent
         // ? (
@@ -63,14 +61,14 @@ class TypeAhead extends Component {
         );
     }
 }
-
 const mapStateToProps = (state) => ({
     isFetching: state.activity.isFetching,
+    currentView: state.activity.currentView,
 });
 const mapDispatchToProps = (dispatch) => ({
     searchActivity : (textValue,month) => dispatch(searchActivity(textValue,month)),
     searchPermit : (value) => dispatch(searchPermit(value)),
-    view: (currentView) => dispatch(view(currentView))
+    display: (currentView) => dispatch(display(currentView))
 });
 
 export default connect(mapStateToProps , mapDispatchToProps)(TypeAhead)

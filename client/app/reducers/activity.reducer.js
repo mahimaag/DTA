@@ -11,6 +11,7 @@ const initialState = {
     isFetching:false,
     error: {}                  // error from Apis.
 };
+
 const ActivityReducer = (state = initialState, action) => {
     let duplicateState = _.cloneDeep(state);
     switch (action.type) {
@@ -25,8 +26,7 @@ const ActivityReducer = (state = initialState, action) => {
             break;
 
         case ActivityActions.PostActivity.Success:
-            console.log('data in action',duplicateState.activities,action.data);
-             if(duplicateState && duplicateState.activities.length>0) {
+             if(duplicateState && duplicateState.activities.length>0){
                  //if state exists
                  if(action.data.length >1){
                      // if repeated activity is to be added;
@@ -36,7 +36,7 @@ const ActivityReducer = (state = initialState, action) => {
                              duplicateState.activities[index3].activities.push(repeatedDateActivity);
                          }else{
                              duplicateState.activities.push({
-                                 _id:repeatedDateActivity.date,
+                                 _id: repeatedDateActivity.date,
                                  activities : [repeatedDateActivity]
                              })
                          }
@@ -84,7 +84,6 @@ const ActivityReducer = (state = initialState, action) => {
                         console.log('activity found-----------',activity._id,action.data._id);
                         if(activity._id === action.data._id){
                             activity = action.data;
-                            console.log('activity',activity);
                         }
                     })
                 })
@@ -93,38 +92,28 @@ const ActivityReducer = (state = initialState, action) => {
         case ActivityActions.UpdateActivity.Failure:
             console.log('error in reducer');
             break;
-
         case ActivityActions.DeleteActivity.Success:
-            console.log("Deleteing activity with id :",action.data,duplicateState.activities);
             if(duplicateState && duplicateState.activities.length>0) {
                 let index = duplicateState.activities.findIndex((dates) => dates._id === action.data.date);
-                console.log("delete index 1:",index);
                 if (index >= 0) {
                     let index2 = duplicateState.activities[index].activities.findIndex((activity) => activity._id === action.data._id)
                     if(index2>=0)
                         duplicateState.activities[index].activities.splice(index2,1)
                     }
                 }
-                console.log('data after deletion',duplicateState.activities);
             break;
-
         case ActivityActions.DeleteActivity.Failure:
             console.log('error in reducer');
             break;
 
-
         case ActivityActions.DeleteAllActivity.Success:
-            console.log('deleting all activities...***************',action.data.date,duplicateState.activities[1]._id);
             let date = parseInt(action.data.date);
-            console.log('types--------->>>>>>>',typeof(date),typeof(duplicateState.activities[1]._id));
             if(duplicateState && duplicateState.activities.length>0) {
                 let index = duplicateState.activities.findIndex((dates) => dates._id === date);
-                console.log('&&&&&&&&&&&&&&&&',index);
                 if (index >= 0) {
                     duplicateState.activities.splice(index, 1);
                     }
             }
-            console.log('data after deletion',duplicateState.activities);
             break;
         case  ActivityActions.SearchActivity.Success:
               duplicateState.searchedList = action.data;

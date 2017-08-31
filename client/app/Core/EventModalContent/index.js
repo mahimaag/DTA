@@ -24,9 +24,9 @@ class ModalContent extends Component {
         this.state = {
             edit: false,
             hh:'',
-            mm:0,
+            mm:'0',
             activityType:'',
-            description:'',
+            description:this.props.eventInfo.moreInfo.description,
             collaborators:[],
             deleteModal:false
         }
@@ -57,11 +57,11 @@ class ModalContent extends Component {
         console.log(updatedEvent);
         this.props.updateActivities(updatedEvent);
         this.props.closeCalendar();
-    }
+    };
 
     onInputChange = (event) => {
         this.setState({
-            [event.target.name] : event.target.value
+            description : event.target.value
         })
     };
 
@@ -90,16 +90,16 @@ class ModalContent extends Component {
         })
     };
 
-    close = () => {
+    close = (e) => {
+        e.preventDefault();
         this.setState({deleteModal: false})
     };
 
     deleteEventDone = () => {
-        console.log("Delete :",this.props.eventInfo);
         this.props.deleteActivity(this.props.eventInfo.moreInfo._id)
         this.setState({
             deleteModal:false
-        })
+        });
         this.props.closeCalendar();
     };
 
@@ -107,37 +107,40 @@ class ModalContent extends Component {
         let hour = [1,2 ,3,4,5,6,7 ,8 ];
         let minutes = [10,20,30,40,50];
         let activityTitles = ['Westcon','Knowlegde Meet','Daily Time Analysis'];
-
-        return (
+         return (
             <div>{
                 this.state.edit ?
                     <div>
                         <TsmsForm formClassName="add-activity">
                             <div>
                                 <FormGroup controlId="projectCategory">
-                                    <ControlLabel>Activity Type:*</ControlLabel>
+                                    <ControlLabel>Activity Type:<span className="requiredField">*</span></ControlLabel>
                                     <Dropdown data={activityTitles}
                                               title={this.state.activityType || this.props.eventInfo.moreInfo.activityType}
                                               onSelect={(item) => this.setSelectedValue(item,'activityType')}
                                     />
                                 </FormGroup>
                                 <FormGroup controlId="hh">
-                                    <ControlLabel>hh:*</ControlLabel>
+                                    <ControlLabel>HH:<span className="requiredField">*</span></ControlLabel>
                                     <Dropdown data={hour}
                                               title={this.state.hh || this.props.eventInfo.moreInfo.hh}
                                               onSelect={(item) => this.setSelectedValue(item,'hh')}/>
                                 </FormGroup>
                                 <FormGroup controlId="mm">
-                                    <ControlLabel>mm:*</ControlLabel>
+                                    <ControlLabel>MM:<span className="requiredField">*</span></ControlLabel>
                                     <Dropdown data={minutes}
                                               title={this.state.mm || this.props.eventInfo.moreInfo.mm}
                                               onSelect={(item) => this.setSelectedValue(item,'mm')}/>
                                 </FormGroup>
                                 <FormGroup controlId="description">
                                     <ControlLabel>Description:</ControlLabel>
-                                    <FormControl type="text" label="Description" placeholder="Description" value={this.state.description || this.props.eventInfo.moreInfo.description} onChange={this.onInputChange} name="description"/>
+                                    <FormControl type="text" label="Description" placeholder="Description" value={this.state.description} onChange={this.onInputChange} name="description"/>
                                 </FormGroup>
-                                <div>Collaborators : {this.props.eventInfo.moreInfo.collaborators}</div>
+                                <ControlLabel>Collaborators : {
+                                        this.props.eventInfo.moreInfo.collaborators.map((newer) => (
+                                            <div>{newer}</div>
+                                        ))
+                                    }</ControlLabel>
 
                                 <TtnButton iconButton
                                            level="secondary"
@@ -153,10 +156,14 @@ class ModalContent extends Component {
                     </div> :
                     <div>
                         <div>Activity : {this.props.eventInfo.moreInfo.activityType}</div>
-                        <div>hh : {this.props.eventInfo.moreInfo.hh}</div>
-                        <div>mm : {this.props.eventInfo.moreInfo.mm}</div>
+                        <div>HH : {this.props.eventInfo.moreInfo.hh}</div>
+                        <div>MM : {this.props.eventInfo.moreInfo.mm}</div>
                         <div>Description : {this.props.eventInfo.moreInfo.description}</div>
-                        <div>Collaborators : {this.props.eventInfo.moreInfo.collaborators}</div>
+                        <div>Collaborators : {
+                            this.props.eventInfo.moreInfo.collaborators.map((newer) => (
+                                <div>{newer}</div>
+                            ))
+                        }</div>
                         {
                             this.props.month === new Date().getMonth() ?
                             <div>

@@ -93,7 +93,7 @@ export const searchActivity = (textValue,month) => {
         decoratedFetch("/api/activity/searchActivity?activityName="+textValue+"&month="+month,{method:'get'})
             .then(response => {
                 if(response.status == ApiResponseCode.OK){
-                    dispatch({type:ActivityActions.SearchActivity.Fetching,data:true});
+                    // dispatch({type:ActivityActions.SearchActivity.Fetching,data:true});
                     return response.json()
                 }else if(response.status == ApiResponseCode.AUTH_FAIL){
                     //fetch(AUTHORIZE_URL)
@@ -114,7 +114,7 @@ export const searchPermit = (value) => {
     }
 };
 
-export const view = (currentView) => {
+export const display = (currentView) => {
    return (dispatch) => {
        dispatch({type:ActivityActions.SearchActivity.CurrentView,data:currentView})
    }

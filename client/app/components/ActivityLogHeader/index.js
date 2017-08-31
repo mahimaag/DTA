@@ -1,17 +1,15 @@
-/**
- * Created by saubhagya on 20/7/17.
- */
+
 import React, { Component } from 'react'
 import { Row, Col} from 'react-bootstrap'
 //import { TSMS_TextButton } from './../../Core/Button'
-import TtnButton from 'core/Button/btn';
-import {monthArray} from '../../../constants/Index'
+import TtnButton from '../../Core/Button/btn'
 import {getDate} from '../../../utils/common'
 import moment from 'moment'
 import {deleteAllActivity} from '../../actions/activity.actions'
 import { connect } from 'react-redux';
 import ModalComp from '../../Core/ModalComp'
 import DeleteModal from '../../Core/DeleteModal'
+
 
 class ActivityLogHeader extends Component{
     constructor(props){
@@ -20,7 +18,6 @@ class ActivityLogHeader extends Component{
             displayModal: false
         }
     }
-
     onClearClick = (activity) => {
         this.setState({
             displayModal: true
@@ -41,6 +38,7 @@ class ActivityLogHeader extends Component{
     };
 
     render(){
+        console.log('&&&&&&&&&&&&&&&&&&&&&&&&&&&&&',this.props.month);
         let activityArray = this.props.activities;
         let totalHours = 0,totalMins = 0;
         activityArray.map(function(activity){
@@ -57,25 +55,27 @@ class ActivityLogHeader extends Component{
         return(
             <div>
                 <Row className = "show-grid">
-                    <Col md = {2} lg = {2} className = "log-col">
+                    <Col md = {2} lg = {2} className = "log-col date-day-col">
                         <span className = "log-date-day">{formattedDate}</span>
                         <span className = "log-date-day">{logDay}</span>
                     </Col>
-                    <Col md = {2} lg = {2} lgOffset = {1} className = "log-col">
+                    <Col md = {2} lg = {2}  className = "log-col totalHours-col">
                         <span>{totalHours} : {totalMins}</span>
                     </Col>
-                    <Col md = {4} lg = {4} lgOffset = {3} className = "log-col">
-                        <TtnButton bClassName = "log-clear-button"
-                                   level = "primary"
-                                   title = "Log Time"
-                                   onClick = {this.props.onLogTimeClick}/>:
+                    <Col md = {4} lg = {4} lgOffset = {3} className = "log-col header-buttons-col">
+                        {this.props.month === new Date().getMonth()?
+                            <div className="header-buttons">
+                                <TtnButton bClassName = "log-clear-button"
+                                           level = "primary"
+                                           title = "Log Time"
+                                           onClick = {this.props.onLogTimeClick}/>:
 
-                        <TtnButton bClassName = "log-clear-button"
-                                   level = "primary"
-                                   title = "Clear"
-                                   onClick = {this.onClearClick}/>
-
-
+                                <TtnButton bClassName = "log-clear-button"
+                                           level = "primary"
+                                           title = "Clear"
+                                           onClick = {this.onClearClick}/>
+                            </div>: null
+                        }
                     </Col>
                 </Row>
 
