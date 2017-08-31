@@ -30,8 +30,12 @@
 
 }
 
+.requiredField{
+    color: red;
+}
+
 .rbc-event.rbc-selected {
-    background-color: lightgray;
+    background-color: blue;
     color:black;
 
 }
