@@ -26,7 +26,7 @@ class CalendarNavigation extends React.Component{
                         <div>
                             {this.props.title === 'back' ?
                                 <button onClick={this.backClick}>{`<`}</button> :
-                                <button onClick={this.todayClick}>today</button>
+                                <button onClick={this.todayClick}>Today</button>
                             }
                         </div>
                 }

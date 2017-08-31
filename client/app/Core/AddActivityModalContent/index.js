@@ -25,7 +25,7 @@ class ModalContent extends Component{
             showCalendar:false,
             activityType:'Select',
             hh:'Select',
-            mm:0,
+            mm:'Select',
             collaborators:[],
             description:'',
             repeatActivity : [],
@@ -129,20 +129,13 @@ class ModalContent extends Component{
     }
 
     eventStyleGetterRepeat(event, start, end, isSelected) {
-        let cssClass = "repeat-icon";
+        let cssClass = "repeat-icon",todayClass = "current-date";
         if(event.title === " "){
-
-            return {
-                className:cssClass,
-            };
+            return { className:cssClass };
         }else{
-            return{
-                className:cssClass
-            }
+            return{ className:todayClass }
         }
-
     }
-
 
     render(){
         let activityTitles = ['Westcon','Knowlegde Meet','Daily Time Analysis'];
@@ -165,20 +158,20 @@ class ModalContent extends Component{
                     <TsmsForm formClassName="add-activity">
                         <div>
                             <FormGroup controlId="activityType">
-                                <ControlLabel>Activity Type:*</ControlLabel>
+                                <ControlLabel>Activity Type:<span className="requiredField">*</span></ControlLabel>
                                 <Dropdown data={activityTitles}
                                           title={this.state.activityType}
                                           onSelect={(item) => this.setSelectedValue(item,'activityType')}
                                 />
                             </FormGroup>
                             <FormGroup controlId="hh">
-                                <ControlLabel>hh:*</ControlLabel>
+                                <ControlLabel>HH:<span className="requiredField">*</span></ControlLabel>
                                 <Dropdown data={hour}
                                           title={this.state.hh}
                                           onSelect={(item) => this.setSelectedValue(item,'hh')}/>
                             </FormGroup>
                             <FormGroup controlId="mm">
-                                <ControlLabel>mm:*</ControlLabel>
+                                <ControlLabel>MM:<span className="requiredField">*</span></ControlLabel>
                                 <Dropdown data={minutes}
                                           title={this.state.mm}
                                           onSelect={(item) => this.setSelectedValue(item,'mm')}/>
@@ -188,7 +181,7 @@ class ModalContent extends Component{
                                 <FormControl type="text" label="Description" placeholder="Description" value={this.state.description} onChange={this.onInputChange} name="description"/>
                             </FormGroup>
                             <FormGroup controlId="collaborators">
-                                Collaborators: <Tags updateTag = {(tags) => {this.getTags(tags)}}/>
+                                <ControlLabel>Collaborators: <Tags updateTag = {(tags) => {this.getTags(tags)}}/></ControlLabel>
                             </FormGroup>
 
                             <TtnButton level = "primary"

@@ -24,7 +24,7 @@ class ModalContent extends Component {
         this.state = {
             edit: false,
             hh:'',
-            mm:0,
+            mm:'0',
             activityType:'',
             description:this.props.eventInfo.moreInfo.description,
             collaborators:[],
@@ -107,28 +107,27 @@ class ModalContent extends Component {
         let hour = [1,2 ,3,4,5,6,7 ,8 ];
         let minutes = [10,20,30,40,50];
         let activityTitles = ['Westcon','Knowlegde Meet','Daily Time Analysis'];
-
-        return (
+         return (
             <div>{
                 this.state.edit ?
                     <div>
                         <TsmsForm formClassName="add-activity">
                             <div>
                                 <FormGroup controlId="projectCategory">
-                                    <ControlLabel>Activity Type:*</ControlLabel>
+                                    <ControlLabel>Activity Type:<span className="requiredField">*</span></ControlLabel>
                                     <Dropdown data={activityTitles}
                                               title={this.state.activityType || this.props.eventInfo.moreInfo.activityType}
                                               onSelect={(item) => this.setSelectedValue(item,'activityType')}
                                     />
                                 </FormGroup>
                                 <FormGroup controlId="hh">
-                                    <ControlLabel>hh:*</ControlLabel>
+                                    <ControlLabel>HH:<span className="requiredField">*</span></ControlLabel>
                                     <Dropdown data={hour}
                                               title={this.state.hh || this.props.eventInfo.moreInfo.hh}
                                               onSelect={(item) => this.setSelectedValue(item,'hh')}/>
                                 </FormGroup>
                                 <FormGroup controlId="mm">
-                                    <ControlLabel>mm:*</ControlLabel>
+                                    <ControlLabel>MM:<span className="requiredField">*</span></ControlLabel>
                                     <Dropdown data={minutes}
                                               title={this.state.mm || this.props.eventInfo.moreInfo.mm}
                                               onSelect={(item) => this.setSelectedValue(item,'mm')}/>
@@ -137,7 +136,11 @@ class ModalContent extends Component {
                                     <ControlLabel>Description:</ControlLabel>
                                     <FormControl type="text" label="Description" placeholder="Description" value={this.state.description} onChange={this.onInputChange} name="description"/>
                                 </FormGroup>
-                                <div>Collaborators : {this.props.eventInfo.moreInfo.collaborators}</div>
+                                <ControlLabel>Collaborators : {
+                                        this.props.eventInfo.moreInfo.collaborators.map((newer) => (
+                                            <div>{newer}</div>
+                                        ))
+                                    }</ControlLabel>
 
                                 <TtnButton iconButton
                                            level="secondary"
@@ -153,10 +156,14 @@ class ModalContent extends Component {
                     </div> :
                     <div>
                         <div>Activity : {this.props.eventInfo.moreInfo.activityType}</div>
-                        <div>hh : {this.props.eventInfo.moreInfo.hh}</div>
-                        <div>mm : {this.props.eventInfo.moreInfo.mm}</div>
+                        <div>HH : {this.props.eventInfo.moreInfo.hh}</div>
+                        <div>MM : {this.props.eventInfo.moreInfo.mm}</div>
                         <div>Description : {this.props.eventInfo.moreInfo.description}</div>
-                        <div>Collaborators : {this.props.eventInfo.moreInfo.collaborators}</div>
+                        <div>Collaborators : {
+                            this.props.eventInfo.moreInfo.collaborators.map((newer) => (
+                                <div>{newer}</div>
+                            ))
+                        }</div>
                         {
                             this.props.month === new Date().getMonth() ?
                             <div>

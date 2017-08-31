@@ -157,23 +157,6 @@ class Main extends React.Component {
                             </div>
                         </div>
                     </div>
-                    <div className="row">
-                        <div className="col-lg-6">
-                            <div className="ibox float-e-margins">
-                                <div className="ibox-title">
-                                    <h5>List of components</h5>
-                                </div>
-                                <div className="ibox-content">
-                                    <div>
-                                        <h3> Buttons </h3>
-                                        <TtnButton level="primary" title="Flat Button"/>
-                                        <TtnButton nature="Decline"/>
-                                        <TtnButton iconButton level="primary" rounded icon="fa fa-address-book-o"/>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>                
                 </div>
             </div>
         )
